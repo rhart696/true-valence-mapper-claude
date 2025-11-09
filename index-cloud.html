@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProActive True Valence Mapper - Cloud Enabled</title>
+    <style>
+        /* Copy all existing styles from index.html */
+        /* Plus new cloud-specific styles: */
+
+        .cloud-status {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cloud-status.online {
+            color: #4CAF50;
+        }
+
+        .cloud-status.offline {
+            color: #ff9800;
+        }
+
+        .cloud-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .cloud-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .cloud-button {
+            background: #00A8CC;
+            color: white;
+        }
+
+        .cloud-button:hover {
+            background: #0096b3;
+        }
+
+        .share-link-container {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .share-link-container.show {
+            display: block;
+        }
+
+        .share-link {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .share-link input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #90caf9;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .copy-button {
+            padding: 8px 15px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .copy-button:hover {
+            background: #1976D2;
+        }
+
+        .my-maps-modal {
+            /* Reuse modal styles */
+        }
+
+        .map-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .map-item {
+            padding: 15px;
+            margin: 10px 0;
+            background: #f5f5f5;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .map-item-info h4 {
+            margin: 0 0 5px 0;
+            color: #2E4A8B;
+        }
+
+        .map-item-info .date {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .map-item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .map-item-actions button {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Copy existing HTML structure and add: -->
+
+    <!-- Cloud Status Indicator -->
+    <div class="cloud-status" id="cloudStatus">
+        <span class="cloud-indicator"></span>
+        <span id="statusText">Checking connection...</span>
+    </div>
+
+    <!-- Modified control buttons to include cloud features -->
+    <div class="control-group cloud-buttons">
+        <button class="cloud-button" onclick="saveToCloud()">Save to Cloud</button>
+        <button class="cloud-button" onclick="showMyMaps()">My Maps</button>
+        <button class="cloud-button" onclick="shareMap()">Get Share Link</button>
+    </div>
+
+    <!-- Share Link Container -->
+    <div class="share-link-container" id="shareLinkContainer">
+        <h4>Share Your Trust Map</h4>
+        <p>Anyone with this link can view your map:</p>
+        <div class="share-link">
+            <input type="text" id="shareUrl" readonly>
+            <button class="copy-button" onclick="copyShareLink()">Copy Link</button>
+        </div>
+        <p style="font-size: 12px; color: #666; margin-top: 10px;">
+            Share code: <code id="shareCode"></code>
+        </p>
+    </div>
+
+    <!-- My Maps Modal -->
+    <div id="myMapsModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeMyMapsModal()">&times;</span>
+            <h2>My Cloud Maps</h2>
+            <div id="mapsList" class="map-list">
+                <p>Loading maps...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="cloud-storage.js"></script>
+    <script>
+        // Initialize cloud storage
+        let cloudStorage;
+        let currentMapId = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize cloud storage
+            cloudStorage = new CloudStorage();
+
+            // Check connection status
+            updateConnectionStatus();
+
+            // Check for share code in URL
+            const shareCode = cloudStorage.checkForShareCode();
+            if (shareCode) {
+                loadSharedMap(shareCode);
+            } else {
+                // Load from localStorage as usual
+                loadFromLocalStorage();
+            }
+
+            // Update status periodically
+            setInterval(updateConnectionStatus, 30000);
+        });
+
+        function updateConnectionStatus() {
+            const statusEl = document.getElementById('cloudStatus');
+            const statusText = document.getElementById('statusText');
+
+            if (navigator.onLine) {
+                statusEl.className = 'cloud-status online';
+                statusText.textContent = 'Cloud sync enabled';
+            } else {
+                statusEl.className = 'cloud-status offline';
+                statusText.textContent = 'Offline mode';
+            }
+        }
+
+        async function saveToCloud() {
+            const mapName = prompt('Name your map:', 'Trust Map ' + new Date().toLocaleDateString());
+            if (!mapName) return;
+
+            const mapData = {
+                relationships: relationships,
+                trustScores: trustScores
+            };
+
+            const result = await cloudStorage.saveToCloud(mapData, mapName);
+
+            if (result.success) {
+                currentMapId = result.id;
+                if (result.shareCode) {
+                    showShareLink(result.shareCode, result.shareUrl);
+                }
+            }
+        }
+
+        async function loadSharedMap(shareCode) {
+            const result = await cloudStorage.loadFromCloud(shareCode);
+
+            if (result.success) {
+                relationships = result.data.relationships;
+                trustScores = result.data.trustScores;
+                renderVisualization();
+                updateNodeCount();
+
+                // Show info about loaded map
+                cloudStorage.showStatus(`Loaded shared map: ${result.data.mapName}`, 'success');
+            }
+        }
+
+        async function showMyMaps() {
+            const modal = document.getElementById('myMapsModal');
+            const mapsList = document.getElementById('mapsList');
+
+            modal.classList.add('show');
+            mapsList.innerHTML = '<p>Loading...</p>';
+
+            const result = await cloudStorage.getMyMaps();
+
+            if (result.success) {
+                if (result.maps.length === 0) {
+                    mapsList.innerHTML = '<p>No saved maps yet. Save your first map to the cloud!</p>';
+                } else {
+                    mapsList.innerHTML = result.maps.map(map => `
+                        <div class="map-item">
+                            <div class="map-item-info">
+                                <h4>${map.map_name}</h4>
+                                <span class="date">Updated: ${new Date(map.updated_at).toLocaleString()}</span>
+                                ${map.share_code ? `<br><small>Share: ${map.share_code}</small>` : ''}
+                            </div>
+                            <div class="map-item-actions">
+                                <button onclick="loadMapFromCloud('${map.id}')">Load</button>
+                                <button onclick="getShareLink('${map.share_code}')">Share</button>
+                                <button onclick="deleteCloudMap('${map.id}')">Delete</button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } else {
+                mapsList.innerHTML = '<p>Failed to load maps. Check your connection.</p>';
+            }
+        }
+
+        function closeMyMapsModal() {
+            document.getElementById('myMapsModal').classList.remove('show');
+        }
+
+        async function loadMapFromCloud(mapId) {
+            const result = await cloudStorage.loadFromCloud(mapId);
+
+            if (result.success) {
+                relationships = result.data.relationships;
+                trustScores = result.data.trustScores;
+                currentMapId = mapId;
+
+                renderVisualization();
+                updateNodeCount();
+                closeMyMapsModal();
+
+                cloudStorage.showStatus('Map loaded successfully', 'success');
+            }
+        }
+
+        async function deleteCloudMap(mapId) {
+            if (!confirm('Delete this map? This cannot be undone.')) return;
+
+            const result = await cloudStorage.deleteMap(mapId);
+            if (result.success) {
+                showMyMaps(); // Refresh the list
+            }
+        }
+
+        function shareMap() {
+            if (!currentMapId) {
+                alert('Please save your map to the cloud first');
+                return;
+            }
+
+            const refs = JSON.parse(localStorage.getItem('mapReferences') || '{}');
+            const ref = refs[currentMapId];
+
+            if (ref && ref.shareCode) {
+                const shareUrl = cloudStorage.getShareUrl(ref.shareCode);
+                showShareLink(ref.shareCode, shareUrl);
+            }
+        }
+
+        function showShareLink(shareCode, shareUrl) {
+            const container = document.getElementById('shareLinkContainer');
+            const urlInput = document.getElementById('shareUrl');
+            const codeEl = document.getElementById('shareCode');
+
+            urlInput.value = shareUrl;
+            codeEl.textContent = shareCode;
+            container.classList.add('show');
+        }
+
+        function copyShareLink() {
+            const urlInput = document.getElementById('shareUrl');
+            urlInput.select();
+            document.execCommand('copy');
+
+            cloudStorage.showStatus('Link copied to clipboard!', 'success');
+        }
+
+        function getShareLink(shareCode) {
+            if (shareCode && shareCode !== 'null') {
+                const shareUrl = cloudStorage.getShareUrl(shareCode);
+                showShareLink(shareCode, shareUrl);
+                closeMyMapsModal();
+            }
+        }
+
+        // Auto-save to cloud when changes are made (optional)
+        function autoSaveToCloud() {
+            if (currentMapId && navigator.onLine) {
+                const mapData = {
+                    relationships: relationships,
+                    trustScores: trustScores
+                };
+                cloudStorage.updateCloudMap(currentMapId, mapData);
+            }
+        }
+
+        // Override the original save functions to include cloud sync
+        const originalRenderVisualization = renderVisualization;
+        renderVisualization = function() {
+            originalRenderVisualization();
+            // Auto-save after 2 seconds of inactivity
+            clearTimeout(window.autoSaveTimeout);
+            window.autoSaveTimeout = setTimeout(autoSaveToCloud, 2000);
+        };
+    </script>
+</body>
+</html>
