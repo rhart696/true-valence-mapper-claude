@@ -403,34 +403,37 @@
         function createArrows(person, x, y) {
             const arrowsGroup = document.getElementById('arrows');
 
-            // Calculate control points for curved arrows
-            const midX = (CENTER_X + x) / 2;
-            const midY = (CENTER_Y + y) / 2;
-
-            // Perpendicular offset for curve - significantly increased for clear separation
+            // Calculate direction vector
             const dx = x - CENTER_X;
             const dy = y - CENTER_Y;
-            const perpX = -dy / 3;  // Much larger offset for clear visual separation
-            const perpY = dx / 3;   // Much larger offset for clear visual separation
+            const length = Math.sqrt(dx * dx + dy * dy);
 
             // Normalize the direction vector
-            const length = Math.sqrt(dx * dx + dy * dy);
             const normalX = dx / length;
             const normalY = dy / length;
+
+            // Calculate perpendicular vector for parallel offset
+            const perpX = -normalY * 8;  // 8 pixels offset perpendicular to the line
+            const perpY = normalX * 8;   // This creates parallel arrows
 
             // Start and end points for arrows (adjusted to not overlap at nodes)
             const startRadius = 45;  // Start 45px from center (just outside center node)
             const endRadius = 35;    // End 35px from target (just outside target node)
 
-            const startX = CENTER_X + normalX * startRadius;
-            const startY = CENTER_Y + normalY * startRadius;
-            const endX = CENTER_X + normalX * (length - endRadius);
-            const endY = CENTER_Y + normalY * (length - endRadius);
+            // Base positions along the main axis
+            const baseStartX = CENTER_X + normalX * startRadius;
+            const baseStartY = CENTER_Y + normalY * startRadius;
+            const baseEndX = CENTER_X + normalX * (length - endRadius);
+            const baseEndY = CENTER_Y + normalY * (length - endRadius);
 
-            // Outward arrow (You -> Them)
+            // Outward arrow (You -> Them) - offset to one side
             const outwardScore = trustScores[person.id].outward;
             const outwardPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            const outwardD = `M ${startX} ${startY} Q ${midX - perpX} ${midY - perpY} ${endX} ${endY}`;
+            const outwardStartX = baseStartX - perpX;
+            const outwardStartY = baseStartY - perpY;
+            const outwardEndX = baseEndX - perpX;
+            const outwardEndY = baseEndY - perpY;
+            const outwardD = `M ${outwardStartX} ${outwardStartY} L ${outwardEndX} ${outwardEndY}`;
             outwardPath.setAttribute('d', outwardD);
             outwardPath.setAttribute('class', `arrow-path score-${outwardScore}`);
             outwardPath.setAttribute('marker-end', `url(#arrow-${outwardScore})`);
@@ -438,10 +441,14 @@
             outwardPath.setAttribute('data-direction', 'outward');
             outwardPath.onclick = () => cycleScore(person.id, 'outward');
 
-            // Inward arrow (Them -> You)
+            // Inward arrow (Them -> You) - offset to the other side
             const inwardScore = trustScores[person.id].inward;
             const inwardPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            const inwardD = `M ${endX} ${endY} Q ${midX + perpX} ${midY + perpY} ${startX} ${startY}`;
+            const inwardStartX = baseStartX + perpX;
+            const inwardStartY = baseStartY + perpY;
+            const inwardEndX = baseEndX + perpX;
+            const inwardEndY = baseEndY + perpY;
+            const inwardD = `M ${inwardEndX} ${inwardEndY} L ${inwardStartX} ${inwardStartY}`;
             inwardPath.setAttribute('d', inwardD);
             inwardPath.setAttribute('class', `arrow-path score-${inwardScore}`);
             inwardPath.setAttribute('marker-end', `url(#arrow-${inwardScore})`);
