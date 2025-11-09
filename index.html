@@ -278,6 +278,10 @@
                 <button id="saveMap" onclick="saveMap()">Save Map</button>
                 <button id="loadMap" onclick="loadMap()">Load Map</button>
             </div>
+            <div class="control-group">
+                <button onclick="exportToJSON()">Export JSON</button>
+                <button onclick="importJSON()">Import JSON</button>
+            </div>
         </div>
 
         <div class="node-count" id="nodeCount">Relationships: 0 / 8</div>
@@ -579,6 +583,69 @@
                 }
             }
             return false;
+        }
+
+        // Export/Import Functions
+        function exportToJSON() {
+            const data = {
+                version: "1.0",
+                appName: "ProActive True Valence Mapper",
+                relationships: relationships,
+                trustScores: trustScores,
+                exportDate: new Date().toISOString()
+            };
+
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `trust-map-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+        }
+
+        function importJSON() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+
+            input.onchange = function(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+
+                        // Validate the data structure
+                        if (data.relationships && data.trustScores) {
+                            // Confirm before overwriting
+                            if (relationships.length > 0) {
+                                if (!confirm('This will replace your current map. Continue?')) {
+                                    return;
+                                }
+                            }
+
+                            relationships = data.relationships || [];
+                            trustScores = data.trustScores || {};
+
+                            renderVisualization();
+                            updateNodeCount();
+                            saveToLocalStorage();
+
+                            alert('Map imported successfully!');
+                        } else {
+                            alert('Invalid file format. Please select a valid trust map JSON file.');
+                        }
+                    } catch (error) {
+                        alert('Error reading file. Please ensure it\'s a valid JSON file.');
+                    }
+                };
+                reader.readAsText(file);
+            };
+
+            input.click();
         }
     </script>
 
