@@ -3,7 +3,7 @@
 A visual tool for mapping trust flow in relationship networks. Perfect for coaching sessions, self-reflection, and understanding relationship dynamics.
 
 ## Live Demo
-🚀 Coming November 16, 2025 (GitHub Pages)
+🚀 **LIVE NOW**: https://rhart696.github.io/true-value-mapper/
 
 ## What It Does
 - Visualize up to 8 key relationships
@@ -81,4 +81,4 @@ Built in 7 days as part of the "ship, don't infrastructure" challenge.
 
 ---
 *Version 1.0 - Front-end MVP*
-*Ship Date: November 16, 2025*
+*Ship Date: November 9, 2025* ✅
