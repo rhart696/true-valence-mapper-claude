@@ -405,11 +405,11 @@
             const midX = (CENTER_X + x) / 2;
             const midY = (CENTER_Y + y) / 2;
 
-            // Perpendicular offset for curve - increased for more separation
+            // Perpendicular offset for curve - significantly increased for clear separation
             const dx = x - CENTER_X;
             const dy = y - CENTER_Y;
-            const perpX = -dy / 5;  // Increased from /10 to /5 for more separation
-            const perpY = dx / 5;   // Increased from /10 to /5 for more separation
+            const perpX = -dy / 3;  // Much larger offset for clear visual separation
+            const perpY = dx / 3;   // Much larger offset for clear visual separation
 
             // Normalize the direction vector
             const length = Math.sqrt(dx * dx + dy * dy);
