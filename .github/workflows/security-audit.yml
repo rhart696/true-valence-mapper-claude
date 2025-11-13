@@ -1,0 +1,150 @@
+name: Security Audit
+
+on:
+  schedule:
+    # Run weekly on Sundays at 2 AM UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '**.js'
+      - '**.html'
+      - '**.sql'
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for hardcoded secrets
+        run: |
+          echo "🔍 Scanning for hardcoded secrets..."
+
+          # Check for common secret patterns
+          if grep -rEi "password\s*=\s*['\"]" --include="*.js" --include="*.html" .; then
+            echo "⚠️ WARNING: Found potential hardcoded passwords"
+            exit 1
+          fi
+
+          if grep -rEi "api[_-]?key\s*=\s*['\"][^'\"]{20,}" --include="*.js" --include="*.html" .; then
+            echo "⚠️ WARNING: Found potential hardcoded API keys"
+            exit 1
+          fi
+
+          if grep -rEi "secret\s*=\s*['\"]" --include="*.js" --include="*.html" .; then
+            echo "⚠️ WARNING: Found potential hardcoded secrets"
+            exit 1
+          fi
+
+          echo "✅ No hardcoded secrets detected"
+
+      - name: Check SQL injection patterns
+        run: |
+          echo "🔍 Scanning SQL files for injection risks..."
+
+          # Check for SQL files with potential injection patterns
+          if find . -name "*.sql" -type f | xargs grep -i "DROP TABLE" | grep -v "IF EXISTS" | grep -v "-- "; then
+            echo "⚠️ WARNING: Found potentially unsafe DROP TABLE statements"
+            exit 1
+          fi
+
+          # Check for string concatenation in SQL (indicates potential injection)
+          if grep -rEi "\+\s*['\"].*SELECT" --include="*.js" .; then
+            echo "⚠️ WARNING: Found potential SQL injection via string concatenation"
+            exit 1
+          fi
+
+          echo "✅ No SQL injection patterns detected"
+
+      - name: Check XSS vulnerabilities
+        run: |
+          echo "🔍 Scanning for XSS vulnerability patterns..."
+
+          # Check for dangerous innerHTML usage
+          if grep -rn "innerHTML\s*=" --include="*.js" . | grep -v "InputValidator\|htmlEncode"; then
+            echo "⚠️ WARNING: Found potentially unsafe innerHTML usage"
+            exit 1
+          fi
+
+          # Check for eval usage
+          if grep -rn "eval(" --include="*.js" .; then
+            echo "⚠️ WARNING: Found eval() usage (dangerous)"
+            exit 1
+          fi
+
+          # Check for new Function usage
+          if grep -rn "new Function(" --include="*.js" .; then
+            echo "⚠️ WARNING: Found new Function() usage (dangerous)"
+            exit 1
+          fi
+
+          echo "✅ No XSS vulnerability patterns detected"
+
+      - name: Validate input sanitization
+        run: |
+          echo "🔍 Checking for proper input validation..."
+
+          # Ensure InputValidator is being used in critical files
+          if ! grep -q "InputValidator" cloud-storage.js; then
+            echo "⚠️ WARNING: cloud-storage.js doesn't appear to use InputValidator"
+            exit 1
+          fi
+
+          if ! grep -q "InputValidator" index.html; then
+            echo "⚠️ WARNING: index.html doesn't appear to use InputValidator"
+            exit 1
+          fi
+
+          echo "✅ Input validation checks passed"
+
+      - name: Check RLS policies
+        run: |
+          echo "🔍 Validating RLS policy security..."
+
+          # Check if SQL files contain RLS policies
+          if find . -name "*rls*.sql" -type f | xargs grep -i "CREATE POLICY" | grep -v "USING"; then
+            echo "⚠️ WARNING: Found RLS policy without USING clause"
+            exit 1
+          fi
+
+          # Check for permissive policies (allow all)
+          if find . -name "*.sql" -type f | xargs grep -i "TO authenticated" | grep -i "USING (true)"; then
+            echo "⚠️ WARNING: Found overly permissive RLS policy"
+            exit 1
+          fi
+
+          echo "✅ RLS policy checks passed"
+
+      - name: Security audit summary
+        if: always()
+        run: |
+          echo "📊 Security Audit Summary"
+          echo "========================"
+          echo ""
+          echo "Checks performed:"
+          echo "  ✓ Hardcoded secrets scan"
+          echo "  ✓ SQL injection patterns"
+          echo "  ✓ XSS vulnerability patterns"
+          echo "  ✓ Input validation usage"
+          echo "  ✓ RLS policy validation"
+          echo ""
+          echo "For detailed security documentation, see:"
+          echo "  - .github/SECURITY.md"
+          echo "  - docs/security/"
+
+      - name: Upload audit results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-audit-results
+          path: |
+            **/*.sql
+            **/*.js
+            **/*.html
+          retention-days: 30

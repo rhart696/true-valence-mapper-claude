@@ -1,0 +1,15 @@
+# Code Owners for True Value Mapper
+# These owners will be requested for review when someone opens a pull request.
+
+# Default owner for everything in the repository
+* @rhart696
+
+# Security-sensitive files require review
+/.github/workflows/ @rhart696
+/docs/security/ @rhart696
+*.sql @rhart696
+input-validation.js @rhart696
+cloud-storage.js @rhart696
+
+# Documentation
+*.md @rhart696

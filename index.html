@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Visualize trust flow in your relationships with ProActive True Valence Mapper - a professional coaching tool for understanding bidirectional trust dynamics">
     <title>ProActive True Valence Mapper - Relationship Trust Visualization</title>
     <style>
         * {
@@ -103,6 +104,95 @@
         button:disabled {
             background: #ccc;
             cursor: not-allowed;
+        }
+
+        button:focus,
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 3px solid #00A8CC;
+            outline-offset: 2px;
+        }
+
+        /* High contrast focus for better visibility */
+        button:focus-visible,
+        input:focus-visible {
+            outline: 3px solid #00A8CC;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(0, 168, 204, 0.2);
+        }
+
+        /* Screen reader only class */
+        .sr-only {
+            position: absolute;
+            left: -10000px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+        /* Skip links for keyboard navigation */
+        .skip-links {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            z-index: 10000;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -10000px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            background: #2E4A8B;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 0 0 8px 0;
+            font-weight: bold;
+        }
+
+        .skip-link:focus {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: auto;
+            height: auto;
+            overflow: visible;
+            z-index: 10001;
+            outline: 3px solid #00A8CC;
+        }
+
+        /* Focus visible for SVG elements */
+        .arrow-path:focus,
+        .node-circle:focus {
+            outline: 3px solid #00A8CC;
+            outline-offset: 3px;
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            button {
+                border: 2px solid currentColor;
+            }
+
+            input[type="text"] {
+                border: 2px solid #000;
+            }
+
+            .arrow-path {
+                stroke-width: 3.5;
+            }
         }
 
         .visualization-container {
@@ -287,9 +377,23 @@
             color: #999;
             line-height: 1;
             transition: color 0.3s;
+            background: transparent;
+            border: none;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-close:focus {
+            outline: 3px solid #00A8CC;
+            outline-offset: 2px;
             color: #333;
         }
 
@@ -369,10 +473,22 @@
             border-radius: 50%;
             background: #d0d0d0;
             transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+            padding: 0;
         }
 
         .dot.active {
             background: #2E4A8B;
+        }
+
+        .dot:hover {
+            background: #666;
+        }
+
+        .dot:focus {
+            outline: 2px solid #00A8CC;
+            outline-offset: 3px;
         }
 
         .checkbox-container {
@@ -423,38 +539,406 @@
                 width: 100%;
             }
         }
+
+        .cloud-button {
+            background: #00A8CC;
+            color: white;
+        }
+
+        .cloud-button:hover {
+            background: #0096b3;
+        }
+
+        .share-modal {
+            display: none;
+        }
+
+        .share-link-container {
+            padding: 20px;
+        }
+
+        .share-link {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .share-link input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #90caf9;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .copy-button {
+            padding: 8px 15px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .copy-button:hover {
+            background: #1976D2;
+        }
+
+        /* Version History Styles */
+        .version-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+
+        .version-item {
+            padding: 15px;
+            margin: 10px 0;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border-left: 4px solid #2E4A8B;
+            transition: background 0.2s;
+        }
+
+        .version-item:hover {
+            background: #e8f4f8;
+        }
+
+        .version-item.current {
+            border-left-color: #00A8CC;
+            background: #e8f4f8;
+        }
+
+        .version-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .version-number {
+            font-weight: bold;
+            color: #2E4A8B;
+            font-size: 14px;
+        }
+
+        .version-timestamp {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .version-summary {
+            margin: 8px 0;
+            color: #333;
+            font-size: 13px;
+        }
+
+        .version-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .version-actions button {
+            padding: 5px 12px;
+            font-size: 12px;
+        }
+
+        .version-stats {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .version-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2E4A8B;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .comparison-view {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-header {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #2E4A8B;
+        }
+
+        .comparison-version {
+            text-align: center;
+        }
+
+        .comparison-arrow {
+            display: flex;
+            align-items: center;
+            color: #666;
+            font-size: 20px;
+        }
+
+        .diff-section {
+            margin: 15px 0;
+        }
+
+        .diff-section h4 {
+            color: #2E4A8B;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .diff-item {
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .diff-added {
+            background: #d4edda;
+            border-left: 3px solid #28a745;
+            color: #155724;
+        }
+
+        .diff-removed {
+            background: #f8d7da;
+            border-left: 3px solid #dc3545;
+            color: #721c24;
+        }
+
+        .diff-modified {
+            background: #fff3cd;
+            border-left: 3px solid #ffc107;
+            color: #856404;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .version-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .version-timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #ddd;
+        }
+
+        .version-timeline .version-item {
+            position: relative;
+        }
+
+        .version-timeline .version-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 15px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #2E4A8B;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px #2E4A8B;
+        }
+
+        .version-timeline .version-item.current::before {
+            background: #00A8CC;
+            box-shadow: 0 0 0 2px #00A8CC;
+        }
+
+        .btn-restore {
+            background: #28a745;
+        }
+
+        .btn-restore:hover {
+            background: #218838;
+        }
+
+        .btn-compare {
+            background: #17a2b8;
+        }
+
+        .btn-compare:hover {
+            background: #138496;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+
+        .manual-save-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #00A8CC;
+            color: white;
+            border-radius: 12px;
+            font-size: 10px;
+            margin-left: 8px;
+        }
     </style>
+    <!-- Toast Notifications -->
+    <link rel="stylesheet" href="toast-notifications.css">
+    <!-- Supabase and Cloud Storage -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="input-validation.js"></script>
+    <script src="toast-notifications.js"></script>
+    <script src="cloud-storage.js"></script>
+    <script src="version-history.js"></script>
+    <script src="accessibility-improvements.js"></script>
 </head>
 <body>
-    <div class="container">
-        <button class="help-button" onclick="showHelpModal()" title="Help">?</button>
-        <div class="header">
-            <img src="background-assets/ProActive-ReSolutions-full-logo.png" alt="ProActive ReSolutions" class="logo">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="container" role="main">
+        <button class="help-button" onclick="showHelpModal()" aria-label="Open help and documentation" title="Help">?</button>
+
+        <header class="header">
+            <img src="background-assets/ProActive-ReSolutions-full-logo.png" alt="ProActive ReSolutions logo" class="logo">
             <h1>ProActive True Valence Mapper</h1>
             <p class="subtitle">Visualize trust flow in your relationships</p>
-        </div>
+        </header>
 
-        <div class="controls">
+        <nav id="controls" class="controls" aria-label="Map controls">
             <div class="control-group">
-                <input type="text" id="personName" placeholder="Enter person's name" maxlength="20">
-                <button id="addPerson" onclick="addPerson()">Add Person</button>
+                <label for="personName" class="sr-only">Person's name</label>
+                <input
+                    type="text"
+                    id="personName"
+                    placeholder="Enter person's name"
+                    maxlength="20"
+                    aria-label="Enter person's name"
+                    aria-describedby="nodeCount">
+                <button
+                    id="addPerson"
+                    onclick="addPerson()"
+                    aria-label="Add person to relationship map">
+                    Add Person
+                </button>
             </div>
-            <div class="control-group">
-                <button id="clearAll" onclick="clearAll()">Clear All</button>
-                <button id="saveMap" onclick="saveMap()">Save Map</button>
-                <button id="loadMap" onclick="loadMap()">Load Map</button>
+            <div class="control-group" role="group" aria-label="Map management">
+                <button
+                    id="clearAll"
+                    onclick="clearAll()"
+                    aria-label="Clear all relationships from map">
+                    Clear All
+                </button>
+                <button
+                    id="saveMap"
+                    onclick="saveMap()"
+                    aria-label="Save map to browser storage">
+                    Save Map
+                </button>
+                <button
+                    id="loadMap"
+                    onclick="loadMap()"
+                    aria-label="Load map from browser storage">
+                    Load Map
+                </button>
+                <button
+                    onclick="showVersionHistory()"
+                    aria-label="View version history">
+                    <span aria-hidden="true">📜</span> Version History
+                </button>
             </div>
-            <div class="control-group">
-                <button onclick="exportToJSON()">Export JSON</button>
-                <button onclick="importJSON()">Import JSON</button>
-                <button class="demo-button" onclick="loadDemoData()">Load Example</button>
+            <div class="control-group" role="group" aria-label="Import and export">
+                <button
+                    onclick="exportToJSON()"
+                    aria-label="Export map as JSON file">
+                    Export JSON
+                </button>
+                <button
+                    onclick="importJSON()"
+                    aria-label="Import map from JSON file">
+                    Import JSON
+                </button>
+                <button
+                    class="demo-button"
+                    onclick="loadDemoData()"
+                    aria-label="Load example data with sample relationships">
+                    Load Example
+                </button>
             </div>
-        </div>
+            <div class="control-group" role="group" aria-label="Cloud storage">
+                <button
+                    class="cloud-button"
+                    onclick="saveToCloud()"
+                    aria-label="Save map to cloud storage">
+                    <span aria-hidden="true">☁️</span> Save to Cloud
+                </button>
+                <button
+                    class="cloud-button"
+                    onclick="showMyMaps()"
+                    aria-label="View my cloud saved maps">
+                    <span aria-hidden="true">📁</span> My Cloud Maps
+                </button>
+                <button
+                    class="cloud-button"
+                    onclick="shareMap()"
+                    aria-label="Get shareable link for this map">
+                    <span aria-hidden="true">🔗</span> Get Share Link
+                </button>
+            </div>
+        </nav>
 
-        <div class="node-count" id="nodeCount">Relationships: 0 / 8</div>
+        <div class="node-count" id="nodeCount" aria-live="polite" aria-atomic="true">Relationships: 0 / 8</div>
 
-        <div class="visualization-container">
-            <svg id="trustMap" viewBox="0 0 600 500">
+        <main id="main-content">
+            <section id="visualization" class="visualization-container" aria-label="Trust relationship visualization">
+                <h2 class="sr-only">Trust Map Visualization</h2>
+                <svg
+                    id="trustMap"
+                    viewBox="0 0 600 500"
+                    role="img"
+                    aria-label="Interactive trust map showing bidirectional trust relationships. Use Tab to navigate between connections, Enter or Space to change trust levels, and arrow keys to adjust scores."
+                    focusable="false">
                 <!-- Define arrow markers -->
                 <defs>
                     <marker id="arrow-1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
@@ -475,44 +959,47 @@
                 <g id="arrows"></g>
 
                 <!-- Nodes group -->
-                <g id="nodes">
+                <g id="nodes" role="group" aria-label="Relationship nodes">
                     <!-- Center node (You) -->
-                    <circle cx="300" cy="250" r="40" class="node-circle center-node" />
-                    <text x="300" y="255" class="node-text center-text">You</text>
+                    <circle cx="300" cy="250" r="40" class="node-circle center-node" role="img" aria-label="You - center of trust map" />
+                    <text x="300" y="255" class="node-text center-text" aria-hidden="true">You</text>
                 </g>
             </svg>
-        </div>
+            </section>
+        </main>
 
-        <div class="legend">
+        <aside class="legend" role="region" aria-label="Trust level color legend">
             <div class="legend-item">
-                <div class="legend-color" style="background: #22c55e;"></div>
+                <div class="legend-color" style="background: #22c55e;" aria-hidden="true"></div>
                 <span>High Trust (1)</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #eab308;"></div>
+                <div class="legend-color" style="background: #eab308;" aria-hidden="true"></div>
                 <span>Medium Trust (2)</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #ef4444;"></div>
+                <div class="legend-color" style="background: #ef4444;" aria-hidden="true"></div>
                 <span>Low/No Trust (3)</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #d1d5db;"></div>
+                <div class="legend-color" style="background: #d1d5db;" aria-hidden="true"></div>
                 <span>Not Scored</span>
             </div>
-        </div>
+        </aside>
 
-        <div class="info-panel">
-            <h3>How to Use</h3>
+        <section class="info-panel" role="region" aria-labelledby="how-to-use-heading">
+            <h2 id="how-to-use-heading">How to Use</h2>
             <p>
                 <strong>1. Add People:</strong> Enter names of up to 8 people in your relationship network.<br>
                 <strong>2. Score Trust:</strong> Click the arrows to score trust levels (1-3):<br>
-                &nbsp;&nbsp;• Outward arrow: "How confident am I that I'd go to them with a problem?"<br>
-                &nbsp;&nbsp;• Inward arrow: "How confident am I that they'd come to me with a problem?"<br>
+                <span role="list">
+                    <span role="listitem">&nbsp;&nbsp;• Outward arrow: "How confident am I that I'd go to them with a problem?"</span><br>
+                    <span role="listitem">&nbsp;&nbsp;• Inward arrow: "How confident am I that they'd come to me with a problem?"</span><br>
+                </span>
                 <strong>3. See Patterns:</strong> Green shows high trust, yellow shows medium, red shows low/no trust.<br>
                 <strong>4. Save Your Map:</strong> Use Save/Load to keep your progress.
             </p>
-        </div>
+        </section>
     </div>
 
     <script>
@@ -524,16 +1011,43 @@
         const CENTER_Y = 250;
         const RADIUS = 150;
 
+        // Cloud Storage variables
+        let cloudStorage;
+        let currentMapId = null;
+
+        // Version History variables
+        let versionHistory;
+
+        // Toast Manager
+        let toastMgr;
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if first visit
-            if (!localStorage.getItem('hideWelcome')) {
-                showWelcomeModal();
-            }
+            // Initialize toast manager
+            toastMgr = initToastManager({ duration: 3000 });
+            // Initialize version history
+            versionHistory = new VersionHistory();
+            // Initialize cloud storage
+            cloudStorage = new CloudStorage();
 
-            // Try to load saved map
-            loadFromLocalStorage();
-            updateNodeCount();
+            // Update connection status
+            updateConnectionStatus();
+            setInterval(updateConnectionStatus, 30000);
+
+            // Check for share code in URL
+            const shareCode = cloudStorage.checkForShareCode();
+            if (shareCode) {
+                loadSharedMap(shareCode);
+            } else {
+                // Check if first visit
+                if (!localStorage.getItem('hideWelcome')) {
+                    showWelcomeModal();
+                }
+
+                // Try to load saved map
+                loadFromLocalStorage();
+                updateNodeCount();
+            }
 
             // Add enter key support
             document.getElementById('personName').addEventListener('keypress', function(e) {
@@ -559,24 +1073,29 @@
 
         function addPerson() {
             const input = document.getElementById('personName');
-            const name = input.value.trim();
+            const nameRaw = input.value.trim();
 
-            if (!name) {
-                alert('Please enter a name');
+            // Validate input
+            const validation = InputValidator.validatePersonName(nameRaw);
+            if (!validation.isValid) {
+                showError(validation.error);
                 return;
             }
+
+            const name = validation.sanitized;
 
             if (relationships.length >= MAX_NODES) {
-                alert(`Maximum ${MAX_NODES} relationships allowed`);
+                showError(`Maximum ${MAX_NODES} relationships allowed`);
                 return;
             }
 
+            // Check for duplicates (case-insensitive)
             if (relationships.find(r => r.name.toLowerCase() === name.toLowerCase())) {
-                alert('This person already exists');
+                showError('This person already exists');
                 return;
             }
 
-            // Add the person
+            // Add the person with validated name
             const person = {
                 id: Date.now(),
                 name: name
@@ -596,6 +1115,16 @@
             renderVisualization();
             updateNodeCount();
             saveToLocalStorage();
+
+            // Auto-save version
+            if (versionHistory && versionHistory.shouldAutoSave()) {
+                autoSaveVersion();
+            }
+
+            // Announce to screen readers
+            if (window.a11yManager) {
+                window.a11yManager.announce(`${name} added to relationship map`, 'assertive');
+            }
         }
 
         function renderVisualization() {
@@ -649,6 +1178,9 @@
             const baseEndX = CENTER_X + normalX * (length - endRadius);
             const baseEndY = CENTER_Y + normalY * (length - endRadius);
 
+            // Trust level names for accessibility
+            const scoreNames = ['not scored', 'high trust', 'medium trust', 'low trust'];
+
             // Outward arrow (You -> Them) - offset to one side
             const outwardScore = trustScores[person.id].outward;
             const outwardPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -662,6 +1194,9 @@
             outwardPath.setAttribute('marker-end', `url(#arrow-${outwardScore})`);
             outwardPath.setAttribute('data-person', person.id);
             outwardPath.setAttribute('data-direction', 'outward');
+            outwardPath.setAttribute('tabindex', '0');
+            outwardPath.setAttribute('role', 'button');
+            outwardPath.setAttribute('aria-label', `Your trust in ${person.name}: ${scoreNames[outwardScore]}. Press Enter or Space to change, use arrow keys to adjust.`);
             outwardPath.onclick = () => cycleScore(person.id, 'outward');
 
             // Inward arrow (Them -> You) - offset to the other side
@@ -677,6 +1212,9 @@
             inwardPath.setAttribute('marker-end', `url(#arrow-${inwardScore})`);
             inwardPath.setAttribute('data-person', person.id);
             inwardPath.setAttribute('data-direction', 'inward');
+            inwardPath.setAttribute('tabindex', '0');
+            inwardPath.setAttribute('role', 'button');
+            inwardPath.setAttribute('aria-label', `${person.name}'s trust in you: ${scoreNames[inwardScore]}. Press Enter or Space to change, use arrow keys to adjust.`);
             inwardPath.onclick = () => cycleScore(person.id, 'inward');
 
             arrowsGroup.appendChild(outwardPath);
@@ -699,7 +1237,10 @@
             text.setAttribute('x', x);
             text.setAttribute('y', y + 5);
             text.setAttribute('class', 'node-text');
-            text.textContent = person.name;
+
+            // Sanitize person name for safe SVG display
+            const safeName = InputValidator.sanitizeForSVGDisplay(person.name, 30);
+            text.textContent = safeName;
 
             g.appendChild(circle);
             g.appendChild(text);
@@ -709,7 +1250,16 @@
         function cycleScore(personId, direction) {
             // Cycle through scores: 0 -> 1 -> 2 -> 3 -> 0
             const currentScore = trustScores[personId][direction];
-            trustScores[personId][direction] = (currentScore + 1) % 4;
+            const newScore = (currentScore + 1) % 4;
+            trustScores[personId][direction] = newScore;
+
+            // Announce change to screen readers
+            if (window.a11yManager) {
+                const person = relationships.find(r => r.id == personId);
+                const scoreNames = ['not scored', 'high trust', 'medium trust', 'low trust'];
+                const directionName = direction === 'outward' ? 'your trust in them' : 'their trust in you';
+                window.a11yManager.announce(`${person ? person.name + ', ' : ''}${directionName} changed to ${scoreNames[newScore]}`, 'polite');
+            }
 
             // Re-render to update colors
             renderVisualization();
@@ -717,30 +1267,61 @@
         }
 
         function updateNodeCount() {
-            document.getElementById('nodeCount').textContent = `Relationships: ${relationships.length} / ${MAX_NODES}`;
-            document.getElementById('addPerson').disabled = relationships.length >= MAX_NODES;
+            const nodeCountEl = document.getElementById('nodeCount');
+            nodeCountEl.textContent = `Relationships: ${relationships.length} / ${MAX_NODES}`;
+
+            const addButton = document.getElementById('addPerson');
+            const isDisabled = relationships.length >= MAX_NODES;
+            addButton.disabled = isDisabled;
+
+            if (isDisabled) {
+                addButton.setAttribute('aria-disabled', 'true');
+            } else {
+                addButton.removeAttribute('aria-disabled');
+            }
         }
 
         function clearAll() {
             if (confirm('Are you sure you want to clear all relationships?')) {
+                // Save version before clearing
+                if (versionHistory && relationships.length > 0) {
+                    autoSaveVersion();
+                }
+
                 relationships = [];
                 trustScores = {};
                 renderVisualization();
                 updateNodeCount();
                 saveToLocalStorage();
+
+                // Announce to screen readers
+                if (window.a11yManager) {
+                    window.a11yManager.announce('All relationships cleared from map', 'assertive');
+                }
             }
         }
 
         function saveMap() {
             saveToLocalStorage();
-            alert('Map saved to browser storage!');
+            showSuccess('Map saved to browser storage');
+
+            // Announce to screen readers
+            if (window.a11yManager) {
+                window.a11yManager.announce('Map saved to browser storage', 'assertive');
+            }
         }
 
         function loadMap() {
-            if (loadFromLocalStorage()) {
-                alert('Map loaded successfully!');
+            const success = loadFromLocalStorage();
+            if (success) {
+                showSuccess('Map loaded successfully');
+
+                // Announce to screen readers
+                if (window.a11yManager) {
+                    window.a11yManager.announce('Map loaded successfully', 'assertive');
+                }
             } else {
-                alert('No saved map found');
+                showWarning('No saved map found');
             }
         }
 
@@ -804,28 +1385,48 @@
                     try {
                         const data = JSON.parse(e.target.result);
 
-                        // Validate the data structure
-                        if (data.relationships && data.trustScores) {
+                        // Validate and sanitize the imported data
+                        const sanitized = InputValidator.sanitizeImportedJSON(data);
+                        const validation = InputValidator.validateMapData(sanitized);
+
+                        if (validation.isValid && validation.data && validation.data.relationships.length > 0) {
                             // Confirm before overwriting
                             if (relationships.length > 0) {
                                 if (!confirm('This will replace your current map. Continue?')) {
                                     return;
                                 }
+                                // Save current state before importing
+                                if (versionHistory) {
+                                    autoSaveVersion();
+                                }
                             }
 
-                            relationships = data.relationships || [];
-                            trustScores = data.trustScores || {};
+                            relationships = validation.data.relationships;
+                            trustScores = validation.data.trustScores;
 
                             renderVisualization();
                             updateNodeCount();
                             saveToLocalStorage();
 
-                            alert('Map imported successfully!');
+                            // Create version for imported map
+                            if (versionHistory) {
+                                versionHistory.createVersion(
+                                    { relationships, trustScores },
+                                    'Imported from JSON file',
+                                    true
+                                );
+                            }
+
+                            showSuccess('Map imported successfully!');
                         } else {
-                            alert('Invalid file format. Please select a valid trust map JSON file.');
+                            const errorMsg = validation.errors.length > 0
+                                ? `Validation errors: ${validation.errors.join(', ')}`
+                                : 'Invalid file format. Please select a valid trust map JSON file.';
+                            showError(errorMsg);
                         }
                     } catch (error) {
-                        alert('Error reading file. Please ensure it\'s a valid JSON file.');
+                        console.error('Import error:', error);
+                        showError('Error reading file. Please ensure it\'s a valid JSON file.');
                     }
                 };
                 reader.readAsText(file);
@@ -881,23 +1482,37 @@
 
             for (let i = 0; i < dots.length; i++) {
                 dots[i].classList.remove('active');
+                dots[i].setAttribute('aria-selected', 'false');
             }
 
             slides[currentSlideIndex - 1].classList.add('active');
             dots[currentSlideIndex - 1].classList.add('active');
+            dots[currentSlideIndex - 1].setAttribute('aria-selected', 'true');
 
             // Update navigation buttons
-            document.getElementById('prevBtn').style.visibility = currentSlideIndex === 1 ? 'hidden' : 'visible';
-            document.getElementById('nextBtn').textContent = currentSlideIndex === slides.length ? 'Get Started' : 'Next';
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
 
-            if (currentSlideIndex === slides.length) {
-                document.getElementById('nextBtn').onclick = function() {
+            prevBtn.style.visibility = currentSlideIndex === 1 ? 'hidden' : 'visible';
+            prevBtn.setAttribute('aria-hidden', currentSlideIndex === 1 ? 'true' : 'false');
+
+            const isLastSlide = currentSlideIndex === slides.length;
+            nextBtn.textContent = isLastSlide ? 'Get Started' : 'Next';
+            nextBtn.setAttribute('aria-label', isLastSlide ? 'Get started with the application' : 'Next slide');
+
+            if (isLastSlide) {
+                nextBtn.onclick = function() {
                     closeWelcomeModal();
                 };
             } else {
-                document.getElementById('nextBtn').onclick = function() {
+                nextBtn.onclick = function() {
                     changeSlide(1);
                 };
+            }
+
+            // Announce slide change to screen readers
+            if (window.a11yManager) {
+                window.a11yManager.announce(`Slide ${currentSlideIndex} of ${slides.length}`, 'polite');
             }
         }
 
@@ -912,7 +1527,7 @@
 
         // Demo Mode Function
         function loadDemoData() {
-            // Confirm before loading demo
+            // Confirm before loading demo (keep confirm for this important action)
             if (relationships.length > 0) {
                 if (!confirm('This will replace your current map with sample data. Continue?')) {
                     return;
@@ -952,19 +1567,559 @@
             updateNodeCount();
             saveToLocalStorage();
 
+            // Create version for demo data
+            if (versionHistory) {
+                versionHistory.createVersion(
+                    { relationships, trustScores },
+                    'Loaded demo data with sample relationships',
+                    true
+                );
+            }
+
             // Show a tip
-            alert('Demo loaded! Click any arrow to see how trust scoring works. Notice the asymmetric patterns in some relationships.');
+            showInfo('Demo loaded! Click any arrow to see how trust scoring works. Notice the asymmetric patterns in some relationships.');
+        }
+
+        // Cloud Storage Functions
+        function updateConnectionStatus() {
+            const statusEl = document.getElementById('cloudStatus');
+            const statusText = document.getElementById('statusText');
+
+            if (navigator.onLine) {
+                statusEl.className = 'cloud-status online';
+                statusText.textContent = '☁️ Cloud sync enabled';
+            } else {
+                statusEl.className = 'cloud-status offline';
+                statusText.textContent = '💾 Offline mode';
+            }
+        }
+
+        async function saveToCloud() {
+            if (relationships.length === 0) {
+                showError('Add some relationships before saving to cloud');
+                return;
+            }
+
+            let mapName = prompt('Name your map:', 'Trust Map ' + new Date().toLocaleDateString());
+            if (!mapName) return;
+
+            // Validate and sanitize map name
+            const nameValidation = InputValidator.validateMapName(mapName);
+            if (!nameValidation.isValid) {
+                showError(nameValidation.error);
+                return;
+            }
+            mapName = nameValidation.sanitized;
+
+            const mapData = {
+                relationships: relationships,
+                trustScores: trustScores
+            };
+
+            const result = await cloudStorage.saveToCloud(mapData, mapName);
+
+            if (result.success) {
+                currentMapId = result.id;
+                if (result.shareCode) {
+                    showShareLink(result.shareCode, result.shareUrl);
+                }
+            }
+        }
+
+        async function loadSharedMap(shareCode) {
+            const result = await cloudStorage.loadFromCloud(shareCode);
+
+            if (result.success) {
+                relationships = result.data.relationships || [];
+                trustScores = result.data.trustScores || {};
+                renderVisualization();
+                updateNodeCount();
+
+                cloudStorage.showStatus(`Loaded shared map: ${result.data.mapName}`, 'success');
+            }
+        }
+
+        async function showMyMaps() {
+            const modal = document.getElementById('myMapsModal');
+            const mapsList = document.getElementById('mapsList');
+
+            modal.classList.add('show');
+            mapsList.innerHTML = '<p>Loading...</p>';
+
+            const result = await cloudStorage.getMyMaps();
+
+            if (result.success) {
+                if (result.maps.length === 0) {
+                    mapsList.innerHTML = '<p style="text-align: center; color: #666;">No saved maps yet.<br><br>Save your first map to the cloud!</p>';
+                } else {
+                    mapsList.innerHTML = result.maps.map(map => {
+                        // Sanitize map name for safe HTML display
+                        const safeName = InputValidator.htmlEncode(map.map_name);
+                        const safeShareCode = InputValidator.htmlEncode(map.share_code || '');
+                        const mapId = InputValidator.htmlEncode(map.id);
+
+                        return `
+                            <div style="padding: 15px; margin: 10px 0; background: #f5f5f5; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h4 style="margin: 0 0 5px 0; color: #2E4A8B;">${safeName}</h4>
+                                    <span style="font-size: 12px; color: #666;">Updated: ${new Date(map.updated_at).toLocaleString()}</span>
+                                    ${safeShareCode ? `<br><small style="font-family: monospace;">Share: ${safeShareCode}</small>` : ''}
+                                </div>
+                                <div style="display: flex; gap: 8px;">
+                                    <button style="padding: 5px 10px; font-size: 12px;" onclick="loadMapFromCloud('${mapId}')">Load</button>
+                                    ${safeShareCode ? `<button style="padding: 5px 10px; font-size: 12px;" onclick="getShareLink('${safeShareCode}')">Share</button>` : ''}
+                                    <button style="padding: 5px 10px; font-size: 12px; background: #f44336;" onclick="deleteCloudMap('${mapId}')">Delete</button>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            } else {
+                mapsList.innerHTML = '<p style="text-align: center; color: #f44336;">Failed to load maps. Check your connection.</p>';
+            }
+        }
+
+        function closeMyMapsModal() {
+            document.getElementById('myMapsModal').classList.remove('show');
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('show');
+        }
+
+        async function loadMapFromCloud(mapId) {
+            const result = await cloudStorage.loadFromCloud(mapId);
+
+            if (result.success) {
+                relationships = result.data.relationships || [];
+                trustScores = result.data.trustScores || {};
+                currentMapId = mapId;
+
+                renderVisualization();
+                updateNodeCount();
+                closeMyMapsModal();
+
+                cloudStorage.showStatus('Map loaded successfully', 'success');
+            }
+        }
+
+        async function deleteCloudMap(mapId) {
+            if (!confirm('Delete this map? This cannot be undone.')) return;
+
+            const result = await cloudStorage.deleteMap(mapId);
+            if (result.success) {
+                showMyMaps(); // Refresh the list
+            }
+        }
+
+        function shareMap() {
+            if (!currentMapId) {
+                showError('Please save your map to the cloud first');
+                return;
+            }
+
+            const refs = JSON.parse(localStorage.getItem('mapReferences') || '{}');
+            const ref = refs[currentMapId];
+
+            if (ref && ref.shareCode) {
+                const shareUrl = cloudStorage.getShareUrl(ref.shareCode);
+                showShareLink(ref.shareCode, shareUrl);
+            }
+        }
+
+        function showShareLink(shareCode, shareUrl) {
+            const modal = document.getElementById('shareModal');
+            const urlInput = document.getElementById('shareUrl');
+            const codeEl = document.getElementById('shareCode');
+
+            urlInput.value = shareUrl;
+            codeEl.textContent = shareCode;
+            modal.classList.add('show');
+        }
+
+        function copyShareLink() {
+            const urlInput = document.getElementById('shareUrl');
+            urlInput.select();
+            document.execCommand('copy');
+
+            showSuccess('Link copied to clipboard!');
+            setTimeout(() => closeShareModal(), 1500);
+        }
+
+        function getShareLink(shareCode) {
+            if (shareCode && shareCode !== 'null') {
+                const shareUrl = cloudStorage.getShareUrl(shareCode);
+                showShareLink(shareCode, shareUrl);
+                closeMyMapsModal();
+            }
+        }
+
+        // Add close modal on escape for new modals
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeMyMapsModal();
+                closeShareModal();
+                closeVersionHistoryModal();
+                closeVersionCompareModal();
+            }
+        });
+
+        // ============================================
+        // VERSION HISTORY FUNCTIONS
+        // ============================================
+
+        /**
+         * Show version history modal
+         */
+        function showVersionHistory() {
+            const modal = document.getElementById('versionHistoryModal');
+            modal.classList.add('show');
+
+            renderVersionHistory();
+        }
+
+        /**
+         * Close version history modal
+         */
+        function closeVersionHistoryModal() {
+            document.getElementById('versionHistoryModal').classList.remove('show');
+        }
+
+        /**
+         * Close version comparison modal
+         */
+        function closeVersionCompareModal() {
+            document.getElementById('versionCompareModal').classList.remove('show');
+        }
+
+        /**
+         * Render version history list and statistics
+         */
+        function renderVersionHistory() {
+            const stats = versionHistory.getStatistics();
+            const versions = versionHistory.getAllVersions();
+
+            // Render statistics
+            const statsEl = document.getElementById('versionStats');
+            statsEl.innerHTML = `
+                <h3 style="margin-bottom: 10px;">Statistics</h3>
+                <div class="version-stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">${stats.totalVersions}</div>
+                        <div class="stat-label">Total Versions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${stats.manualSaves}</div>
+                        <div class="stat-label">Manual Saves</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${stats.autoSaves}</div>
+                        <div class="stat-label">Auto Saves</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${versionHistory.getStorageSize()} KB</div>
+                        <div class="stat-label">Storage Used</div>
+                    </div>
+                </div>
+            `;
+
+            // Render version list
+            const listEl = document.getElementById('versionList');
+
+            if (versions.length === 0) {
+                listEl.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon" aria-hidden="true">📜</div>
+                        <p>No version history yet</p>
+                        <p style="font-size: 12px; margin-top: 10px;">Versions are created automatically when you make changes</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Get current version (latest)
+            const latestVersion = versions[versions.length - 1];
+
+            listEl.innerHTML = versions.reverse().map(version => {
+                const isCurrent = version.versionNumber === latestVersion.versionNumber;
+                const timestamp = VersionHistory.formatTimestamp(version.timestamp);
+
+                return `
+                    <div class="version-item ${isCurrent ? 'current' : ''}" data-version="${version.versionNumber}">
+                        <div class="version-header">
+                            <div>
+                                <span class="version-number">v${version.versionNumber}</span>
+                                ${version.isManual ? '<span class="manual-save-badge">Manual Save</span>' : ''}
+                                ${isCurrent ? '<span class="manual-save-badge" style="background: #00A8CC;">Current</span>' : ''}
+                            </div>
+                            <div class="version-timestamp">${timestamp}</div>
+                        </div>
+                        <div class="version-summary">${InputValidator.htmlEncode(version.changeSummary)}</div>
+                        <div style="font-size: 11px; color: #666; margin-top: 5px;">
+                            ${version.metadata.relationshipCount} relationship(s)
+                        </div>
+                        <div class="version-actions">
+                            ${!isCurrent ? `<button class="btn-restore" onclick="restoreVersion(${version.versionNumber})" aria-label="Restore version ${version.versionNumber}">Restore</button>` : ''}
+                            <button class="btn-compare" onclick="showVersionComparison(${version.versionNumber})" aria-label="Compare version ${version.versionNumber}">Compare</button>
+                            ${!isCurrent ? `<button class="btn-delete" onclick="deleteVersion(${version.versionNumber})" aria-label="Delete version ${version.versionNumber}">Delete</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        /**
+         * Create a manual version save
+         */
+        function createManualVersion() {
+            const summary = prompt('Enter a description for this version (optional):');
+            if (summary === null) return; // User cancelled
+
+            const mapData = {
+                relationships: relationships,
+                trustScores: trustScores
+            };
+
+            versionHistory.createVersion(mapData, summary || '', true);
+            renderVersionHistory();
+
+            if (window.a11yManager) {
+                window.a11yManager.announce('Version saved successfully', 'assertive');
+            }
+        }
+
+        /**
+         * Auto-save version on significant changes
+         */
+        function autoSaveVersion() {
+            if (relationships.length === 0) return; // Don't save empty maps
+
+            const mapData = {
+                relationships: relationships,
+                trustScores: trustScores
+            };
+
+            versionHistory.createVersion(mapData, '', false);
+        }
+
+        /**
+         * Restore a specific version
+         */
+        function restoreVersion(versionNumber) {
+            if (!confirm(`Restore to version ${versionNumber}? Current changes will be saved as a new version.`)) {
+                return;
+            }
+
+            // Save current state before restoring
+            autoSaveVersion();
+
+            // Restore the version
+            const restored = versionHistory.restoreVersion(versionNumber);
+            if (restored) {
+                relationships = restored.relationships;
+                trustScores = restored.trustScores;
+
+                renderVisualization();
+                updateNodeCount();
+                saveToLocalStorage();
+
+                closeVersionHistoryModal();
+
+                if (window.a11yManager) {
+                    window.a11yManager.announce(`Version ${versionNumber} restored`, 'assertive');
+                }
+
+                alert(`Version ${versionNumber} restored successfully!`);
+            } else {
+                alert('Failed to restore version');
+            }
+        }
+
+        /**
+         * Delete a specific version
+         */
+        function deleteVersion(versionNumber) {
+            if (!confirm(`Delete version ${versionNumber}? This cannot be undone.`)) {
+                return;
+            }
+
+            if (versionHistory.deleteVersion(versionNumber)) {
+                renderVersionHistory();
+
+                if (window.a11yManager) {
+                    window.a11yManager.announce(`Version ${versionNumber} deleted`, 'assertive');
+                }
+            } else {
+                alert('Failed to delete version');
+            }
+        }
+
+        /**
+         * Show version comparison modal
+         */
+        function showVersionComparison(defaultVersion) {
+            const modal = document.getElementById('versionCompareModal');
+            const versions = versionHistory.getAllVersions();
+
+            if (versions.length < 2) {
+                alert('Need at least 2 versions to compare');
+                return;
+            }
+
+            // Populate dropdowns
+            const v1Select = document.getElementById('compareV1');
+            const v2Select = document.getElementById('compareV2');
+
+            v1Select.innerHTML = versions.map(v =>
+                `<option value="${v.versionNumber}" ${v.versionNumber === defaultVersion ? 'selected' : ''}>
+                    v${v.versionNumber} - ${VersionHistory.formatTimestamp(v.timestamp)}
+                </option>`
+            ).join('');
+
+            v2Select.innerHTML = versions.map(v =>
+                `<option value="${v.versionNumber}" ${v.versionNumber === versions[versions.length - 1].versionNumber && defaultVersion !== v.versionNumber ? 'selected' : ''}>
+                    v${v.versionNumber} - ${VersionHistory.formatTimestamp(v.timestamp)}
+                </option>`
+            ).join('');
+
+            modal.classList.add('show');
+
+            // Auto-perform comparison
+            performComparison();
+        }
+
+        /**
+         * Perform version comparison
+         */
+        function performComparison() {
+            const v1 = parseInt(document.getElementById('compareV1').value);
+            const v2 = parseInt(document.getElementById('compareV2').value);
+
+            if (v1 === v2) {
+                document.getElementById('comparisonResult').innerHTML = '<p style="text-align: center; color: #666;">Please select two different versions to compare.</p>';
+                return;
+            }
+
+            const comparison = versionHistory.compareVersions(v1, v2);
+
+            if (comparison.error) {
+                document.getElementById('comparisonResult').innerHTML = `<p style="text-align: center; color: #f44336;">${comparison.error}</p>`;
+                return;
+            }
+
+            let html = `
+                <div class="comparison-view">
+                    <div class="comparison-header">
+                        <div class="comparison-version">
+                            <h3>Version ${comparison.version1.number}</h3>
+                            <p style="font-size: 12px; color: #666;">${VersionHistory.formatTimestamp(comparison.version1.timestamp)}</p>
+                            <p style="font-size: 12px; margin-top: 5px;">${comparison.version1.relationshipCount} relationships</p>
+                        </div>
+                        <div class="comparison-arrow">→</div>
+                        <div class="comparison-version">
+                            <h3>Version ${comparison.version2.number}</h3>
+                            <p style="font-size: 12px; color: #666;">${VersionHistory.formatTimestamp(comparison.version2.timestamp)}</p>
+                            <p style="font-size: 12px; margin-top: 5px;">${comparison.version2.relationshipCount} relationships</p>
+                        </div>
+                    </div>
+            `;
+
+            const diff = comparison.differences;
+
+            // Added relationships
+            if (diff.added.length > 0) {
+                html += `
+                    <div class="diff-section">
+                        <h4>Added Relationships (${diff.added.length})</h4>
+                        ${diff.added.map(name => `<div class="diff-item diff-added">+ ${InputValidator.htmlEncode(name)}</div>`).join('')}
+                    </div>
+                `;
+            }
+
+            // Removed relationships
+            if (diff.removed.length > 0) {
+                html += `
+                    <div class="diff-section">
+                        <h4>Removed Relationships (${diff.removed.length})</h4>
+                        ${diff.removed.map(name => `<div class="diff-item diff-removed">- ${InputValidator.htmlEncode(name)}</div>`).join('')}
+                    </div>
+                `;
+            }
+
+            // Modified trust scores
+            if (diff.modified.length > 0) {
+                html += `
+                    <div class="diff-section">
+                        <h4>Modified Trust Scores (${diff.modified.length})</h4>
+                        ${diff.modified.map(m => {
+                            const v1Out = m.v1.outward;
+                            const v1In = m.v1.inward;
+                            const v2Out = m.v2.outward;
+                            const v2In = m.v2.inward;
+
+                            return `
+                                <div class="diff-item diff-modified">
+                                    <strong>${InputValidator.htmlEncode(m.name)}</strong><br>
+                                    <span style="font-size: 11px;">
+                                        Outward: ${v1Out} → ${v2Out} | Inward: ${v1In} → ${v2In}
+                                    </span>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            }
+
+            if (diff.added.length === 0 && diff.removed.length === 0 && diff.modified.length === 0) {
+                html += '<p style="text-align: center; color: #666; padding: 20px;">No differences found between these versions.</p>';
+            }
+
+            html += '</div>';
+
+            document.getElementById('comparisonResult').innerHTML = html;
+        }
+
+        /**
+         * Export version history
+         */
+        function exportVersionHistory() {
+            const json = versionHistory.exportVersionHistory();
+            const blob = new Blob([json], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `version-history-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+
+            if (window.a11yManager) {
+                window.a11yManager.announce('Version history exported', 'assertive');
+            }
+        }
+
+        /**
+         * Clear all version history
+         */
+        function clearVersionHistory() {
+            if (!confirm('Clear all version history? This cannot be undone.')) {
+                return;
+            }
+
+            versionHistory.clearAllVersions();
+            renderVersionHistory();
+
+            if (window.a11yManager) {
+                window.a11yManager.announce('Version history cleared', 'assertive');
+            }
         }
     </script>
 
     <!-- Welcome Modal -->
-    <div id="welcomeModal" class="modal">
+    <div id="welcomeModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="welcome-modal-title">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeWelcomeModal()">&times;</span>
+            <button class="modal-close" onclick="closeWelcomeModal()" aria-label="Close welcome dialog">&times;</button>
             <div class="welcome-slides">
                 <!-- Slide 1: What -->
                 <div class="slide active">
-                    <h2>Welcome to ProActive True Valence Mapper</h2>
+                    <h2 id="welcome-modal-title">Welcome to ProActive True Valence Mapper</h2>
                     <p>A powerful visualization tool for understanding trust dynamics in your relationships.</p>
                     <br>
                     <h3>What is a Trust Valence Map?</h3>
@@ -1017,28 +2172,28 @@
                 </div>
             </div>
 
-            <div class="slide-nav">
-                <button id="prevBtn" onclick="changeSlide(-1)" style="visibility: hidden;">Previous</button>
-                <div class="slide-dots">
-                    <span class="dot active" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
+            <nav class="slide-nav" aria-label="Welcome slides navigation">
+                <button id="prevBtn" onclick="changeSlide(-1)" style="visibility: hidden;" aria-label="Previous slide">Previous</button>
+                <div class="slide-dots" role="tablist" aria-label="Slide indicators">
+                    <button class="dot active" onclick="currentSlide(1)" role="tab" aria-label="Slide 1 of 3" aria-selected="true"></button>
+                    <button class="dot" onclick="currentSlide(2)" role="tab" aria-label="Slide 2 of 3" aria-selected="false"></button>
+                    <button class="dot" onclick="currentSlide(3)" role="tab" aria-label="Slide 3 of 3" aria-selected="false"></button>
                 </div>
-                <button id="nextBtn" onclick="changeSlide(1)">Next</button>
-            </div>
+                <button id="nextBtn" onclick="changeSlide(1)" aria-label="Next slide">Next</button>
+            </nav>
 
             <div class="checkbox-container">
-                <input type="checkbox" id="dontShowAgain" onchange="updateWelcomePreference()">
-                <label for="dontShowAgain">Don't show this again</label>
+                <input type="checkbox" id="dontShowAgain" onchange="updateWelcomePreference()" aria-describedby="dont-show-label">
+                <label for="dontShowAgain" id="dont-show-label">Don't show this again</label>
             </div>
         </div>
     </div>
 
     <!-- Help Modal -->
-    <div id="helpModal" class="modal">
+    <div id="helpModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeHelpModal()">&times;</span>
-            <h2>Help & Documentation</h2>
+            <button class="modal-close" onclick="closeHelpModal()" aria-label="Close help dialog">&times;</button>
+            <h2 id="help-modal-title">Help & Documentation</h2>
 
             <h3>Quick Start Guide</h3>
             <ol style="line-height: 1.8; padding-left: 20px;">
@@ -1100,8 +2255,92 @@
         </div>
     </div>
 
-    <footer class="footer">
-        <p>&copy; 2024 ProActive ReSolutions Inc. All rights reserved.</p>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal share-modal" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeShareModal()" aria-label="Close share dialog">&times;</button>
+            <div class="share-link-container">
+                <h2 id="share-modal-title">Share Your Trust Map</h2>
+                <p>Anyone with this link can view your map:</p>
+                <div class="share-link">
+                    <label for="shareUrl" class="sr-only">Share link URL</label>
+                    <input type="text" id="shareUrl" readonly aria-label="Shareable link URL">
+                    <button class="copy-button" onclick="copyShareLink()" aria-label="Copy share link to clipboard">Copy Link</button>
+                </div>
+                <p style="font-size: 12px; color: #666; margin-top: 10px;">
+                    Share code: <code id="shareCode"></code>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Maps Modal -->
+    <div id="myMapsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="my-maps-modal-title">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeMyMapsModal()" aria-label="Close my maps dialog">&times;</button>
+            <h2 id="my-maps-modal-title">My Cloud Maps</h2>
+            <div id="mapsList" class="map-list" style="max-height: 400px; overflow-y: auto;" role="region" aria-live="polite" aria-busy="false">
+                <p>Loading maps...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Version History Modal -->
+    <div id="versionHistoryModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="version-history-title">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeVersionHistoryModal()" aria-label="Close version history dialog">&times;</button>
+            <h2 id="version-history-title">Version History</h2>
+
+            <!-- Statistics -->
+            <div id="versionStats" class="version-stats"></div>
+
+            <!-- Actions -->
+            <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                <button onclick="createManualVersion()" aria-label="Save current state as new version">
+                    <span aria-hidden="true">💾</span> Save Version
+                </button>
+                <button onclick="exportVersionHistory()" aria-label="Export version history">
+                    <span aria-hidden="true">📤</span> Export History
+                </button>
+                <button class="btn-delete" onclick="clearVersionHistory()" aria-label="Clear all version history">
+                    <span aria-hidden="true">🗑️</span> Clear All
+                </button>
+            </div>
+
+            <!-- Version List -->
+            <div id="versionList" class="version-list version-timeline" role="region" aria-live="polite">
+                <div class="empty-state">
+                    <div class="empty-state-icon" aria-hidden="true">📜</div>
+                    <p>No version history yet</p>
+                    <p style="font-size: 12px; margin-top: 10px;">Versions are created automatically when you make changes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Version Comparison Modal -->
+    <div id="versionCompareModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="version-compare-title">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeVersionCompareModal()" aria-label="Close version comparison dialog">&times;</button>
+            <h2 id="version-compare-title">Compare Versions</h2>
+
+            <div style="margin-bottom: 20px;">
+                <label for="compareV1">Version 1:</label>
+                <select id="compareV1" style="margin: 0 10px; padding: 5px;"></select>
+
+                <label for="compareV2">Version 2:</label>
+                <select id="compareV2" style="margin: 0 10px; padding: 5px;"></select>
+
+                <button onclick="performComparison()">Compare</button>
+            </div>
+
+            <div id="comparisonResult"></div>
+        </div>
+    </div>
+
+    <footer class="footer" role="contentinfo">
+        <p>&copy; 2024 ProActive ReSolutions Inc. All rights reserved. | <a href="privacy-policy.html" style="color: #00A8CC; text-decoration: underline;">Privacy Policy</a></p>
         <p class="footer-subtitle">Empowering relationships through trust visualization</p>
     </footer>
 </body>

@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProActive True Valence Mapper - Relationship Trust Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #00A8CC 0%, #2E4A8B 100%); /* ProActive cyan to navy blue */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            max-width: 1200px;
+            width: 100%;
+            padding: 30px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            max-width: 300px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2E4A8B; /* ProActive navy blue */
+            margin-bottom: 10px;
+            font-size: 2.2em;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 0;
+            font-size: 1.1em;
+        }
+
+        .controls {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #00A8CC; /* ProActive cyan */
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #2E4A8B; /* ProActive navy blue */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #1e3460; /* Darker navy on hover */
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .visualization-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        svg {
+            width: 100%;
+            height: 500px;
+        }
+
+        .node-circle {
+            fill: #fff;
+            stroke: #667eea;
+            stroke-width: 2;
+            cursor: pointer;
+            transition: fill 0.3s;
+        }
+
+        .node-circle:hover {
+            fill: #f0f4ff;
+        }
+
+        .center-node {
+            fill: #667eea;
+            stroke: #5563d1;
+            stroke-width: 3;
+        }
+
+        .node-text {
+            font-size: 12px;
+            text-anchor: middle;
+            pointer-events: none;
+            fill: #333;
+        }
+
+        .center-text {
+            fill: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .arrow-path {
+            fill: none;
+            stroke-width: 2.5;
+            cursor: pointer;
+            transition: stroke-width 0.3s;
+            opacity: 0.9;
+        }
+
+        .arrow-path:hover {
+            stroke-width: 3.5;
+            opacity: 1;
+        }
+
+        .arrow-marker {
+            transition: fill 0.3s;
+        }
+
+        /* Trust score colors */
+        .score-1 { stroke: #22c55e; fill: #22c55e; }
+        .score-2 { stroke: #eab308; fill: #eab308; }
+        .score-3 { stroke: #ef4444; fill: #ef4444; }
+        .score-0 { stroke: #d1d5db; fill: #d1d5db; }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 3px;
+        }
+
+        .info-panel {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fef3c7;
+            border-radius: 10px;
+            border: 1px solid #fcd34d;
+        }
+
+        .info-panel h3 {
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+
+        .info-panel p {
+            color: #78350f;
+            line-height: 1.6;
+        }
+
+        .node-count {
+            text-align: center;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: white;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .footer-subtitle {
+            font-style: italic;
+            opacity: 0.9;
+            font-size: 13px !important;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal h2 {
+            color: #2E4A8B;
+            margin-bottom: 20px;
+        }
+
+        .modal h3 {
+            color: #2E4A8B;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .help-button {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2E4A8B;
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .help-button:hover {
+            background: #1e3460;
+            transform: scale(1.1);
+        }
+
+        .demo-button {
+            background: #8BC34A;
+            color: white;
+        }
+
+        .demo-button:hover {
+            background: #7CB342;
+        }
+
+        .welcome-slides {
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .slide-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #d0d0d0;
+            transition: background 0.3s;
+        }
+
+        .dot.active {
+            background: #2E4A8B;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #00A8CC;
+        }
+
+        .feature-card h4 {
+            color: #2E4A8B;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .control-group {
+                flex-direction: column;
+            }
+
+            input[type="text"], button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="help-button" onclick="showHelpModal()" title="Help">?</button>
+        <div class="header">
+            <img src="background-assets/ProActive-ReSolutions-full-logo.png" alt="ProActive ReSolutions" class="logo">
+            <h1>ProActive True Valence Mapper</h1>
+            <p class="subtitle">Visualize trust flow in your relationships</p>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <input type="text" id="personName" placeholder="Enter person's name" maxlength="20">
+                <button id="addPerson" onclick="addPerson()">Add Person</button>
+            </div>
+            <div class="control-group">
+                <button id="clearAll" onclick="clearAll()">Clear All</button>
+                <button id="saveMap" onclick="saveMap()">Save Map</button>
+                <button id="loadMap" onclick="loadMap()">Load Map</button>
+            </div>
+            <div class="control-group">
+                <button onclick="exportToJSON()">Export JSON</button>
+                <button onclick="importJSON()">Import JSON</button>
+                <button class="demo-button" onclick="loadDemoData()">Load Example</button>
+            </div>
+        </div>
+
+        <div class="node-count" id="nodeCount">Relationships: 0 / 8</div>
+
+        <div class="visualization-container">
+            <svg id="trustMap" viewBox="0 0 600 500">
+                <!-- Define arrow markers -->
+                <defs>
+                    <marker id="arrow-1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                        <path d="M0,0 L0,6 L9,3 z" class="arrow-marker score-1" />
+                    </marker>
+                    <marker id="arrow-2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                        <path d="M0,0 L0,6 L9,3 z" class="arrow-marker score-2" />
+                    </marker>
+                    <marker id="arrow-3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                        <path d="M0,0 L0,6 L9,3 z" class="arrow-marker score-3" />
+                    </marker>
+                    <marker id="arrow-0" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                        <path d="M0,0 L0,6 L9,3 z" class="arrow-marker score-0" />
+                    </marker>
+                </defs>
+
+                <!-- Arrows group -->
+                <g id="arrows"></g>
+
+                <!-- Nodes group -->
+                <g id="nodes">
+                    <!-- Center node (You) -->
+                    <circle cx="300" cy="250" r="40" class="node-circle center-node" />
+                    <text x="300" y="255" class="node-text center-text">You</text>
+                </g>
+            </svg>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #22c55e;"></div>
+                <span>High Trust (1)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #eab308;"></div>
+                <span>Medium Trust (2)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ef4444;"></div>
+                <span>Low/No Trust (3)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #d1d5db;"></div>
+                <span>Not Scored</span>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <h3>How to Use</h3>
+            <p>
+                <strong>1. Add People:</strong> Enter names of up to 8 people in your relationship network.<br>
+                <strong>2. Score Trust:</strong> Click the arrows to score trust levels (1-3):<br>
+                &nbsp;&nbsp;• Outward arrow: "How confident am I that I'd go to them with a problem?"<br>
+                &nbsp;&nbsp;• Inward arrow: "How confident am I that they'd come to me with a problem?"<br>
+                <strong>3. See Patterns:</strong> Green shows high trust, yellow shows medium, red shows low/no trust.<br>
+                <strong>4. Save Your Map:</strong> Use Save/Load to keep your progress.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let relationships = [];
+        let trustScores = {};
+        const MAX_NODES = 8;
+        const CENTER_X = 300;
+        const CENTER_Y = 250;
+        const RADIUS = 150;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if first visit
+            if (!localStorage.getItem('hideWelcome')) {
+                showWelcomeModal();
+            }
+
+            // Try to load saved map
+            loadFromLocalStorage();
+            updateNodeCount();
+
+            // Add enter key support
+            document.getElementById('personName').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addPerson();
+                }
+            });
+
+            // Add keyboard shortcut for help
+            document.addEventListener('keypress', function(e) {
+                if (e.key === '?') {
+                    showHelpModal();
+                }
+            });
+
+            // Add escape key to close modals
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllModals();
+                }
+            });
+        });
+
+        function addPerson() {
+            const input = document.getElementById('personName');
+            const name = input.value.trim();
+
+            if (!name) {
+                alert('Please enter a name');
+                return;
+            }
+
+            if (relationships.length >= MAX_NODES) {
+                alert(`Maximum ${MAX_NODES} relationships allowed`);
+                return;
+            }
+
+            if (relationships.find(r => r.name.toLowerCase() === name.toLowerCase())) {
+                alert('This person already exists');
+                return;
+            }
+
+            // Add the person
+            const person = {
+                id: Date.now(),
+                name: name
+            };
+            relationships.push(person);
+
+            // Initialize trust scores
+            trustScores[person.id] = {
+                outward: 0, // You -> Them
+                inward: 0   // Them -> You
+            };
+
+            // Clear input
+            input.value = '';
+
+            // Update visualization
+            renderVisualization();
+            updateNodeCount();
+            saveToLocalStorage();
+        }
+
+        function renderVisualization() {
+            const arrowsGroup = document.getElementById('arrows');
+            const nodesGroup = document.getElementById('nodes');
+
+            // Clear existing nodes (except center)
+            const existingNodes = nodesGroup.querySelectorAll('.relationship-node');
+            existingNodes.forEach(node => node.remove());
+
+            // Clear existing arrows
+            arrowsGroup.innerHTML = '';
+
+            // Calculate positions for each node
+            relationships.forEach((person, index) => {
+                const angle = (index * 2 * Math.PI) / relationships.length - Math.PI / 2;
+                const x = CENTER_X + RADIUS * Math.cos(angle);
+                const y = CENTER_Y + RADIUS * Math.sin(angle);
+
+                // Create arrows (two per relationship)
+                createArrows(person, x, y);
+
+                // Create node
+                createNode(person, x, y);
+            });
+        }
+
+        function createArrows(person, x, y) {
+            const arrowsGroup = document.getElementById('arrows');
+
+            // Calculate direction vector
+            const dx = x - CENTER_X;
+            const dy = y - CENTER_Y;
+            const length = Math.sqrt(dx * dx + dy * dy);
+
+            // Normalize the direction vector
+            const normalX = dx / length;
+            const normalY = dy / length;
+
+            // Calculate perpendicular vector for parallel offset
+            const perpX = -normalY * 8;  // 8 pixels offset perpendicular to the line
+            const perpY = normalX * 8;   // This creates parallel arrows
+
+            // Start and end points for arrows (adjusted to not overlap at nodes)
+            const startRadius = 45;  // Start 45px from center (just outside center node)
+            const endRadius = 35;    // End 35px from target (just outside target node)
+
+            // Base positions along the main axis
+            const baseStartX = CENTER_X + normalX * startRadius;
+            const baseStartY = CENTER_Y + normalY * startRadius;
+            const baseEndX = CENTER_X + normalX * (length - endRadius);
+            const baseEndY = CENTER_Y + normalY * (length - endRadius);
+
+            // Outward arrow (You -> Them) - offset to one side
+            const outwardScore = trustScores[person.id].outward;
+            const outwardPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            const outwardStartX = baseStartX - perpX;
+            const outwardStartY = baseStartY - perpY;
+            const outwardEndX = baseEndX - perpX;
+            const outwardEndY = baseEndY - perpY;
+            const outwardD = `M ${outwardStartX} ${outwardStartY} L ${outwardEndX} ${outwardEndY}`;
+            outwardPath.setAttribute('d', outwardD);
+            outwardPath.setAttribute('class', `arrow-path score-${outwardScore}`);
+            outwardPath.setAttribute('marker-end', `url(#arrow-${outwardScore})`);
+            outwardPath.setAttribute('data-person', person.id);
+            outwardPath.setAttribute('data-direction', 'outward');
+            outwardPath.onclick = () => cycleScore(person.id, 'outward');
+
+            // Inward arrow (Them -> You) - offset to the other side
+            const inwardScore = trustScores[person.id].inward;
+            const inwardPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            const inwardStartX = baseStartX + perpX;
+            const inwardStartY = baseStartY + perpY;
+            const inwardEndX = baseEndX + perpX;
+            const inwardEndY = baseEndY + perpY;
+            const inwardD = `M ${inwardEndX} ${inwardEndY} L ${inwardStartX} ${inwardStartY}`;
+            inwardPath.setAttribute('d', inwardD);
+            inwardPath.setAttribute('class', `arrow-path score-${inwardScore}`);
+            inwardPath.setAttribute('marker-end', `url(#arrow-${inwardScore})`);
+            inwardPath.setAttribute('data-person', person.id);
+            inwardPath.setAttribute('data-direction', 'inward');
+            inwardPath.onclick = () => cycleScore(person.id, 'inward');
+
+            arrowsGroup.appendChild(outwardPath);
+            arrowsGroup.appendChild(inwardPath);
+        }
+
+        function createNode(person, x, y) {
+            const nodesGroup = document.getElementById('nodes');
+
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            g.setAttribute('class', 'relationship-node');
+
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', x);
+            circle.setAttribute('cy', y);
+            circle.setAttribute('r', 30);
+            circle.setAttribute('class', 'node-circle');
+
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', x);
+            text.setAttribute('y', y + 5);
+            text.setAttribute('class', 'node-text');
+            text.textContent = person.name;
+
+            g.appendChild(circle);
+            g.appendChild(text);
+            nodesGroup.appendChild(g);
+        }
+
+        function cycleScore(personId, direction) {
+            // Cycle through scores: 0 -> 1 -> 2 -> 3 -> 0
+            const currentScore = trustScores[personId][direction];
+            trustScores[personId][direction] = (currentScore + 1) % 4;
+
+            // Re-render to update colors
+            renderVisualization();
+            saveToLocalStorage();
+        }
+
+        function updateNodeCount() {
+            document.getElementById('nodeCount').textContent = `Relationships: ${relationships.length} / ${MAX_NODES}`;
+            document.getElementById('addPerson').disabled = relationships.length >= MAX_NODES;
+        }
+
+        function clearAll() {
+            if (confirm('Are you sure you want to clear all relationships?')) {
+                relationships = [];
+                trustScores = {};
+                renderVisualization();
+                updateNodeCount();
+                saveToLocalStorage();
+            }
+        }
+
+        function saveMap() {
+            saveToLocalStorage();
+            alert('Map saved to browser storage!');
+        }
+
+        function loadMap() {
+            if (loadFromLocalStorage()) {
+                alert('Map loaded successfully!');
+            } else {
+                alert('No saved map found');
+            }
+        }
+
+        function saveToLocalStorage() {
+            const data = {
+                relationships: relationships,
+                trustScores: trustScores,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('trustValenceMap', JSON.stringify(data));
+        }
+
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('trustValenceMap');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    relationships = data.relationships || [];
+                    trustScores = data.trustScores || {};
+                    renderVisualization();
+                    updateNodeCount();
+                    return true;
+                } catch (e) {
+                    console.error('Error loading saved map:', e);
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        // Export/Import Functions
+        function exportToJSON() {
+            const data = {
+                version: "1.0",
+                appName: "ProActive True Valence Mapper",
+                relationships: relationships,
+                trustScores: trustScores,
+                exportDate: new Date().toISOString()
+            };
+
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `trust-map-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+        }
+
+        function importJSON() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+
+            input.onchange = function(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+
+                        // Validate the data structure
+                        if (data.relationships && data.trustScores) {
+                            // Confirm before overwriting
+                            if (relationships.length > 0) {
+                                if (!confirm('This will replace your current map. Continue?')) {
+                                    return;
+                                }
+                            }
+
+                            relationships = data.relationships || [];
+                            trustScores = data.trustScores || {};
+
+                            renderVisualization();
+                            updateNodeCount();
+                            saveToLocalStorage();
+
+                            alert('Map imported successfully!');
+                        } else {
+                            alert('Invalid file format. Please select a valid trust map JSON file.');
+                        }
+                    } catch (error) {
+                        alert('Error reading file. Please ensure it\'s a valid JSON file.');
+                    }
+                };
+                reader.readAsText(file);
+            };
+
+            input.click();
+        }
+
+        // Modal Functions
+        let currentSlideIndex = 1;
+
+        function showWelcomeModal() {
+            document.getElementById('welcomeModal').classList.add('show');
+            currentSlideIndex = 1;
+            showSlide(currentSlideIndex);
+        }
+
+        function closeWelcomeModal() {
+            document.getElementById('welcomeModal').classList.remove('show');
+        }
+
+        function showHelpModal() {
+            document.getElementById('helpModal').classList.add('show');
+        }
+
+        function closeHelpModal() {
+            document.getElementById('helpModal').classList.remove('show');
+        }
+
+        function closeAllModals() {
+            closeWelcomeModal();
+            closeHelpModal();
+        }
+
+        function changeSlide(n) {
+            showSlide(currentSlideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlide(currentSlideIndex = n);
+        }
+
+        function showSlide(n) {
+            const slides = document.getElementsByClassName('slide');
+            const dots = document.getElementsByClassName('dot');
+
+            if (n > slides.length) currentSlideIndex = 1;
+            if (n < 1) currentSlideIndex = slides.length;
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('active');
+            }
+
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].classList.remove('active');
+            }
+
+            slides[currentSlideIndex - 1].classList.add('active');
+            dots[currentSlideIndex - 1].classList.add('active');
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').style.visibility = currentSlideIndex === 1 ? 'hidden' : 'visible';
+            document.getElementById('nextBtn').textContent = currentSlideIndex === slides.length ? 'Get Started' : 'Next';
+
+            if (currentSlideIndex === slides.length) {
+                document.getElementById('nextBtn').onclick = function() {
+                    closeWelcomeModal();
+                };
+            } else {
+                document.getElementById('nextBtn').onclick = function() {
+                    changeSlide(1);
+                };
+            }
+        }
+
+        function updateWelcomePreference() {
+            const checkbox = document.getElementById('dontShowAgain');
+            if (checkbox.checked) {
+                localStorage.setItem('hideWelcome', 'true');
+            } else {
+                localStorage.removeItem('hideWelcome');
+            }
+        }
+
+        // Demo Mode Function
+        function loadDemoData() {
+            // Confirm before loading demo
+            if (relationships.length > 0) {
+                if (!confirm('This will replace your current map with sample data. Continue?')) {
+                    return;
+                }
+            }
+
+            // Clear existing
+            relationships = [];
+            trustScores = {};
+
+            // Add demo relationships
+            const demoNames = ['Sarah (Partner)', 'Mom', 'Best Friend Alex', 'Boss Jennifer', 'Brother Mike', 'Therapist Dr. Lee'];
+
+            demoNames.forEach(name => {
+                const person = {
+                    id: Date.now() + Math.random(),
+                    name: name
+                };
+                relationships.push(person);
+
+                // Set demo trust scores
+                trustScores[person.id] = {
+                    outward: 0,
+                    inward: 0
+                };
+            });
+
+            // Set specific demo scores to show patterns
+            if (relationships[0]) trustScores[relationships[0].id] = { outward: 1, inward: 1 }; // Partner - high both ways
+            if (relationships[1]) trustScores[relationships[1].id] = { outward: 1, inward: 2 }; // Mom - asymmetric
+            if (relationships[2]) trustScores[relationships[2].id] = { outward: 1, inward: 1 }; // Best Friend - high both
+            if (relationships[3]) trustScores[relationships[3].id] = { outward: 2, inward: 3 }; // Boss - professional distance
+            if (relationships[4]) trustScores[relationships[4].id] = { outward: 2, inward: 2 }; // Brother - medium both
+            if (relationships[5]) trustScores[relationships[5].id] = { outward: 1, inward: 3 }; // Therapist - one-way professional
+
+            renderVisualization();
+            updateNodeCount();
+            saveToLocalStorage();
+
+            // Show a tip
+            alert('Demo loaded! Click any arrow to see how trust scoring works. Notice the asymmetric patterns in some relationships.');
+        }
+    </script>
+
+    <!-- Welcome Modal -->
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeWelcomeModal()">&times;</span>
+            <div class="welcome-slides">
+                <!-- Slide 1: What -->
+                <div class="slide active">
+                    <h2>Welcome to ProActive True Valence Mapper</h2>
+                    <p>A powerful visualization tool for understanding trust dynamics in your relationships.</p>
+                    <br>
+                    <h3>What is a Trust Valence Map?</h3>
+                    <p>It's a visual representation showing bidirectional trust flow between you and the people in your life. Each relationship has two arrows:</p>
+                    <ul style="margin: 15px 0; padding-left: 20px;">
+                        <li><strong>Outward Arrow (Solid):</strong> Your confidence in going to them with problems</li>
+                        <li><strong>Inward Arrow (Dashed):</strong> Your perception of their willingness to come to you</li>
+                    </ul>
+                </div>
+
+                <!-- Slide 2: Why -->
+                <div class="slide">
+                    <h2>Why Map Trust Flow?</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>Identify Patterns</h4>
+                            <p>See imbalances in your relationships at a glance</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Track Progress</h4>
+                            <p>Monitor how trust evolves over time</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Facilitate Conversations</h4>
+                            <p>Use visual aids to discuss trust with coaches or therapists</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>Build Awareness</h4>
+                            <p>Understand where to invest emotional energy</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: How -->
+                <div class="slide">
+                    <h2>How to Use This Tool</h2>
+                    <ol style="line-height: 1.8; padding-left: 20px;">
+                        <li><strong>Add People:</strong> Enter up to 8 names from your relationship network</li>
+                        <li><strong>Score Trust:</strong> Click arrows to cycle through trust levels:
+                            <ul style="margin: 10px 0;">
+                                <li>🟢 Green = High Trust (Score 1)</li>
+                                <li>🟡 Yellow = Medium Trust (Score 2)</li>
+                                <li>🔴 Red = Low/No Trust (Score 3)</li>
+                                <li>⚪ Gray = Not Yet Scored</li>
+                            </ul>
+                        </li>
+                        <li><strong>Save Your Work:</strong> Use Export JSON to backup or Import to restore</li>
+                        <li><strong>Try Demo:</strong> Click "Load Example" to see a sample map</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="slide-nav">
+                <button id="prevBtn" onclick="changeSlide(-1)" style="visibility: hidden;">Previous</button>
+                <div class="slide-dots">
+                    <span class="dot active" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+                <button id="nextBtn" onclick="changeSlide(1)">Next</button>
+            </div>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="dontShowAgain" onchange="updateWelcomePreference()">
+                <label for="dontShowAgain">Don't show this again</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeHelpModal()">&times;</span>
+            <h2>Help & Documentation</h2>
+
+            <h3>Quick Start Guide</h3>
+            <ol style="line-height: 1.8; padding-left: 20px;">
+                <li>Add people by typing their name and clicking "Add Person"</li>
+                <li>Click the arrows connecting "You" to each person</li>
+                <li>Each click cycles the trust score (Gray → Green → Yellow → Red → Gray)</li>
+                <li>Save your map locally or export as JSON for backup</li>
+            </ol>
+
+            <h3>For Coaches & Facilitators</h3>
+            <p><strong>Suggested Questions to Ask Clients:</strong></p>
+            <ul style="margin: 15px 0; padding-left: 20px;">
+                <li>"Who would you turn to first if you had a problem?"</li>
+                <li>"Who do you think would come to you with their challenges?"</li>
+                <li>"Where do you see asymmetry in these relationships?"</li>
+                <li>"What would need to change to strengthen these connections?"</li>
+            </ul>
+
+            <h3>Privacy & Data Security</h3>
+            <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                <p><strong>🔒 Your data is private and secure:</strong></p>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>All data stored locally in your browser</li>
+                    <li>No account or login required</li>
+                    <li>Export creates offline backup files</li>
+                    <li>You control who sees your maps</li>
+                </ul>
+            </div>
+
+            <h3>Keyboard Shortcuts</h3>
+            <ul style="padding-left: 20px;">
+                <li><kbd>Enter</kbd> - Add person (when typing name)</li>
+                <li><kbd>?</kbd> - Open this help menu</li>
+                <li><kbd>Esc</kbd> - Close modals</li>
+            </ul>
+
+            <h3>Features</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Save/Load</h4>
+                    <p>Stores in browser memory</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Export/Import</h4>
+                    <p>JSON backup files</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Demo Mode</h4>
+                    <p>Try with sample data</p>
+                </div>
+                <div class="feature-card">
+                    <h4>8 Relationships</h4>
+                    <p>Optimal for clarity</p>
+                </div>
+            </div>
+
+            <h3>About ProActive ReSolutions</h3>
+            <p>ProActive ReSolutions Inc. specializes in relationship coaching and team dynamics visualization tools. This mapper helps individuals and organizations understand trust patterns for improved communication and collaboration.</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 ProActive ReSolutions Inc. All rights reserved.</p>
+        <p class="footer-subtitle">Empowering relationships through trust visualization</p>
+    </footer>
+</body>
+</html>

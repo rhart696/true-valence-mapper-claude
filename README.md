@@ -73,12 +73,79 @@ python3 -m http.server 8000
 - Alternative to red/green for colorblind users (coming in v2)
 - Screen reader friendly labels
 
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on:
+- Development workflow (GitHub Flow)
+- Coding standards
+- Security requirements
+- Testing procedures
+- How to submit pull requests
+
+**Quick Start for Contributors:**
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Make your changes
+4. Test thoroughly (especially security!)
+5. Submit a pull request
+
+## Security
+
+Security is a top priority. This application implements:
+- Comprehensive XSS protection
+- Input validation and sanitization
+- Row Level Security (RLS) with Supabase
+- SQL injection prevention
+- Secure data handling
+
+**Reporting Security Issues:** Please see our [Security Policy](.github/SECURITY.md) for responsible disclosure procedures. Do not open public issues for security vulnerabilities.
+
+**Security Documentation:** Detailed security implementation docs are available in [docs/security/](docs/security/).
+
 ## License
-MIT
+
+This project is licensed under the [MIT License](LICENSE).
+
+Copyright (c) 2025 True Value Mapper Contributors
+
+## Development Workflow
+
+We use **GitHub Flow**:
+1. Create feature branch from `main`
+2. Make changes and commit
+3. Open pull request
+4. Pass security checks and review
+5. Merge to `main` (auto-deploys via GitHub Actions)
+
+**Branch Protection:** The `main` branch requires:
+- Pull request reviews
+- Passing status checks (security audit, HTML validation)
+- Up-to-date branches before merge
+
+## Project Structure
+
+```
+true-value-mapper/
+├── index.html                    # Main application
+├── styles.css                    # Core styles
+├── cloud-storage.js              # Supabase integration
+├── input-validation.js           # Security validation
+├── toast-notifications.js        # User notifications
+├── version-history.js            # Version control
+├── accessibility-improvements.js # A11y features
+├── .github/                      # GitHub templates & workflows
+├── docs/                         # Documentation
+│   ├── security/                # Security documentation
+│   ├── implementation/          # Feature guides
+│   ├── planning/                # Architecture & planning
+│   └── reports/                 # Status reports
+└── LICENSE                       # MIT license
+```
 
 ## Created By
 Built in 7 days as part of the "ship, don't infrastructure" challenge.
 
 ---
-*Version 1.0 - Front-end MVP*
+*Version 1.0 - Production*
 *Ship Date: November 9, 2025* ✅
+*Repository configured: January 2025*

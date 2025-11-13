@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toast Notification System - Demo</title>
+    <link rel="stylesheet" href="toast-notifications.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #00A8CC 0%, #2E4A8B 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #2E4A8B;
+            margin-top: 0;
+            text-align: center;
+        }
+        .demo-section {
+            margin: 30px 0;
+        }
+        .demo-section h2 {
+            color: #2E4A8B;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+        .btn-success {
+            background: #4CAF50;
+        }
+        .btn-success:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+        }
+        .btn-error {
+            background: #f44336;
+        }
+        .btn-error:hover {
+            background: #da190b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+        }
+        .btn-info {
+            background: #2196F3;
+        }
+        .btn-info:hover {
+            background: #0b7dda;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+        }
+        .btn-warning {
+            background: #ff9800;
+        }
+        .btn-warning:hover {
+            background: #e68900;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+        }
+        .info-box {
+            background: #f0f4ff;
+            border: 1px solid #00A8CC;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .keyboard-tips {
+            background: #fef3c7;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+        .keyboard-tips strong {
+            color: #e68900;
+        }
+        .code-sample {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Toast Notification System Demo</h1>
+        
+        <div class="demo-section">
+            <h2>Basic Toasts</h2>
+            <div class="button-group">
+                <button class="btn-success" onclick="showSuccess('Operation completed successfully!')">Success</button>
+                <button class="btn-error" onclick="showError('Something went wrong. Please try again.')">Error</button>
+                <button class="btn-info" onclick="showInfo('Here is some helpful information.')">Info</button>
+                <button class="btn-warning" onclick="showWarning('Please be careful with this action.')">Warning</button>
+            </div>
+            <div class="info-box">
+                Click any button above to see a toast notification appear in the top-right corner. The toast will automatically dismiss after 3 seconds, or you can click the X button or press Escape to dismiss it manually.
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Custom Durations</h2>
+            <div class="button-group">
+                <button class="btn-success" onclick="showSuccess('This will dismiss in 1 second', 1000)">1 Second</button>
+                <button class="btn-info" onclick="showToast('This will dismiss in 5 seconds', 'info', 5000)">5 Seconds</button>
+                <button class="btn-warning" onclick="showToast('Click X or press Escape to dismiss', 'warning', 0)">Manual Only</button>
+            </div>
+            <div class="code-sample">showSuccess('Message', 1000);   // Custom duration<br/>
+showToast('Message', 'info', 0); // Manual dismiss only</div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Multiple Toasts</h2>
+            <div class="button-group">
+                <button class="btn-success" onclick="
+                    showSuccess('First notification');
+                    setTimeout(() => showInfo('Second notification'), 300);
+                    setTimeout(() => showWarning('Third notification'), 600);
+                ">Stack 3</button>
+                <button class="btn-info" onclick="
+                    for(let i = 1; i <= 5; i++) {
+                        setTimeout(() => showToast('Notification ' + i, 'info'), i * 200);
+                    }
+                ">Stack 5</button>
+                <button class="btn-error" onclick="clearAllToasts()">Clear All</button>
+            </div>
+            <div class="info-box">
+                The system supports up to 5 visible toasts at once. Additional notifications are queued and appear as others dismiss. Try stacking multiple notifications to see how they're managed.
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Real-World Examples</h2>
+            <div class="button-group">
+                <button class="btn-success" onclick="showSuccess('Map saved to browser storage')">Save Map</button>
+                <button class="btn-error" onclick="showError('Maximum 8 relationships allowed')">Validation</button>
+                <button class="btn-info" onclick="showInfo('Map loaded from cloud')">Load Cloud</button>
+                <button class="btn-success" onclick="showSuccess('Link copied to clipboard!')">Copy Link</button>
+            </div>
+        </div>
+
+        <div class="keyboard-tips">
+            <strong>Keyboard Shortcuts:</strong>
+            <br>• <kbd>Tab</kbd> - Navigate between close buttons
+            <br>• <kbd>Escape</kbd> - Dismiss the most recent toast
+            <br>• <kbd>Enter</kbd> or <kbd>Space</kbd> - Activate close button
+        </div>
+
+        <div class="info-box" style="margin-top: 20px; background: #e8f5e9; border-color: #4CAF50; color: #2d5f2d;">
+            <strong>Accessibility Features:</strong><br>
+            ✓ Screen reader support (ARIA live regions)<br>
+            ✓ Full keyboard navigation<br>
+            ✓ High contrast mode support<br>
+            ✓ Reduced motion support<br>
+            ✓ Color + icons for type indication<br>
+            ✓ Mobile responsive design
+        </div>
+    </div>
+
+    <script src="toast-notifications.js"></script>
+    <script>
+        // Initialize toast manager
+        initToastManager({ duration: 3000 });
+
+        // Log when page loads
+        window.addEventListener('load', () => {
+            console.log('Toast Demo Ready!');
+            console.log('Try these in console:');
+            console.log('  showSuccess("Test")');
+            console.log('  showError("Test")');
+            console.log('  showInfo("Test")');
+            console.log('  showWarning("Test")');
+        });
+    </script>
+</body>
+</html>
