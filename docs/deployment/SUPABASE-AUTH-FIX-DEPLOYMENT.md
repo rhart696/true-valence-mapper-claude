@@ -65,7 +65,7 @@ USING (
 # 4. Paste and click "Run"
 
 # Option B: Via Supabase CLI
-cd /home/ichardart/dev/projects/true-value-mapper
+cd /home/ichardart/dev/projects/true-valence-mapper
 supabase db push --file supabase-auth-fixed-rls-policies.sql
 ```
 

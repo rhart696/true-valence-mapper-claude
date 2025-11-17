@@ -1,4 +1,4 @@
-# True Value Mapper - Complexity Budget
+# True Valence Mapper - Complexity Budget
 ## (Relationship Trust Mapper - Front-End MVP Only)
 
 ## Project Overview

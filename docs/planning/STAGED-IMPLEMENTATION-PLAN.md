@@ -1,4 +1,4 @@
-# Staged Implementation Plan: True Value Mapper
+# Staged Implementation Plan: True Valence Mapper
 ## From Simple Visualization to Full Coaching Platform
 
 ### Overview
@@ -116,7 +116,7 @@ Each stage:
 ---
 
 ## The Meta-Value
-By staging this way, we're literally using the "true value mapper" principle:
+By staging this way, we're literally using the "true valence mapper" principle:
 - High value/low complexity first
 - Ship to learn
 - Iterate based on real use

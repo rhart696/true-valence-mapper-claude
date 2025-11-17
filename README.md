@@ -1,9 +1,12 @@
-# Trust Valence Mapper
+# True Valence Relationship Mapper (Claude Code Edition)
 
-A visual tool for mapping trust flow in relationship networks. Perfect for coaching sessions, self-reflection, and understanding relationship dynamics.
+**Short name:** True Valence Mapper  
+**Edition owner:** Claude Code agent implementation
+
+A visual tool for mapping trust flow in relationship networks. Perfect for coaching sessions, self-reflection, and understanding relationship dynamics. This repository houses the Claude Code-led build; additional orchestrator-led versions live in their own repositories as part of the multi-agent family.
 
 ## Live Demo
-🚀 **LIVE NOW**: https://rhart696.github.io/true-value-mapper/
+🚀 **LIVE NOW**: https://rhart696.github.io/true-valence-mapper/
 
 ## What It Does
 - Visualize up to 8 key relationships
@@ -106,7 +109,7 @@ Security is a top priority. This application implements:
 
 This project is licensed under the [MIT License](LICENSE).
 
-Copyright (c) 2025 True Value Mapper Contributors
+Copyright (c) 2025 True Valence Mapper Contributors
 
 ## Development Workflow
 
@@ -125,7 +128,7 @@ We use **GitHub Flow**:
 ## Project Structure
 
 ```
-true-value-mapper/
+true-valence-mapper-claude/
 ├── index.html                    # Main application
 ├── styles.css                    # Core styles
 ├── cloud-storage.js              # Supabase integration
@@ -148,4 +151,4 @@ Built in 7 days as part of the "ship, don't infrastructure" challenge.
 ---
 *Version 1.0 - Production*
 *Ship Date: November 9, 2025* ✅
-*Repository configured: January 2025*
+*Repository configured: January 2025 (Claude edition)*

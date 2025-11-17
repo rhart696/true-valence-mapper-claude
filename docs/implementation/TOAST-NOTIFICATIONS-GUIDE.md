@@ -2,7 +2,7 @@
 
 ## Overview
 
-The True Value Mapper now includes a professional, accessible toast notification system that replaces all alert dialogs with elegant, stacked notifications. The system provides visual feedback for user actions while respecting accessibility standards.
+The True Valence Mapper now includes a professional, accessible toast notification system that replaces all alert dialogs with elegant, stacked notifications. The system provides visual feedback for user actions while respecting accessibility standards.
 
 ## Files Created
 

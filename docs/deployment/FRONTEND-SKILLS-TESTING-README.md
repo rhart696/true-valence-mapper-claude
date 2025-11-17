@@ -13,7 +13,7 @@ This script should be placed in:
 ~/DEV-ECOSYSTEM-OPTIMIZATION/mcp-agents-and-tool-skills-centres-background/tool-skills-centre/tool-skills-centre/test-frontend-skills.py
 ```
 
-Currently created at: `/home/ichardart/dev/projects/true-value-mapper/test-frontend-skills.py`
+Currently created at: `/home/ichardart/dev/projects/true-valence-mapper/test-frontend-skills.py`
 
 ## Prerequisites
 

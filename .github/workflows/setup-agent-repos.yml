@@ -1,0 +1,39 @@
+name: Setup Multi-Agent Repositories
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Type YES to allow repository creation under rhart696"
+        required: true
+        default: "NO"
+
+jobs:
+  create-repos:
+    if: ${{ github.event.inputs.confirm == 'YES' }}
+    runs-on: ubuntu-latest
+    env:
+      GH_OWNER: rhart696
+    steps:
+      - name: Checkout Claude edition repo
+        uses: actions/checkout@v4
+
+      - name: Authenticate gh CLI
+        env:
+          GH_TOKEN: ${{ secrets.GH_CLI_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "GH_CLI_TOKEN secret is not defined. Add it under repo settings."
+            exit 1
+          fi
+          echo "$GH_TOKEN" | gh auth login --with-token
+          gh auth status
+
+      - name: Create parent + edition repositories
+        env:
+          GH_TOKEN: ${{ secrets.GH_CLI_TOKEN }}
+          GH_OWNER: rhart696
+        run: bash scripts/setup-multi-agent-repos.sh
+
+      - name: Summary
+        run: echo "Repository provisioning run finished."

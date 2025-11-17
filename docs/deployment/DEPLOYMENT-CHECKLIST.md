@@ -34,11 +34,11 @@ Copy and paste these commands in sequence:
 mkdir -p ~/DEV-ECOSYSTEM-OPTIMIZATION/mcp-agents-and-tool-skills-centres-background/tool-skills-centre/tool-skills-centre
 
 # 2. Move test script
-cp /home/ichardart/dev/projects/true-value-mapper/test-frontend-skills.py \
+cp /home/ichardart/dev/projects/true-valence-mapper/test-frontend-skills.py \
    ~/DEV-ECOSYSTEM-OPTIMIZATION/mcp-agents-and-tool-skills-centres-background/tool-skills-centre/tool-skills-centre/
 
 # 3. Move documentation
-cp /home/ichardart/dev/projects/true-value-mapper/FRONTEND-SKILLS-TESTING-README.md \
+cp /home/ichardart/dev/projects/true-valence-mapper/FRONTEND-SKILLS-TESTING-README.md \
    ~/DEV-ECOSYSTEM-OPTIMIZATION/mcp-agents-and-tool-skills-centres-background/tool-skills-centre/tool-skills-centre/
 
 # 4. Make executable

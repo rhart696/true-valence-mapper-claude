@@ -1,5 +1,5 @@
 -- =============================================================================
--- CORRECTED SECURE RLS POLICIES FOR TRUE VALUE MAPPER
+-- CORRECTED SECURE RLS POLICIES FOR TRUE VALENCE MAPPER
 -- =============================================================================
 -- Purpose: Implement WORKING row-level security for anonymous authentication
 --

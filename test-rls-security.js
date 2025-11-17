@@ -462,7 +462,7 @@ async function testCannotInsertWithOtherDeviceId() {
 async function runAllTests() {
     console.log('═══════════════════════════════════════════════════════════');
     console.log('🔒 ROW-LEVEL SECURITY TEST SUITE');
-    console.log('   Testing secure RLS policies for True Value Mapper');
+    console.log('   Testing secure RLS policies for True Valence Mapper');
     console.log('═══════════════════════════════════════════════════════════\n');
 
     // Check if Supabase is loaded

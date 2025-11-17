@@ -113,7 +113,7 @@ node test-rls-security-complete.js
 ### Step 1: Commit Changes (5 min)
 
 ```bash
-cd /home/ichardart/dev/projects/true-value-mapper
+cd /home/ichardart/dev/projects/true-valence-mapper
 
 # Review changes
 git diff cloud-storage.js
@@ -210,7 +210,7 @@ git push origin main
 # Wait ~1 minute for deployment
 
 # Verify deployment
-curl -I https://<your-username>.github.io/true-value-mapper/
+curl -I https://<your-username>.github.io/true-valence-mapper/
 ```
 
 ### Step 5: Post-Deployment Verification (5 min)

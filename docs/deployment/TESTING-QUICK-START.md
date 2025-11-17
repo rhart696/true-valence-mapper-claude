@@ -9,11 +9,11 @@
 mkdir -p ~/DEV-ECOSYSTEM-OPTIMIZATION/mcp-agents-and-tool-skills-centres-background/tool-skills-centre/tool-skills-centre
 
 # Move test script
-mv /home/ichardart/dev/projects/true-value-mapper/test-frontend-skills.py \
+mv /home/ichardart/dev/projects/true-valence-mapper/test-frontend-skills.py \
    ~/DEV-ECOSYSTEM-OPTIMIZATION/mcp-agents-and-tool-skills-centres-background/tool-skills-centre/tool-skills-centre/
 
 # Move README
-mv /home/ichardart/dev/projects/true-value-mapper/FRONTEND-SKILLS-TESTING-README.md \
+mv /home/ichardart/dev/projects/true-valence-mapper/FRONTEND-SKILLS-TESTING-README.md \
    ~/DEV-ECOSYSTEM-OPTIMIZATION/mcp-agents-and-tool-skills-centres-background/tool-skills-centre/tool-skills-centre/
 
 # Make executable
@@ -166,8 +166,8 @@ Before running tests, verify:
 
 | File | Current Location | Target Location |
 |------|-----------------|-----------------|
-| `test-frontend-skills.py` | `/home/ichardart/dev/projects/true-value-mapper/` | `~/DEV-ECOSYSTEM-OPTIMIZATION/.../tool-skills-centre/` |
-| `FRONTEND-SKILLS-TESTING-README.md` | `/home/ichardart/dev/projects/true-value-mapper/` | `~/DEV-ECOSYSTEM-OPTIMIZATION/.../tool-skills-centre/` |
+| `test-frontend-skills.py` | `/home/ichardart/dev/projects/true-valence-mapper/` | `~/DEV-ECOSYSTEM-OPTIMIZATION/.../tool-skills-centre/` |
+| `FRONTEND-SKILLS-TESTING-README.md` | `/home/ichardart/dev/projects/true-valence-mapper/` | `~/DEV-ECOSYSTEM-OPTIMIZATION/.../tool-skills-centre/` |
 | Skill YAMLs | TBD | Tool & Skills Centre registry |
 
 ## Command Reference

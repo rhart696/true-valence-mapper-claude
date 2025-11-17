@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the comprehensive XSS protection and input validation measures implemented in the True Value Mapper application.
+This document describes the comprehensive XSS protection and input validation measures implemented in the True Valence Mapper application.
 
 ## Security Architecture
 

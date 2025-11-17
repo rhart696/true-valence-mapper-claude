@@ -1,5 +1,5 @@
 -- =============================================================================
--- SECURE ROW-LEVEL SECURITY POLICIES FOR TRUE VALUE MAPPER
+-- SECURE ROW-LEVEL SECURITY POLICIES FOR TRUE VALENCE MAPPER
 -- =============================================================================
 -- Purpose: Fix critical security vulnerability where ANY user could access/modify ANY data
 -- Previous Issue: USING (true) WITH CHECK (true) allowed unrestricted access

@@ -1,6 +1,6 @@
-# Contributing to True Value Mapper
+# Contributing to True Valence Mapper
 
-Thank you for your interest in contributing to True Value Mapper! This document provides guidelines and instructions for contributing to the project.
+Thank you for your interest in contributing to True Valence Mapper! This document provides guidelines and instructions for contributing to the project.
 
 ## Table of Contents
 
@@ -31,19 +31,19 @@ Be respectful, constructive, and professional in all interactions. We're buildin
 1. **Fork the repository** on GitHub
 2. **Clone your fork**:
    ```bash
-   git clone https://github.com/YOUR-USERNAME/true-value-mapper.git
-   cd true-value-mapper
+   git clone https://github.com/YOUR-USERNAME/true-valence-mapper.git
+   cd true-valence-mapper
    ```
 3. **Add upstream remote**:
    ```bash
-   git remote add upstream https://github.com/rhart696/true-value-mapper.git
+   git remote add upstream https://github.com/rhart696/true-valence-mapper.git
    ```
 4. **Open in browser**: Simply open `index.html` in your browser (no build step required)
 
 ### Project Structure
 
 ```
-true-value-mapper/
+true-valence-mapper/
 ├── index.html              # Main application
 ├── styles.css              # Core styles
 ├── cloud-storage.js        # Supabase integration
@@ -307,14 +307,14 @@ When contributing, keep in mind our core principle:
 
 ## Questions or Problems?
 
-- **Bug**: [Open a bug report](https://github.com/rhart696/true-value-mapper/issues/new?template=bug_report.md)
-- **Feature idea**: [Open a feature request](https://github.com/rhart696/true-value-mapper/issues/new?template=feature_request.md)
+- **Bug**: [Open a bug report](https://github.com/rhart696/true-valence-mapper/issues/new?template=bug_report.md)
+- **Feature idea**: [Open a feature request](https://github.com/rhart696/true-valence-mapper/issues/new?template=feature_request.md)
 - **Security issue**: See [.github/SECURITY.md](.github/SECURITY.md) - **do not** open a public issue
 - **General question**: Open a discussion or issue
 
 ## Recognition
 
-Contributors will be acknowledged in release notes and project documentation. Thank you for helping make True Value Mapper better!
+Contributors will be acknowledged in release notes and project documentation. Thank you for helping make True Valence Mapper better!
 
 ---
 

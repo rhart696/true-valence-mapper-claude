@@ -52,7 +52,7 @@ FROM pg_policies WHERE tablename = 'trust_maps';
    ```
 
 ### ☐ Step 5: Test in Application
-1. Open: https://ichardart.github.io/true-value-mapper/
+1. Open: https://ichardart.github.io/true-valence-mapper/
 2. Open browser console (F12)
 3. Run:
 ```javascript
@@ -134,7 +134,7 @@ Deployment is successful when:
 **Next Step:** Start with Step 1 above
 
 **Files Needed:**
-- `/home/ichardart/dev/projects/true-value-mapper/supabase-auth-fixed-rls-policies.sql`
-- `/home/ichardart/dev/projects/true-value-mapper/verify-rls-deployment.sql`
+- `/home/ichardart/dev/projects/true-valence-mapper/supabase-auth-fixed-rls-policies.sql`
+- `/home/ichardart/dev/projects/true-valence-mapper/verify-rls-deployment.sql`
 
 **Supabase Dashboard:** https://app.supabase.com/project/qhozgoiukkbwjivowrbw

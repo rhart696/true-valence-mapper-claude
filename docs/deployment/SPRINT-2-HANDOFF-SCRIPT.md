@@ -46,7 +46,7 @@ Copy this entire prompt to start Sprint 2:
 
 **Testing:**
 - Created `test-deployment-real.html` - Run this in browser to verify security
-- Open: file:///home/ichardart/dev/projects/true-value-mapper/test-deployment-real.html
+- Open: file:///home/ichardart/dev/projects/true-valence-mapper/test-deployment-real.html
 - Should show "🎉 PRODUCTION READY" if RLS working correctly
 
 ---
@@ -269,7 +269,7 @@ jobs:
 
 **Production Files:**
 ```
-/home/ichardart/dev/projects/true-value-mapper/
+/home/ichardart/dev/projects/true-valence-mapper/
 ├── index.html (2520 lines - NEEDS REFACTORING)
 ├── cloud-storage.js (540 lines)
 ├── version-history.js (371 lines)
@@ -703,13 +703,13 @@ export class TrustMap {
 
 ## Contact & Resources
 
-**Project Location:** `/home/ichardart/dev/projects/true-value-mapper/`
+**Project Location:** `/home/ichardart/dev/projects/true-valence-mapper/`
 
 **Supabase Dashboard:** https://app.supabase.com/project/qhozgoiukkbwjivowrbw
 
-**Live App:** https://ichardart.github.io/true-value-mapper/
+**Live App:** https://ichardart.github.io/true-valence-mapper/
 
-**Security Test:** file:///home/ichardart/dev/projects/true-value-mapper/test-deployment-real.html
+**Security Test:** file:///home/ichardart/dev/projects/true-valence-mapper/test-deployment-real.html
 
 **Key Documentation:**
 - Architecture: `ARCHITECTURE-OVERVIEW.md`

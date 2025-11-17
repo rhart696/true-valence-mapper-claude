@@ -1,7 +1,7 @@
 # Files Manifest - XSS Protection Implementation
 
 ## Summary
-Complete XSS protection and input validation implementation for True Value Mapper.
+Complete XSS protection and input validation implementation for True Valence Mapper.
 Date: November 12, 2024
 Status: Production Ready
 
@@ -10,7 +10,7 @@ Status: Production Ready
 ### 1. input-validation.js
 **Type**: JavaScript Module
 **Size**: 365 lines
-**Path**: /home/ichardart/dev/projects/true-value-mapper/input-validation.js
+**Path**: /home/ichardart/dev/projects/true-valence-mapper/input-validation.js
 
 **Purpose**: Core input validation and sanitization module
 
@@ -40,7 +40,7 @@ Status: Production Ready
 ### 2. SECURITY.md
 **Type**: Documentation
 **Size**: 500+ lines
-**Path**: /home/ichardart/dev/projects/true-value-mapper/SECURITY.md
+**Path**: /home/ichardart/dev/projects/true-valence-mapper/SECURITY.md
 
 **Purpose**: Comprehensive security documentation and reference guide
 
@@ -65,7 +65,7 @@ Status: Production Ready
 ### 3. test-xss-protection.js
 **Type**: JavaScript Test Suite
 **Size**: 300+ lines
-**Path**: /home/ichardart/dev/projects/true-value-mapper/test-xss-protection.js
+**Path**: /home/ichardart/dev/projects/true-valence-mapper/test-xss-protection.js
 
 **Purpose**: Automated test suite for validation functionality
 
@@ -94,7 +94,7 @@ XSSProtectionTests.runAll()
 ### 4. XSS-IMPLEMENTATION-SUMMARY.md
 **Type**: Documentation
 **Size**: 1,000+ lines
-**Path**: /home/ichardart/dev/projects/true-value-mapper/XSS-IMPLEMENTATION-SUMMARY.md
+**Path**: /home/ichardart/dev/projects/true-valence-mapper/XSS-IMPLEMENTATION-SUMMARY.md
 
 **Purpose**: High-level overview of implementation
 
@@ -120,7 +120,7 @@ XSSProtectionTests.runAll()
 ### 5. XSS-QUICK-REFERENCE.md
 **Type**: Documentation
 **Size**: 300+ lines
-**Path**: /home/ichardart/dev/projects/true-value-mapper/XSS-QUICK-REFERENCE.md
+**Path**: /home/ichardart/dev/projects/true-valence-mapper/XSS-QUICK-REFERENCE.md
 
 **Purpose**: Quick reference and lookup guide for developers
 
@@ -144,7 +144,7 @@ XSSProtectionTests.runAll()
 ### 6. IMPLEMENTATION-CHECKLIST.md
 **Type**: Documentation
 **Size**: 600+ lines
-**Path**: /home/ichardart/dev/projects/true-value-mapper/IMPLEMENTATION-CHECKLIST.md
+**Path**: /home/ichardart/dev/projects/true-valence-mapper/IMPLEMENTATION-CHECKLIST.md
 
 **Purpose**: Detailed implementation verification checklist
 
@@ -168,7 +168,7 @@ XSSProtectionTests.runAll()
 ### 7. FILES-MANIFEST.md (This File)
 **Type**: Documentation
 **Size**: 300+ lines
-**Path**: /home/ichardart/dev/projects/true-value-mapper/FILES-MANIFEST.md
+**Path**: /home/ichardart/dev/projects/true-valence-mapper/FILES-MANIFEST.md
 
 **Purpose**: Complete manifest of all files in this implementation
 
@@ -191,7 +191,7 @@ XSSProtectionTests.runAll()
 ### 1. index.html
 **Type**: HTML/JavaScript
 **Size**: 1,418 lines (was 1,418, now 1,438)
-**Path**: /home/ichardart/dev/projects/true-value-mapper/index.html
+**Path**: /home/ichardart/dev/projects/true-valence-mapper/index.html
 
 **Changes Made**:
 
@@ -236,7 +236,7 @@ XSSProtectionTests.runAll()
 ### 2. cloud-storage.js
 **Type**: JavaScript Module
 **Size**: 364 lines (was 364, now ~420)
-**Path**: /home/ichardart/dev/projects/true-value-mapper/cloud-storage.js
+**Path**: /home/ichardart/dev/projects/true-valence-mapper/cloud-storage.js
 
 **Changes Made**:
 
@@ -335,7 +335,7 @@ XSSProtectionTests.runAll()
 ## Directory Structure
 
 ```
-/home/ichardart/dev/projects/true-value-mapper/
+/home/ichardart/dev/projects/true-valence-mapper/
 ├── input-validation.js                    [NEW] Validation module
 ├── SECURITY.md                             [NEW] Security documentation
 ├── test-xss-protection.js                  [NEW] Test suite

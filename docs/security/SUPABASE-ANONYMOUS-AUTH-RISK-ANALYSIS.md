@@ -1,6 +1,6 @@
 # COMPREHENSIVE RISK ANALYSIS: Supabase Anonymous Authentication Migration
 
-**Project:** True Value Mapper
+**Project:** True Valence Mapper
 **Migration:** localStorage device_id → Supabase Anonymous Auth
 **Date:** 2025-11-12
 **Risk Assessor:** Claude (Sonnet 4.5)

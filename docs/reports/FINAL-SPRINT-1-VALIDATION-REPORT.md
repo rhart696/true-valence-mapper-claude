@@ -3,7 +3,7 @@
 
 **Date:** 2025-11-15
 **Testing Method:** Real-world browser testing via Chrome DevTools MCP
-**Environment:** file:///home/ichardart/dev/projects/true-value-mapper/index.html
+**Environment:** file:///home/ichardart/dev/projects/true-valence-mapper/index.html
 
 ---
 
@@ -237,7 +237,7 @@ Error> ❌ Auth initialization error: {
 4. **Deploy to GitHub Pages** (automatic)
    - Push to main branch
    - GitHub Actions deploys automatically
-   - Verify: https://ichardart.github.io/true-value-mapper/
+   - Verify: https://ichardart.github.io/true-valence-mapper/
 
 5. **Final Manual Testing** (15 min)
    - Test all workflows end-to-end

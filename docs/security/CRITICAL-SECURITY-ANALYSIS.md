@@ -1,5 +1,5 @@
 # CRITICAL SECURITY ANALYSIS
-## True Value Mapper RLS Implementation
+## True Valence Mapper RLS Implementation
 
 **Date:** 2025-11-12
 **Status:** CRITICAL ISSUES IDENTIFIED
@@ -315,10 +315,10 @@ To properly test RLS, you need:
 
 ## Files Requiring Changes
 
-1. `/home/ichardart/dev/projects/true-value-mapper/supabase-secure-rls-policies.sql` - Needs rewrite
-2. `/home/ichardart/dev/projects/true-value-mapper/cloud-storage.js` - Needs auth implementation
-3. `/home/ichardart/dev/projects/true-value-mapper/test-rls-security.js` - Tests won't work as written
-4. `/home/ichardart/dev/projects/true-value-mapper/RLS-TESTING-PROCEDURE.md` - Needs major updates
+1. `/home/ichardart/dev/projects/true-valence-mapper/supabase-secure-rls-policies.sql` - Needs rewrite
+2. `/home/ichardart/dev/projects/true-valence-mapper/cloud-storage.js` - Needs auth implementation
+3. `/home/ichardart/dev/projects/true-valence-mapper/test-rls-security.js` - Tests won't work as written
+4. `/home/ichardart/dev/projects/true-valence-mapper/RLS-TESTING-PROCEDURE.md` - Needs major updates
 
 ---
 

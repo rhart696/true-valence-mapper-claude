@@ -25,7 +25,7 @@ The Version History system provides comprehensive versioning, comparison, and re
 ## File Structure
 
 ```
-/home/ichardart/dev/projects/true-value-mapper/
+/home/ichardart/dev/projects/true-valence-mapper/
 ├── version-history.js              # Core version management system
 ├── index.html                      # Updated with version UI and integration
 └── VERSION-HISTORY-IMPLEMENTATION.md  # This documentation

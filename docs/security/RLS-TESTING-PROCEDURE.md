@@ -1,8 +1,8 @@
-# RLS Testing Procedure - True Value Mapper v2.0
+# RLS Testing Procedure - True Valence Mapper v2.0
 
 ## Overview
 
-This document provides comprehensive instructions for testing the Row-Level Security (RLS) policies implemented for the True Value Mapper application. These tests validate that the critical security vulnerability has been fixed and users can only access their own data.
+This document provides comprehensive instructions for testing the Row-Level Security (RLS) policies implemented for the True Valence Mapper application. These tests validate that the critical security vulnerability has been fixed and users can only access their own data.
 
 **Version:** 2.0
 **Updated:** 2025-11-12

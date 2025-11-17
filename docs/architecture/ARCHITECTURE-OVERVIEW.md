@@ -1,6 +1,6 @@
 # True Valence Mapper - Architectural Overview
 
-**Project Location:** `/home/ichardart/dev/projects/true-value-mapper/`
+**Project Location:** `/home/ichardart/dev/projects/true-valence-mapper/`
 **Current Status:** Production (v1.0) - LIVE on GitHub Pages
 **Codebase Size:** ~85KB total (index.html: 2346 lines, supporting JS: 4469 lines total)
 

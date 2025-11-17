@@ -1,5 +1,5 @@
 # CRITICAL SECURITY ALERT
-## True Value Mapper - Row-Level Security Implementation
+## True Valence Mapper - Row-Level Security Implementation
 
 **Status:** CRITICAL VULNERABILITIES IDENTIFIED
 **Date:** 2025-11-12
@@ -9,7 +9,7 @@
 
 ## START HERE - Critical Information
 
-This README documents CRITICAL SECURITY ISSUES discovered in the True Value Mapper RLS implementation and provides the complete solution.
+This README documents CRITICAL SECURITY ISSUES discovered in the True Valence Mapper RLS implementation and provides the complete solution.
 
 ### What Happened
 
@@ -133,7 +133,7 @@ An analysis of the RLS (Row-Level Security) policies revealed that:
 
 ```bash
 # 1. Backup everything
-cd /home/ichardart/dev/projects/true-value-mapper
+cd /home/ichardart/dev/projects/true-valence-mapper
 cp cloud-storage.js cloud-storage.js.backup
 # Also backup database via Supabase Dashboard
 

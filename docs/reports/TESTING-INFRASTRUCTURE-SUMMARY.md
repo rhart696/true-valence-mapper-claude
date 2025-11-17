@@ -12,7 +12,7 @@ Comprehensive testing infrastructure created for validating frontend design skil
 
 ### 1. Test Script: `test-frontend-skills.py`
 
-**Current Location**: `/home/ichardart/dev/projects/true-value-mapper/test-frontend-skills.py`
+**Current Location**: `/home/ichardart/dev/projects/true-valence-mapper/test-frontend-skills.py`
 
 **Target Location**:
 ```
@@ -38,7 +38,7 @@ Comprehensive testing infrastructure created for validating frontend design skil
 
 ### 2. Comprehensive README: `FRONTEND-SKILLS-TESTING-README.md`
 
-**Current Location**: `/home/ichardart/dev/projects/true-value-mapper/FRONTEND-SKILLS-TESTING-README.md`
+**Current Location**: `/home/ichardart/dev/projects/true-valence-mapper/FRONTEND-SKILLS-TESTING-README.md`
 
 **Target Location**: Same directory as test script
 
@@ -53,7 +53,7 @@ Comprehensive testing infrastructure created for validating frontend design skil
 
 ### 3. Quick Start Guide: `TESTING-QUICK-START.md`
 
-**Current Location**: `/home/ichardart/dev/projects/true-value-mapper/TESTING-QUICK-START.md`
+**Current Location**: `/home/ichardart/dev/projects/true-valence-mapper/TESTING-QUICK-START.md`
 
 **Purpose**: Immediate action guide for deployment
 
@@ -189,11 +189,11 @@ All frontend design skills are working correctly!
 mkdir -p ~/DEV-ECOSYSTEM-OPTIMIZATION/mcp-agents-and-tool-skills-centres-background/tool-skills-centre/tool-skills-centre
 
 # Move test script
-mv /home/ichardart/dev/projects/true-value-mapper/test-frontend-skills.py \
+mv /home/ichardart/dev/projects/true-valence-mapper/test-frontend-skills.py \
    ~/DEV-ECOSYSTEM-OPTIMIZATION/mcp-agents-and-tool-skills-centres-background/tool-skills-centre/tool-skills-centre/
 
 # Move documentation
-mv /home/ichardart/dev/projects/true-value-mapper/FRONTEND-SKILLS-TESTING-README.md \
+mv /home/ichardart/dev/projects/true-valence-mapper/FRONTEND-SKILLS-TESTING-README.md \
    ~/DEV-ECOSYSTEM-OPTIMIZATION/mcp-agents-and-tool-skills-centres-background/tool-skills-centre/tool-skills-centre/
 
 # Make executable
@@ -456,9 +456,9 @@ Potential improvements:
 
 **Current**:
 ```
-/home/ichardart/dev/projects/true-value-mapper/test-frontend-skills.py
-/home/ichardart/dev/projects/true-value-mapper/FRONTEND-SKILLS-TESTING-README.md
-/home/ichardart/dev/projects/true-value-mapper/TESTING-QUICK-START.md
+/home/ichardart/dev/projects/true-valence-mapper/test-frontend-skills.py
+/home/ichardart/dev/projects/true-valence-mapper/FRONTEND-SKILLS-TESTING-README.md
+/home/ichardart/dev/projects/true-valence-mapper/TESTING-QUICK-START.md
 ```
 
 **Target**:

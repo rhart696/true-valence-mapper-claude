@@ -3,8 +3,8 @@
 
 **Version:** 1.0
 **Date:** 2025-11-12
-**Target File:** `/home/ichardart/dev/projects/true-value-mapper/cloud-storage.js`
-**Reference:** `/home/ichardart/dev/projects/true-value-mapper/supabase-auth-implementation.js`
+**Target File:** `/home/ichardart/dev/projects/true-valence-mapper/cloud-storage.js`
+**Reference:** `/home/ichardart/dev/projects/true-valence-mapper/supabase-auth-implementation.js`
 
 ---
 
@@ -277,7 +277,7 @@ MANUAL STEP: Admin migrates data from old-uuid to new-auth-uid
 
 ## 3. DETAILED CODE CHANGES
 
-### 3.1 File: `/home/ichardart/dev/projects/true-value-mapper/cloud-storage.js`
+### 3.1 File: `/home/ichardart/dev/projects/true-valence-mapper/cloud-storage.js`
 
 #### CHANGE 1: Constructor Modifications
 
@@ -988,7 +988,7 @@ async signOut() {
 
 ---
 
-### 3.2 File: `/home/ichardart/dev/projects/true-value-mapper/index.html`
+### 3.2 File: `/home/ichardart/dev/projects/true-valence-mapper/index.html`
 
 **NO CHANGES REQUIRED** to index.html
 
@@ -2174,10 +2174,10 @@ Implementation is successful when:
 ## APPENDIX A: Quick Reference
 
 ### Key Files Modified
-- `/home/ichardart/dev/projects/true-value-mapper/cloud-storage.js`
+- `/home/ichardart/dev/projects/true-valence-mapper/cloud-storage.js`
 
 ### Key Files Not Modified
-- `/home/ichardart/dev/projects/true-value-mapper/index.html` (no changes needed)
+- `/home/ichardart/dev/projects/true-valence-mapper/index.html` (no changes needed)
 
 ### New Methods Added
 - `initializeAuth()` - Handle anonymous sign-in

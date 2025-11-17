@@ -8,7 +8,7 @@
 
 ## Reporting a Vulnerability
 
-We take the security of True Value Mapper seriously. If you have discovered a security vulnerability, please report it to us responsibly.
+We take the security of True Valence Mapper seriously. If you have discovered a security vulnerability, please report it to us responsibly.
 
 ### How to Report
 
@@ -114,7 +114,7 @@ This repository includes automated security checks:
 
 ## Acknowledgments
 
-We appreciate responsible disclosure and will acknowledge security researchers who help improve the security of True Value Mapper.
+We appreciate responsible disclosure and will acknowledge security researchers who help improve the security of True Valence Mapper.
 
 ---
 

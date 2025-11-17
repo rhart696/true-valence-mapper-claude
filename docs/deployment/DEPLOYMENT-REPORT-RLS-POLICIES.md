@@ -24,7 +24,7 @@ Current RLS policies use application-level filtering (`USING true`) which allows
 
 ### 1. SQL File Integrity ✅
 
-**File:** `/home/ichardart/dev/projects/true-value-mapper/supabase-auth-fixed-rls-policies.sql`
+**File:** `/home/ichardart/dev/projects/true-valence-mapper/supabase-auth-fixed-rls-policies.sql`
 **Size:** 7,134 bytes
 **Content Verified:** Yes
 
@@ -52,7 +52,7 @@ Current RLS policies use application-level filtering (`USING true`) which allows
 
 ### 2. Application Code Compatibility ✅
 
-**File:** `/home/ichardart/dev/projects/true-value-mapper/cloud-storage.js`
+**File:** `/home/ichardart/dev/projects/true-valence-mapper/cloud-storage.js`
 
 **Anonymous Auth Implementation Verified:**
 ```javascript
@@ -116,7 +116,7 @@ WHERE tablename = 'trust_maps';
 1. Open Supabase Dashboard: https://app.supabase.com/project/qhozgoiukkbwjivowrbw
 2. Navigate to: **SQL Editor**
 3. Click "New query"
-4. Copy the ENTIRE contents of: `/home/ichardart/dev/projects/true-value-mapper/supabase-auth-fixed-rls-policies.sql`
+4. Copy the ENTIRE contents of: `/home/ichardart/dev/projects/true-valence-mapper/supabase-auth-fixed-rls-policies.sql`
 5. Paste into SQL Editor
 6. Click "RUN" or press Ctrl+Enter
 
@@ -176,7 +176,7 @@ LIMIT 5;
 ### Test 1: Own Maps Access ✅
 
 Open application in browser:
-1. Navigate to: https://ichardart.github.io/true-value-mapper/
+1. Navigate to: https://ichardart.github.io/true-valence-mapper/
 2. Open Developer Console (F12)
 3. Run:
 ```javascript
@@ -550,7 +550,7 @@ Run full user flow:
 ## Deployment Status
 
 **Deployment Method:** Manual (via Supabase Dashboard SQL Editor)
-**SQL File:** `/home/ichardart/dev/projects/true-value-mapper/supabase-auth-fixed-rls-policies.sql`
+**SQL File:** `/home/ichardart/dev/projects/true-valence-mapper/supabase-auth-fixed-rls-policies.sql`
 **File Size:** 7,134 bytes
 **Policies:** 4 (SELECT, INSERT, UPDATE, DELETE)
 **Code Changes Required:** None
@@ -597,7 +597,7 @@ Run full user flow:
 ---
 
 **Deployment Report Generated:** 2025-11-15
-**Report File:** `/home/ichardart/dev/projects/true-value-mapper/DEPLOYMENT-REPORT-RLS-POLICIES.md`
+**Report File:** `/home/ichardart/dev/projects/true-valence-mapper/DEPLOYMENT-REPORT-RLS-POLICIES.md`
 **Status:** READY FOR MANUAL DEPLOYMENT ✅
 
 ---

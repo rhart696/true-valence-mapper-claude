@@ -1,5 +1,5 @@
 # Security Fix Implementation Guide
-## True Value Mapper - Row-Level Security
+## True Valence Mapper - Row-Level Security
 
 **Date:** 2025-11-12
 **Priority:** CRITICAL
@@ -79,7 +79,7 @@ Read `CRITICAL-SECURITY-ANALYSIS.md` completely to understand the issues.
 # Via Supabase Dashboard: Project Settings → Database → Backups → Create Backup
 
 # Backup code
-cd /home/ichardart/dev/projects/true-value-mapper
+cd /home/ichardart/dev/projects/true-valence-mapper
 cp cloud-storage.js cloud-storage.js.backup
 cp index.html index.html.backup
 

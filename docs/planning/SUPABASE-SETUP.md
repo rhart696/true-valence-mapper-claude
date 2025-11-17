@@ -5,7 +5,7 @@
 ### 1. Create Supabase Account
 1. Go to https://supabase.com
 2. Sign up for free account
-3. Create new project named "true-value-mapper"
+3. Create new project named "true-valence-mapper"
 
 ### 2. Get Your Credentials
 Once project is created, go to Settings → API:
