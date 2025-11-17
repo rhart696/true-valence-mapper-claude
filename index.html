@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Visualize trust flow in your relationships with ProActive True Valence Mapper - a professional coaching tool for understanding bidirectional trust dynamics">
     <title>ProActive True Valence Mapper - Relationship Trust Visualization</title>
+
+    <!-- Favicon - SVG for scalability and brand colors -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300A8CC;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%232E4A8B;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='url(%23grad)'/%3E%3Cpath d='M 30 50 L 50 30 L 70 50 L 50 70 Z' fill='white' opacity='0.9'/%3E%3Ccircle cx='50' cy='50' r='8' fill='white'/%3E%3C/svg%3E">
+    <!-- Fallback PNG favicon for older browsers -->
+    <link rel="alternate icon" type="image/png" href="background-assets/ProActive-ReSolutions-Trillium-logo.png">
+
     <style>
         * {
             margin: 0;
@@ -258,11 +264,34 @@
             transition: fill 0.3s;
         }
 
-        /* Trust score colors */
-        .score-1 { stroke: #22c55e; fill: #22c55e; }
-        .score-2 { stroke: #eab308; fill: #eab308; }
-        .score-3 { stroke: #ef4444; fill: #ef4444; }
-        .score-0 { stroke: #d1d5db; fill: #d1d5db; }
+        /* Trust score colors with stroke patterns for accessibility (WCAG 2.1 SC 1.4.1) */
+        /* Score 1: High trust - Solid green line */
+        .score-1 {
+            stroke: #22c55e;
+            fill: #22c55e;
+            stroke-dasharray: none; /* Solid line */
+        }
+
+        /* Score 2: Medium trust - Dashed yellow line */
+        .score-2 {
+            stroke: #eab308;
+            fill: #eab308;
+            stroke-dasharray: 8 4; /* Medium dashes */
+        }
+
+        /* Score 3: Low trust - Dotted red line */
+        .score-3 {
+            stroke: #ef4444;
+            fill: #ef4444;
+            stroke-dasharray: 2 3; /* Small dots */
+        }
+
+        /* Score 0: Not scored - Long dash gray line */
+        .score-0 {
+            stroke: #d1d5db;
+            fill: #d1d5db;
+            stroke-dasharray: 12 6; /* Long dashes */
+        }
 
         .legend {
             display: flex;
@@ -274,6 +303,50 @@
             border-radius: 10px;
         }
 
+        .trust-definitions {
+            margin-top: 15px;
+            padding: 20px;
+            background: #e8f5e9;
+            border-left: 4px solid #22c55e;
+            border-radius: 8px;
+        }
+
+        .trust-definitions h3 {
+            color: #2E4A8B;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .trust-definition-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .trust-definition-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .trust-definition-item strong {
+            color: #2E4A8B;
+            font-size: 0.95em;
+        }
+
+        .trust-definition-item .question {
+            font-style: italic;
+            color: #555;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .trust-definition-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .legend-item {
             display: flex;
             align-items: center;
@@ -281,8 +354,13 @@
         }
 
         .legend-color {
-            width: 20px;
-            height: 3px;
+            width: 40px;
+            height: 20px;
+        }
+
+        .legend-line {
+            stroke-width: 3;
+            fill: none;
         }
 
         .info-panel {
@@ -325,6 +403,83 @@
             font-style: italic;
             opacity: 0.9;
             font-size: 13px !important;
+        }
+
+        .footer a {
+            color: #00A8CC;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .footer a:hover {
+            opacity: 0.8;
+        }
+
+        .footer a:focus {
+            outline: 2px solid #00A8CC;
+            outline-offset: 2px;
+        }
+
+        /* Privacy Modal Specific Styles */
+        .privacy-modal .modal-content {
+            max-width: 700px;
+        }
+
+        .privacy-section {
+            margin: 20px 0;
+        }
+
+        .privacy-section h3 {
+            color: #2E4A8B;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .privacy-section p, .privacy-section ul {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .privacy-section ul {
+            margin-left: 20px;
+        }
+
+        .privacy-section li {
+            margin-bottom: 8px;
+        }
+
+        .privacy-disclaimer-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .privacy-disclaimer-box strong {
+            color: #856404;
+        }
+
+        .privacy-accept {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+        }
+
+        .privacy-accept input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .privacy-accept label {
+            cursor: pointer;
+            user-select: none;
         }
 
         /* Modal Styles */
@@ -968,36 +1123,54 @@
             </section>
         </main>
 
-        <aside class="legend" role="region" aria-label="Trust level color legend">
+        <aside class="legend" role="region" aria-label="Trust level patterns and colors legend">
             <div class="legend-item">
-                <div class="legend-color" style="background: #22c55e;" aria-hidden="true"></div>
-                <span>High Trust (1)</span>
+                <svg class="legend-color" aria-hidden="true">
+                    <line x1="0" y1="10" x2="40" y2="10" class="legend-line score-1" />
+                </svg>
+                <span>High Trust (1) - Solid</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #eab308;" aria-hidden="true"></div>
-                <span>Medium Trust (2)</span>
+                <svg class="legend-color" aria-hidden="true">
+                    <line x1="0" y1="10" x2="40" y2="10" class="legend-line score-2" />
+                </svg>
+                <span>Medium Trust (2) - Dashed</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #ef4444;" aria-hidden="true"></div>
-                <span>Low/No Trust (3)</span>
+                <svg class="legend-color" aria-hidden="true">
+                    <line x1="0" y1="10" x2="40" y2="10" class="legend-line score-3" />
+                </svg>
+                <span>Low/No Trust (3) - Dotted</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #d1d5db;" aria-hidden="true"></div>
-                <span>Not Scored</span>
+                <svg class="legend-color" aria-hidden="true">
+                    <line x1="0" y1="10" x2="40" y2="10" class="legend-line score-0" />
+                </svg>
+                <span>Not Scored - Long Dash</span>
+            </div>
+        </aside>
+
+        <aside class="trust-definitions" role="region" aria-labelledby="trust-definitions-heading">
+            <h3 id="trust-definitions-heading">What Am I Scoring?</h3>
+            <div class="trust-definition-grid">
+                <div class="trust-definition-item">
+                    <strong>→ Outward Trust (Solid Arrow)</strong>
+                    <div class="question">"How confident am I that I'd go to them with a problem?"</div>
+                </div>
+                <div class="trust-definition-item">
+                    <strong>← Inward Trust (Dashed Arrow)</strong>
+                    <div class="question">"How confident am I that they'd come to me with a problem?"</div>
+                </div>
             </div>
         </aside>
 
         <section class="info-panel" role="region" aria-labelledby="how-to-use-heading">
             <h2 id="how-to-use-heading">How to Use</h2>
             <p>
-                <strong>1. Add People:</strong> Enter names of up to 8 people in your relationship network.<br>
-                <strong>2. Score Trust:</strong> Click the arrows to score trust levels (1-3):<br>
-                <span role="list">
-                    <span role="listitem">&nbsp;&nbsp;• Outward arrow: "How confident am I that I'd go to them with a problem?"</span><br>
-                    <span role="listitem">&nbsp;&nbsp;• Inward arrow: "How confident am I that they'd come to me with a problem?"</span><br>
-                </span>
-                <strong>3. See Patterns:</strong> Green shows high trust, yellow shows medium, red shows low/no trust.<br>
-                <strong>4. Save Your Map:</strong> Use Save/Load to keep your progress.
+                <strong>1. Add People:</strong> Enter names of up to 8 people in your relationship network (max 8).<br>
+                <strong>2. Score Trust:</strong> Click any arrow to score trust levels (1-3). See definitions above for what you're scoring.<br>
+                <strong>3. See Patterns:</strong> Trust levels use both colors and line patterns (solid, dashed, dotted) for accessibility.<br>
+                <strong>4. Save Your Map:</strong> Use Save/Load to keep your progress locally, or Save to Cloud for sharing.
             </p>
         </section>
     </div>
@@ -1039,8 +1212,11 @@
             if (shareCode) {
                 loadSharedMap(shareCode);
             } else {
-                // Check if first visit
-                if (!localStorage.getItem('hideWelcome')) {
+                // Check privacy disclaimer on first visit (before welcome modal)
+                checkPrivacyDisclaimer();
+
+                // Check if first visit - show welcome modal AFTER privacy (if accepted)
+                if (!localStorage.getItem('hideWelcome') && localStorage.getItem('privacyDisclaimerAccepted')) {
                     showWelcomeModal();
                 }
 
@@ -1459,6 +1635,31 @@
         function closeAllModals() {
             closeWelcomeModal();
             closeHelpModal();
+            closePrivacyModal();
+        }
+
+        // Privacy Modal Functions
+        function showPrivacyModal() {
+            document.getElementById('privacyModal').classList.add('show');
+        }
+
+        function closePrivacyModal() {
+            const modal = document.getElementById('privacyModal');
+            modal.classList.remove('show');
+
+            // Save "don't show again" preference if checked
+            const checkbox = document.getElementById('privacyDontShowAgain');
+            if (checkbox && checkbox.checked) {
+                localStorage.setItem('privacyDisclaimerAccepted', 'true');
+            }
+        }
+
+        function checkPrivacyDisclaimer() {
+            // Show privacy disclaimer on first visit (unless user clicked "don't show again")
+            const accepted = localStorage.getItem('privacyDisclaimerAccepted');
+            if (!accepted) {
+                showPrivacyModal();
+            }
         }
 
         function changeSlide(n) {
@@ -1584,6 +1785,11 @@
         function updateConnectionStatus() {
             const statusEl = document.getElementById('cloudStatus');
             const statusText = document.getElementById('statusText');
+
+            // Safety check: elements might not exist if cloud status UI is not implemented
+            if (!statusEl || !statusText) {
+                return; // Silently skip if elements don't exist
+            }
 
             if (navigator.onLine) {
                 statusEl.className = 'cloud-status online';
@@ -2339,8 +2545,85 @@
         </div>
     </div>
 
+    <!-- Privacy Disclaimer Modal -->
+    <div id="privacyModal" class="modal privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePrivacyModal()" aria-label="Close privacy disclaimer">&times;</button>
+            <h2 id="privacy-modal-title">Privacy & Usage Disclaimer</h2>
+
+            <div class="privacy-disclaimer-box">
+                <strong>IMPORTANT:</strong> This is a coaching and training tool. Please read carefully before using.
+            </div>
+
+            <div class="privacy-section">
+                <h3>Purpose & Intended Use</h3>
+                <p>The ProActive True Valence Mapper is designed as a <strong>coaching and self-reflection tool</strong> to help you:</p>
+                <ul>
+                    <li>Visualize trust patterns in your relationships</li>
+                    <li>Identify areas for personal growth and communication improvement</li>
+                    <li>Facilitate meaningful conversations with a certified coach or therapist</li>
+                </ul>
+            </div>
+
+            <div class="privacy-section">
+                <h3>Not Professional Advice</h3>
+                <p>This tool is <strong>NOT</strong> a substitute for professional mental health services, therapy, or counseling. It does not provide:</p>
+                <ul>
+                    <li>Clinical diagnosis or treatment</li>
+                    <li>Crisis intervention or emergency mental health support</li>
+                    <li>Legal, financial, or relationship advice</li>
+                </ul>
+                <p>If you are experiencing a mental health crisis, please contact a qualified professional or crisis helpline immediately.</p>
+            </div>
+
+            <div class="privacy-section">
+                <h3>Your Data & Privacy</h3>
+                <p><strong>Local Storage:</strong> Your data is stored locally in your browser by default. No one else can access it.</p>
+                <p><strong>Cloud Storage (Optional):</strong> If you choose to save to the cloud:</p>
+                <ul>
+                    <li>Your maps are stored securely using anonymous authentication</li>
+                    <li>Only you can access your saved maps (via your device)</li>
+                    <li>Shared maps use unique codes - only people with the link can view them</li>
+                    <li>We do not collect personal identifying information</li>
+                    <li>Your relationship data is private and encrypted</li>
+                </ul>
+            </div>
+
+            <div class="privacy-section">
+                <h3>Best Practices for Use</h3>
+                <ul>
+                    <li><strong>Be honest:</strong> This tool works best when you're truthful with yourself</li>
+                    <li><strong>Use with guidance:</strong> Consider working with a coach to interpret results</li>
+                    <li><strong>Regular updates:</strong> Trust patterns change - revisit periodically</li>
+                    <li><strong>Respect privacy:</strong> Don't share others' maps without their permission</li>
+                    <li><strong>Safe environment:</strong> Only share your map with trusted coaches or therapists</li>
+                </ul>
+            </div>
+
+            <div class="privacy-section">
+                <h3>Disclaimer of Liability</h3>
+                <p>By using this tool, you acknowledge that:</p>
+                <ul>
+                    <li>Results are self-reported and subjective</li>
+                    <li>ProActive ReSolutions Inc. is not responsible for decisions made based on your trust map</li>
+                    <li>This tool does not guarantee any specific outcomes</li>
+                    <li>You use this tool at your own discretion and risk</li>
+                </ul>
+            </div>
+
+            <div class="privacy-accept">
+                <input type="checkbox" id="privacyDontShowAgain" aria-label="Don't show this disclaimer again">
+                <label for="privacyDontShowAgain">I understand. Don't show this again.</label>
+            </div>
+
+            <button onclick="closePrivacyModal()" style="width: 100%; margin-top: 20px; padding: 12px; font-size: 16px;">
+                I Understand - Continue
+            </button>
+        </div>
+    </div>
+
     <footer class="footer" role="contentinfo">
-        <p>&copy; 2024 ProActive ReSolutions Inc. All rights reserved. | <a href="privacy-policy.html" style="color: #00A8CC; text-decoration: underline;">Privacy Policy</a></p>
+        <p>&copy; 2024 ProActive ReSolutions Inc. All rights reserved. | <a onclick="showPrivacyModal()" tabindex="0" role="button" aria-label="View privacy disclaimer">Privacy & Disclaimer</a></p>
         <p class="footer-subtitle">Empowering relationships through trust visualization</p>
     </footer>
 </body>
