@@ -978,6 +978,413 @@
             font-size: 10px;
             margin-left: 8px;
         }
+
+        /* Insights Panel Styles */
+        .insights-panel {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .insights-panel h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .insight-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .insight-card h4 {
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .insight-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .insight-label {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        .asymmetric-highlight {
+            background: rgba(255, 193, 7, 0.2);
+            border-left: 3px solid #ffc107;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .coaching-tips {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .coaching-tips h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .coaching-tips ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .coaching-tips li {
+            margin: 8px 0;
+            color: #1b5e20;
+        }
+
+        /* Quick Actions Menu */
+        .quick-actions {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+        }
+
+        .quick-action-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #2E4A8B;
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quick-action-btn:hover {
+            transform: scale(1.1);
+            background: #1e3460;
+        }
+
+        .quick-actions-menu {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            min-width: 200px;
+            display: none;
+        }
+
+        .quick-actions-menu.show {
+            display: block;
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quick-action-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+        }
+
+        .quick-action-item:hover {
+            background: #f5f5f5;
+        }
+
+        /* Improved Control Groups */
+        .control-section {
+            margin-bottom: 20px;
+        }
+
+        .control-section-title {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .controls-improved {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Relationship Health Indicator */
+        .health-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .health-strong {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .health-balanced {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .health-needs-attention {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            margin-top: 10px;
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00A8CC, #667eea);
+            transition: width 0.5s ease;
+        }
+
+        /* Enhanced Visual Feedback */
+        .relationship-node:hover {
+            filter: brightness(1.1);
+        }
+
+        /* Contextual Help */
+        .contextual-help {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            max-width: 250px;
+            z-index: 1000;
+            display: none;
+            pointer-events: none;
+        }
+
+        .contextual-help.show {
+            display: block;
+        }
+
+        /* Better Tooltips */
+        [data-tooltip] {
+            position: relative;
+        }
+
+        [data-tooltip]:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            white-space: nowrap;
+            z-index: 1000;
+            margin-bottom: 5px;
+        }
+
+        /* Improved Button Groups */
+        .button-group-compact {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .button-group-compact button {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        /* Collapsible Controls */
+        .controls-collapsible {
+            transition: max-height 0.3s ease;
+            overflow: hidden;
+        }
+
+        .controls-toggle {
+            display: none;
+            width: 100%;
+            padding: 10px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .controls-toggle:hover {
+            background: #e0e0e0;
+        }
+
+        /* Enhanced Node Counter */
+        .node-count {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .node-count-bar {
+            flex: 1;
+            max-width: 300px;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .node-count-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00A8CC, #667eea);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        /* Mobile Improvements */
+        @media (max-width: 768px) {
+            .controls-toggle {
+                display: block;
+            }
+
+            .controls {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+
+            .controls.expanded {
+                max-height: 1000px;
+            }
+
+            .control-group {
+                width: 100%;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .quick-actions {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .quick-action-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+
+        /* Smooth Transitions */
+        * {
+            transition: background-color 0.2s ease;
+        }
+
+        button {
+            transition: all 0.2s ease;
+        }
+
+        /* Focus Indicators Enhanced */
+        button:focus-visible,
+        input:focus-visible,
+        .arrow-path:focus-visible {
+            outline: 3px solid #00A8CC;
+            outline-offset: 3px;
+            box-shadow: 0 0 0 6px rgba(0, 168, 204, 0.15);
+        }
+
+        /* Empty State Message */
+        .empty-state-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .empty-state-message h3 {
+            color: #2E4A8B;
+            margin-bottom: 10px;
+        }
+
+        .empty-state-message p {
+            margin-bottom: 20px;
+        }
+
+        /* Print Styles */
+        @media print {
+            .controls,
+            .quick-actions,
+            .help-button,
+            button {
+                display: none !important;
+            }
+
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+
+            body {
+                background: white;
+            }
+        }
     </style>
     <!-- Toast Notifications -->
     <link rel="stylesheet" href="toast-notifications.css">
@@ -1083,7 +1490,12 @@
             </div>
         </nav>
 
-        <div class="node-count" id="nodeCount" aria-live="polite" aria-atomic="true">Relationships: 0 / 8</div>
+        <div class="node-count" id="nodeCount" aria-live="polite" aria-atomic="true">
+            <span id="nodeCountText">Relationships: 0 / 8</span>
+            <div class="node-count-bar" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" aria-label="Relationship slots used">
+                <div class="node-count-fill" id="nodeCountFill" style="width: 0%"></div>
+            </div>
+        </div>
 
         <main id="main-content">
             <section id="visualization" class="visualization-container" aria-label="Trust relationship visualization">
@@ -1164,6 +1576,63 @@
             </div>
         </aside>
 
+        <!-- Insights Panel -->
+        <section id="insightsPanel" class="insights-panel" role="region" aria-labelledby="insights-heading" style="display: none;">
+            <h3 id="insights-heading">
+                <span aria-hidden="true">💡</span> Relationship Insights
+            </h3>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <h4>Total Relationships</h4>
+                    <div class="insight-value" id="insightTotal">0</div>
+                    <div class="insight-label">people mapped</div>
+                </div>
+                <div class="insight-card">
+                    <h4>Strong Connections</h4>
+                    <div class="insight-value" id="insightStrong">0</div>
+                    <div class="insight-label">mutual high trust</div>
+                </div>
+                <div class="insight-card">
+                    <h4>Asymmetric Patterns</h4>
+                    <div class="insight-value" id="insightAsymmetric">0</div>
+                    <div class="insight-label">imbalanced relationships</div>
+                </div>
+                <div class="insight-card">
+                    <h4>Growth Opportunities</h4>
+                    <div class="insight-value" id="insightGrowth">0</div>
+                    <div class="insight-label">relationships to strengthen</div>
+                </div>
+            </div>
+            <div id="asymmetricDetails" style="display: none;"></div>
+        </section>
+
+        <!-- Coaching Tips Panel -->
+        <section id="coachingTips" class="coaching-tips" role="region" aria-labelledby="coaching-tips-heading" style="display: none;">
+            <h4 id="coaching-tips-heading">
+                <span aria-hidden="true">🎯</span> Coaching Questions for This Session
+            </h4>
+            <ul id="coachingQuestionsList">
+                <!-- Dynamically populated based on map insights -->
+            </ul>
+            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #c8e6c9;">
+                <strong>💡 Pro Tip:</strong> Use these questions to guide reflection and identify actionable steps for relationship building.
+            </div>
+        </section>
+
+        <!-- Keyboard Shortcuts Info -->
+        <section id="keyboardShortcuts" class="coaching-tips" role="region" aria-labelledby="shortcuts-heading" style="display: none; background: #e3f2fd; border-left-color: #2196f3;">
+            <h4 id="shortcuts-heading">
+                <span aria-hidden="true">⌨️</span> Keyboard Shortcuts
+            </h4>
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="margin: 8px 0;"><kbd style="background: #f5f5f5; padding: 2px 8px; border-radius: 3px; border: 1px solid #ddd;">Enter</kbd> - Add person (when typing name)</li>
+                <li style="margin: 8px 0;"><kbd style="background: #f5f5f5; padding: 2px 8px; border-radius: 3px; border: 1px solid #ddd;">Tab</kbd> - Navigate between connections</li>
+                <li style="margin: 8px 0;"><kbd style="background: #f5f5f5; padding: 2px 8px; border-radius: 3px; border: 1px solid #ddd;">Space</kbd> / <kbd style="background: #f5f5f5; padding: 2px 8px; border-radius: 3px; border: 1px solid #ddd;">Enter</kbd> - Change trust level</li>
+                <li style="margin: 8px 0;"><kbd style="background: #f5f5f5; padding: 2px 8px; border-radius: 3px; border: 1px solid #ddd;">?</kbd> - Open help</li>
+                <li style="margin: 8px 0;"><kbd style="background: #f5f5f5; padding: 2px 8px; border-radius: 3px; border: 1px solid #ddd;">Esc</kbd> - Close modals</li>
+            </ul>
+        </section>
+
         <section class="info-panel" role="region" aria-labelledby="how-to-use-heading">
             <h2 id="how-to-use-heading">How to Use</h2>
             <p>
@@ -1173,6 +1642,33 @@
                 <strong>4. Save Your Map:</strong> Use Save/Load to keep your progress locally, or Save to Cloud for sharing.
             </p>
         </section>
+    </div>
+
+    <!-- Quick Actions Menu -->
+    <div class="quick-actions" role="navigation" aria-label="Quick actions menu">
+        <button class="quick-action-btn" onclick="toggleQuickActions()" aria-label="Open quick actions menu" title="Quick Actions">
+            ⚡
+        </button>
+        <div id="quickActionsMenu" class="quick-actions-menu" role="menu">
+            <div class="quick-action-item" role="menuitem" onclick="toggleInsights()" tabindex="0">
+                <span aria-hidden="true">💡</span> Toggle Insights
+            </div>
+            <div class="quick-action-item" role="menuitem" onclick="toggleCoachingTips()" tabindex="0">
+                <span aria-hidden="true">🎯</span> Coaching Tips
+            </div>
+            <div class="quick-action-item" role="menuitem" onclick="toggleKeyboardShortcuts()" tabindex="0">
+                <span aria-hidden="true">⌨️</span> Keyboard Shortcuts
+            </div>
+            <div class="quick-action-item" role="menuitem" onclick="exportToJSON()" tabindex="0">
+                <span aria-hidden="true">📥</span> Export Data
+            </div>
+            <div class="quick-action-item" role="menuitem" onclick="showHelpModal()" tabindex="0">
+                <span aria-hidden="true">❓</span> Help
+            </div>
+            <div class="quick-action-item" role="menuitem" onclick="window.print()" tabindex="0">
+                <span aria-hidden="true">🖨️</span> Print Map
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1443,8 +1939,16 @@
         }
 
         function updateNodeCount() {
-            const nodeCountEl = document.getElementById('nodeCount');
-            nodeCountEl.textContent = `Relationships: ${relationships.length} / ${MAX_NODES}`;
+            const nodeCountText = document.getElementById('nodeCountText');
+            const nodeCountFill = document.getElementById('nodeCountFill');
+            const nodeCountBar = document.querySelector('.node-count-bar');
+            
+            nodeCountText.textContent = `Relationships: ${relationships.length} / ${MAX_NODES}`;
+            
+            // Update progress bar
+            const percentage = (relationships.length / MAX_NODES) * 100;
+            nodeCountFill.style.width = `${percentage}%`;
+            nodeCountBar.setAttribute('aria-valuenow', relationships.length);
 
             const addButton = document.getElementById('addPerson');
             const isDisabled = relationships.length >= MAX_NODES;
@@ -2316,6 +2820,210 @@
                 window.a11yManager.announce('Version history cleared', 'assertive');
             }
         }
+
+        // ============================================
+        // INSIGHTS & COACHING FEATURES
+        // ============================================
+
+        /**
+         * Calculate and update relationship insights
+         */
+        function updateInsights() {
+            if (relationships.length === 0) {
+                document.getElementById('insightsPanel').style.display = 'none';
+                return;
+            }
+
+            // Calculate insights
+            let strongConnections = 0;
+            let asymmetricPatterns = 0;
+            let growthOpportunities = 0;
+            const asymmetricDetails = [];
+
+            relationships.forEach(person => {
+                const scores = trustScores[person.id];
+                const outward = scores.outward;
+                const inward = scores.inward;
+
+                // Strong mutual connections (both sides high trust)
+                if (outward === 1 && inward === 1) {
+                    strongConnections++;
+                }
+
+                // Asymmetric patterns (difference > 1)
+                if (Math.abs(outward - inward) > 1 && outward !== 0 && inward !== 0) {
+                    asymmetricPatterns++;
+                    asymmetricDetails.push({
+                        name: person.name,
+                        outward: outward,
+                        inward: inward
+                    });
+                }
+
+                // Growth opportunities (any red scores or unscored)
+                if (outward === 3 || inward === 3 || outward === 0 || inward === 0) {
+                    growthOpportunities++;
+                }
+            });
+
+            // Update UI
+            document.getElementById('insightTotal').textContent = relationships.length;
+            document.getElementById('insightStrong').textContent = strongConnections;
+            document.getElementById('insightAsymmetric').textContent = asymmetricPatterns;
+            document.getElementById('insightGrowth').textContent = growthOpportunities;
+
+            // Show asymmetric details if any
+            const asymmetricDetailsEl = document.getElementById('asymmetricDetails');
+            if (asymmetricDetails.length > 0) {
+                asymmetricDetailsEl.style.display = 'block';
+                asymmetricDetailsEl.innerHTML = `
+                    <div class="asymmetric-highlight">
+                        <strong>⚠️ Asymmetric Relationships Detected:</strong>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            ${asymmetricDetails.map(detail => {
+                                const scoreName = (score) => ['not scored', 'high', 'medium', 'low'][score];
+                                return `<li>${InputValidator.htmlEncode(detail.name)}: You feel ${scoreName(detail.outward)} trust, they might feel ${scoreName(detail.inward)} trust</li>`;
+                            }).join('')}
+                        </ul>
+                        <small>These relationships may benefit from open communication about trust and expectations.</small>
+                    </div>
+                `;
+            } else {
+                asymmetricDetailsEl.style.display = 'none';
+            }
+
+            // Update coaching tips
+            updateCoachingTips(strongConnections, asymmetricPatterns, growthOpportunities);
+        }
+
+        /**
+         * Update coaching tips based on current map
+         */
+        function updateCoachingTips(strongConnections, asymmetricPatterns, growthOpportunities) {
+            const tips = [];
+
+            if (strongConnections > 0) {
+                tips.push(`"What makes your relationship with [strong connection name] feel so secure? Can you identify specific behaviors or patterns?"`);
+            }
+
+            if (asymmetricPatterns > 0) {
+                tips.push(`"I notice some imbalance in trust perceptions. How might you test these assumptions through conversation?"`);
+                tips.push(`"What would need to change for you to feel more comfortable approaching [person with low inward trust]?"`);
+            }
+
+            if (growthOpportunities > 0) {
+                tips.push(`"Which relationship would have the biggest positive impact on your work life if strengthened?"`);
+                tips.push(`"What's one small step you could take this week to build trust with [low trust person]?"`);
+            }
+
+            if (relationships.length >= 6) {
+                tips.push(`"Looking at all these relationships, where are you investing most of your emotional energy?"`);
+                tips.push(`"Are there any relationships here that might be draining more than they're giving?"`);
+            }
+
+            // Always include these general questions
+            tips.push(`"What patterns do you notice in how trust flows through your network?"`);
+            tips.push(`"If you could change one relationship dynamic here, which would it be and why?"`);
+
+            const listEl = document.getElementById('coachingQuestionsList');
+            listEl.innerHTML = tips.map(tip => `<li>${tip}</li>`).join('');
+        }
+
+        /**
+         * Toggle insights panel visibility
+         */
+        function toggleInsights() {
+            const panel = document.getElementById('insightsPanel');
+            if (panel.style.display === 'none') {
+                updateInsights();
+                panel.style.display = 'block';
+                if (window.a11yManager) {
+                    window.a11yManager.announce('Insights panel opened', 'polite');
+                }
+            } else {
+                panel.style.display = 'none';
+                if (window.a11yManager) {
+                    window.a11yManager.announce('Insights panel closed', 'polite');
+                }
+            }
+            closeQuickActions();
+        }
+
+        /**
+         * Toggle coaching tips panel visibility
+         */
+        function toggleCoachingTips() {
+            const panel = document.getElementById('coachingTips');
+            if (panel.style.display === 'none') {
+                updateInsights(); // This updates tips too
+                panel.style.display = 'block';
+                if (window.a11yManager) {
+                    window.a11yManager.announce('Coaching tips panel opened', 'polite');
+                }
+            } else {
+                panel.style.display = 'none';
+                if (window.a11yManager) {
+                    window.a11yManager.announce('Coaching tips panel closed', 'polite');
+                }
+            }
+            closeQuickActions();
+        }
+
+        /**
+         * Toggle keyboard shortcuts panel visibility
+         */
+        function toggleKeyboardShortcuts() {
+            const panel = document.getElementById('keyboardShortcuts');
+            if (panel.style.display === 'none') {
+                panel.style.display = 'block';
+                if (window.a11yManager) {
+                    window.a11yManager.announce('Keyboard shortcuts panel opened', 'polite');
+                }
+            } else {
+                panel.style.display = 'none';
+                if (window.a11yManager) {
+                    window.a11yManager.announce('Keyboard shortcuts panel closed', 'polite');
+                }
+            }
+            closeQuickActions();
+        }
+
+        /**
+         * Toggle quick actions menu
+         */
+        function toggleQuickActions() {
+            const menu = document.getElementById('quickActionsMenu');
+            menu.classList.toggle('show');
+        }
+
+        /**
+         * Close quick actions menu
+         */
+        function closeQuickActions() {
+            const menu = document.getElementById('quickActionsMenu');
+            menu.classList.remove('show');
+        }
+
+        // Close quick actions when clicking outside
+        document.addEventListener('click', function(e) {
+            const quickActions = document.querySelector('.quick-actions');
+            if (quickActions && !quickActions.contains(e.target)) {
+                closeQuickActions();
+            }
+        });
+
+        // Update insights whenever the map changes
+        const originalAddPerson = addPerson;
+        addPerson = function() {
+            originalAddPerson();
+            setTimeout(updateInsights, 100);
+        };
+
+        const originalCycleScore = cycleScore;
+        cycleScore = function(personId, direction) {
+            originalCycleScore(personId, direction);
+            setTimeout(updateInsights, 100);
+        };
     </script>
 
     <!-- Welcome Modal -->
