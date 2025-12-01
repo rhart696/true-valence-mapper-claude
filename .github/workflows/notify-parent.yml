@@ -1,0 +1,73 @@
+# Edition Repository Workflow: Notify Parent on Push
+#
+# This file should be placed in each edition repository at:
+# .github/workflows/notify-parent.yml
+#
+# Purpose: Automatically trigger parent repo submodule update when edition is pushed
+
+name: Notify Parent Repo
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  notify-parent:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract edition name from repository
+        id: edition
+        run: |
+          # Extract edition name from repo name (e.g., true-valence-mapper-claude -> claude)
+          EDITION_NAME="${GITHUB_REPOSITORY#*/true-valence-mapper-}"
+          echo "name=$EDITION_NAME" >> $GITHUB_OUTPUT
+          echo "Edition name: $EDITION_NAME"
+
+      - name: Trigger parent repository sync
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PARENT_REPO_TOKEN }}
+          repository: rhart696/true-valence-mapper
+          event-type: edition-updated
+          client-payload: '{"edition": "${{ steps.edition.outputs.name }}", "commit": "${{ github.sha }}", "pusher": "${{ github.actor }}"}'
+
+      - name: Log notification
+        run: |
+          echo "✅ Notified parent repository to sync submodule: ${{ steps.edition.outputs.name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Pusher: ${{ github.actor }}"
+
+# Setup Instructions:
+#
+# 1. Create GitHub Personal Access Token (PAT):
+#    - Go to https://github.com/settings/tokens
+#    - Click "Generate new token (classic)"
+#    - Name: "Parent Repo Sync Token"
+#    - Scopes: Select "repo" (full control of private repositories)
+#    - Click "Generate token"
+#    - Copy the token (you won't see it again!)
+#
+# 2. Add token as secret in THIS edition repository:
+#    - Go to https://github.com/rhart696/true-valence-mapper-{edition}/settings/secrets/actions
+#    - Click "New repository secret"
+#    - Name: PARENT_REPO_TOKEN
+#    - Value: Paste the PAT from step 1
+#    - Click "Add secret"
+#
+# 3. Commit this file to THIS edition repository:
+#    mkdir -p .github/workflows
+#    cp edition-notify-parent-workflow.yml .github/workflows/notify-parent.yml
+#    git add .github/workflows/notify-parent.yml
+#    git commit -m "ci: add parent repo notification workflow"
+#    git push origin main
+#
+# 4. Verify workflow is registered:
+#    - Go to https://github.com/rhart696/true-valence-mapper-{edition}/actions
+#    - You should see "Notify Parent Repo" in the workflow list
+#
+# 5. Test the workflow:
+#    - Make any change in this edition repo
+#    - Push to main branch
+#    - Check parent repo for automatic submodule update commit
+#    - Check https://github.com/rhart696/true-valence-mapper/actions for auto-sync run
