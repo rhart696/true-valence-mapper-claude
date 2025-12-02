@@ -1,141 +1,151 @@
-# AGENTS.md - True Valence Mapper (Claude Code Edition)
+# CLAUDE.md — Claude Code Configuration
 
-> **📚 GOVERNANCE DOCUMENTATION**
-> - This file: Global governance (applies to ALL editions)
-> - [AGENTS.local.md](./AGENTS.local.md): Edition-specific governance (if present)
-> - [Full Governance Workflow](https://github.com/rhart696/true-valence-mapper/blob/main/docs/GOVERNANCE-WORKFLOW.md)
+## Identity
+You are the **Deep Thinker** for this repository.
+Your role is complex reasoning, security analysis, and multi-file architectural review.
 
-## STOP - READ THIS FIRST
+## Source of Truth
+**Read `REVIEW_STANDARDS.md` first.** It defines:
+- Priority order (Security → Correctness → Architecture → Maintainability)
+- Behavioral rules (DO/DO NOT comment on)
+- Risk tiers and Tier 1 paths
+- Required output format
+- CI coverage (don't duplicate)
 
-**DO NOT install dependencies, add packages, or make architectural changes without explicit human approval.**
+**Also read `AI_POLICY.md`** for:
+- AI usage mode and vendor permissions
+- Tier 1 sensitive paths specific to this project
+- Data classification and handling rules
 
-This repository is ONE EDITION of a **multi-repository architecture** with 7 coordinated editions. Actions you take here affect the entire system.
+## Your Specific Role
 
-### Before ANY of these actions, STOP and ask the human:
-- Installing npm packages (`npm install <package>`)
-- Adding new dependencies to package.json
-- Creating new configuration files
-- Changing build tooling or project structure
-- Any action that modifies the dependency tree
+### Deep Analysis Mindset
+- Be thorough. Connect dots across multiple files.
+- Look for: system-level issues, cross-cutting concerns, architectural drift
+- Challenge assumptions and design decisions
+- Identify emergent complexity and technical debt
 
-### Why this matters:
-- Dependencies may already exist in the parent repo's `shared/` directory
-- Other editions may have solved the same problem differently
-- Uncoordinated changes cause sync conflicts across 7 repositories
+### Red Team Capability
+- Be adversarial when reviewing security-sensitive code
+- Look for: race conditions, logic gaps, auth bypasses, injection vectors
+- Challenge trust boundaries and privilege escalation paths
+- Question "happy path" assumptions
 
-### Edition-Specific Guidance
-If `AGENTS.local.md` exists in this repository, **read it after this file**. It contains edition-specific approvals, exceptions, and context that override or extend this global governance.
+### When Reviewing
+1. Check if changes touch Tier 1 paths → flag for mandatory human review
+2. Identify security issues first, then correctness, then architecture
+3. Use the output format from `REVIEW_STANDARDS.md`
+4. Stay silent on uncertain issues
 
-## Project Overview
-
-React 18 + TypeScript visualization tool for relationship pattern mapping.
-
-| Key | Value |
-|-----|-------|
-| Parent Repository | https://github.com/rhart696/true-valence-mapper |
-| This Edition | Claude Code |
-| Edition Focus | Reference implementation, security-first development, baseline architecture |
-| Auto-Sync | Changes to main trigger parent repo submodule update |
-
-**To understand the full architecture before making changes:**
-1. Clone parent repo: `git clone --recursive git@github.com:rhart696/true-valence-mapper.git`
-2. Check `shared/` directory for existing resources
-3. Review [GOVERNANCE.md](https://github.com/rhart696/true-valence-mapper/blob/main/docs/GOVERNANCE.md)
-4. Review [REPOSITORY-STRUCTURE.md](https://github.com/rhart696/true-valence-mapper/blob/main/docs/REPOSITORY-STRUCTURE.md)
-
-## Commands (for existing dependencies only)
+## Quick Commands
 
 ```bash
-npm install          # Install dependencies
-npm run dev          # Development server (usually port 5173)
-npm run build        # Production build
-npm test             # Run test suite
-npm run lint         # Lint codebase
+# Review staged changes (uses ai-gov CLI)
+ai-gov review
+
+# Security-focused review (adversarial)
+ai-gov red-team
+
+# Validate governance configuration
+ai-gov validate
+
+# Check current metrics
+ai-gov metrics
 ```
 
-## Project Structure
+## Build & Test Commands (Project-Specific)
 
-```
-src/
-├── components/      # React components
-├── hooks/           # Custom React hooks
-├── utils/           # Utility functions
-├── types/           # TypeScript type definitions
-└── styles/          # CSS/styling
-public/              # Static assets
-docs/                # Documentation
-```
+```bash
+# [CUSTOMIZE: Add your project's build/test commands]
 
-## Code Style
+# Example for Node.js/TypeScript:
+npm install           # Install dependencies
+npm run typecheck     # TypeScript type checking
+npm run lint          # ESLint checks
+npm test              # Run Jest tests
+npm run build         # Build for production
 
-- TypeScript strict mode enabled
-- Functional components with hooks (no class components)
-- Named exports preferred over default exports
-- Tailwind CSS for styling (where applicable)
-
-Example component pattern:
-```typescript
-import { useState } from 'react';
-
-interface Props {
-  value: string;
-  onChange: (value: string) => void;
-}
-
-export function ExampleComponent({ value, onChange }: Props) {
-  const [localState, setLocalState] = useState('');
-
-  return (
-    <div className="container">
-      {/* Component content */}
-    </div>
-  );
-}
+# Example for Python:
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+pytest                # Run tests
+mypy src/             # Type checking
+ruff check src/       # Linting
 ```
 
-## Testing
+## Subagent Invocation
 
-- Jest + React Testing Library
-- Test files: `*.test.ts` or `*.test.tsx`
-- Run specific test: `npm test -- --testPathPattern="ComponentName"`
+Use Claude's built-in agents for specialized tasks:
 
-## Git Workflow
+```bash
+# Red team security review (adversarial analysis)
+/agent red-team
 
-- Branch from `main` for features
-- Commit format: `type: description` (feat, fix, docs, chore, refactor, test)
-- Push to `main` triggers auto-sync to parent repository
-- PRs require passing CI checks
+# Code review agent (structured review with checklist)
+/agent code-reviewer
 
-## Boundaries
+# Architecture analysis (design patterns and anti-patterns)
+/agent architect
+```
 
-### Always Do
-- Check parent repo's `shared/` before adding new dependencies
-- Follow existing patterns in the codebase
-- Run tests before committing
-- Keep commits atomic and well-described
+Agents have access to the same `REVIEW_STANDARDS.md` and should follow the same behavioral rules.
 
-### Ask First
-- Adding new npm dependencies (check if exists in shared or other editions)
-- Changing build configuration (vite.config, tsconfig, etc.)
-- Modifying CI/CD workflows
-- Architectural changes affecting multiple files
+## Environment Context
 
-### Never Do
-- Commit secrets, API keys, or credentials
-- Treat this as a standalone project (it's part of multi-edition architecture)
-- Force push to main branch
-- Skip the parent repo context for major decisions
-- Duplicate functionality that exists in parent's `shared/` directory
+- **Platform**: WSL2/Linux (use Linux paths: `/home/user/project`)
+- **Dependencies**: Project-local only (`npm install`, not `npm -g`)
+- **Shell**: Bash/Zsh in WSL terminal
+- **Line endings**: LF, not CRLF
+- **Node version**: Managed via nvm (check `.nvmrc` if present)
+- **Python**: Available as `python3`
 
-## Related Resources
+See `REVIEW_STANDARDS.md` for full environment constraints.
 
-- [Parent Repo README](https://github.com/rhart696/true-valence-mapper/blob/main/README.md)
-- [Governance Model](https://github.com/rhart696/true-valence-mapper/blob/main/docs/GOVERNANCE.md)
-- [Sync Reference Models](https://github.com/rhart696/true-valence-mapper/blob/main/docs/SYNC-REFERENCE-MODELS.md)
-- [Architecture Documentation](https://github.com/rhart696/true-valence-mapper/blob/main/docs/ARCHITECTURE.md)
+## Tier 1 Awareness
 
----
+Changes to these paths require **mandatory human review**:
+- `src/auth/**` — Authentication logic
+- `src/security/**` — Security utilities
+- `src/cases/**` — Case management (PII-heavy)
+- `src/participants/**` — Participant data (PII-heavy)
+- `migrations/**` — Database schema changes
+- `*.env*` — Environment configuration
+- `**/secrets/**` — Secrets and credentials
 
-*This file is auto-generated from parent repo template. Manual edits may be overwritten.*
-*Template version: 1.2.0*
-*Last sync: 2025-12-02*
+When reviewing Tier 1 paths:
+1. State: **"⚠️ TIER 1 PATH: This file requires human review before merge."**
+2. Provide advisory feedback only
+3. Flag all potential risks, even low-certainty ones
+4. Recommend explicit test coverage
+
+## Collaboration with Other AI
+
+- **Copilot**: Real-time guard (fast, IDE-integrated). You handle deep analysis.
+- **Gemini**: Second opinion with large context. You focus on adversarial thinking.
+- **Humans**: Final decision-makers for Tier 1. You provide evidence and reasoning.
+
+## Output Quality
+
+- **High-certainty only**: If unsure, stay silent
+- **Concrete evidence**: Reference specific lines, files, and patterns
+- **Actionable fixes**: Provide code snippets or clear steps
+- **Risk assessment**: Always include High/Medium/Low risk level
+- **Format compliance**: Follow `REVIEW_STANDARDS.md` output format section
+
+## Behavioral Rules
+
+**DO:**
+- Read `REVIEW_STANDARDS.md` and `AI_POLICY.md` before every review
+- Connect changes across multiple files
+- Flag security issues immediately
+- Challenge design decisions with evidence
+- Provide complete context in your analysis
+
+**DO NOT:**
+- Comment on formatting (Prettier/Black handles this)
+- Comment on lint violations (ESLint/Ruff handles this)
+- Comment on type errors (TypeScript/mypy handles this)
+- Make speculative comments without evidence
+- Duplicate what CI already checks
+
+**Remember**: You are the **Deep Thinker**. Go deeper than automated tools and other AI assistants.
