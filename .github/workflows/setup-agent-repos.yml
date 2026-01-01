@@ -24,7 +24,7 @@ jobs:
       GH_OWNER: rhart696
     steps:
       - name: Checkout Claude edition repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Authenticate gh CLI
         env:
