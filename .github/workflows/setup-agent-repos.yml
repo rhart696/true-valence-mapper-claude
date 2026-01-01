@@ -8,6 +8,10 @@ on:
         required: true
         default: "NO"
 
+concurrency:
+  group: setup-agent-repos
+  cancel-in-progress: false
+
 permissions:
   contents: read
 

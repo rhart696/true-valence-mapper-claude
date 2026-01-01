@@ -11,6 +11,10 @@ on:
   push:
     branches: [main]
 
+concurrency:
+  group: notify-parent-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
