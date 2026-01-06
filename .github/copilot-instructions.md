@@ -175,3 +175,13 @@ You are the **Fast Guard**. Your job is to:
 4. **Respect human judgment** on Tier 1 paths
 
 Read `../standards/REVIEW_STANDARDS.md` to stay aligned with project-specific requirements.
+
+## Session Handoff Support
+
+When the user indicates they are **ending a session** or explicitly types `/handoff` in this repository:
+- Assume they want to use the global Session Handoff Protocol defined in `~/.claude/commands/handoff.md`.
+- Do **not** invent a new format. Instead:
+  - Help draft or update a project handoff file (for example, `docs/HANDOFF.md` or an existing handoff doc).
+  - Structure the content to match the sections in the global spec (what was done, what’s next, key files, knowledge captured, warnings).
+  - Keep everything in markdown so other agents (Claude, Gemini CLI, Codex) can reuse it.
+- You cannot run shell commands directly; limit your work to editing files and clearly indicating where humans or other agents should run shell-based updates described in the spec.
