@@ -15,3 +15,6 @@ verify-*.sql
 
 # Temporary review directories
 background-assets/reviews-evaluations/
+# Local AI tool state
+.claude/
+.brv/
