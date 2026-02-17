@@ -56,7 +56,7 @@ export function RelationshipCard({ relationship, onRemove, onUpdate }: Relations
   }
 
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-border-default bg-white p-3 shadow-sm transition-shadow hover:shadow-md">
+    <div className="card-enter flex items-center gap-2 rounded-lg border border-border-default bg-white p-3 shadow-sm transition-shadow hover:shadow-md">
       <span className="flex-1 text-sm font-medium text-gray-dark">
         {relationship.name}
       </span>

@@ -15,7 +15,7 @@ export function TrustLevelSelector({ relationshipId, selectedLevel, onSelect }: 
             role="radio"
             aria-checked={isSelected}
             aria-label={def.label}
-            className={`rounded-lg px-3 py-2 text-xs font-medium transition-all ${
+            className={`rounded-lg px-3 py-2 text-xs font-medium transition-all active:scale-95 ${
               isSelected
                 ? 'text-white shadow-md ring-2 ring-offset-1'
                 : 'border border-border-default bg-white text-gray-medium hover:border-gray-medium'
