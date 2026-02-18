@@ -14,14 +14,37 @@ export function usePDFExport(): UsePDFExportReturn {
   const exportPDF = useCallback(async (canvasElementId: string, relationships?: Relationship[]) => {
     setIsExporting(true);
     try {
-      const html2canvas = (await import('html2canvas')).default;
       const jsPDF = (await import('jspdf')).default;
 
-      const element = document.getElementById(canvasElementId);
-      if (!element) throw new Error(`Element #${canvasElementId} not found`);
+      const svgEl = document.getElementById(canvasElementId) as SVGSVGElement | null;
+      if (!svgEl) throw new Error(`Element #${canvasElementId} not found`);
 
-      const canvasImage = await html2canvas(element, { scale: 2 });
-      const imgData = canvasImage.toDataURL('image/png');
+      // Serialize SVG → canvas → PNG (bypasses html2canvas cloned-iframe limitation)
+      const serialized = new XMLSerializer().serializeToString(svgEl);
+      const svgBlob = new Blob([serialized], { type: 'image/svg+xml;charset=utf-8' });
+      const svgUrl = URL.createObjectURL(svgBlob);
+
+      const SCALE = 2;
+      // Use viewBox dimensions for pixel-perfect rendering at any display size
+      const vb = svgEl.viewBox.baseVal;
+      const canvasW = (vb.width || 900) * SCALE;
+      const canvasH = (vb.height || 700) * SCALE;
+
+      const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+        const i = new Image();
+        i.onload = () => resolve(i);
+        i.onerror = reject;
+        i.src = svgUrl;
+      });
+
+      const canvas = document.createElement('canvas');
+      canvas.width = canvasW;
+      canvas.height = canvasH;
+      const ctx = canvas.getContext('2d')!;
+      ctx.drawImage(img, 0, 0, canvasW, canvasH);
+      URL.revokeObjectURL(svgUrl);
+
+      const imgData = canvas.toDataURL('image/png');
 
       const pdf = new jsPDF('landscape', 'mm', 'a4');
       const pageWidth = pdf.internal.pageSize.getWidth();
@@ -33,12 +56,12 @@ export function usePDFExport(): UsePDFExportReturn {
       pdf.setFontSize(10);
       pdf.text(new Date().toLocaleDateString(), pageWidth / 2, 22, { align: 'center' });
 
-      // Canvas image (fills page minus header/footer margins)
+      // Map image (fills page minus header/footer margins)
       const imgWidth = pageWidth - 20;
-      const imgHeight = (canvasImage.height * imgWidth) / canvasImage.width;
+      const imgHeight = (canvasH * imgWidth) / canvasW;
       const maxImgHeight = pageHeight - 45;
       const finalHeight = Math.min(imgHeight, maxImgHeight);
-      const finalWidth = (canvasImage.width * finalHeight) / canvasImage.height;
+      const finalWidth = (canvasW * finalHeight) / canvasH;
 
       pdf.addImage(imgData, 'PNG', (pageWidth - finalWidth) / 2, 28, finalWidth, finalHeight);
 
