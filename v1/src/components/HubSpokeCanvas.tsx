@@ -238,8 +238,8 @@ export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
               cx={nodeX}
               cy={nodeY}
               r={NODE_R}
-              fill="white"
-              stroke="#DFE1E6"
+              fill="#EEF2FF"
+              stroke="#A5B4FC"
               strokeWidth={2}
             />
             <text
