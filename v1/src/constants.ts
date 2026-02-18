@@ -1,68 +1,67 @@
-// Constants — True Valence Mapper v1.0
-// Generated from 09-DESIGN-SYSTEM.md and 14-API-CONTRACT.md
+// Constants — True Valence Mapper v2.0
 
-import type { TrustDefinition, TrustLevel } from './types';
+import type { ArrowScoreDefinition, ArrowScore } from './types';
 
 // Relationship limits
-export const MIN_RELATIONSHIPS = 12;
 export const MAX_RELATIONSHIPS = 25;
 export const MAX_NAME_LENGTH = 50;
 export const MIN_NAME_LENGTH = 1;
 
-// Trust level definitions
-export const TRUST_DEFINITIONS: TrustDefinition[] = [
+// Arrow score definitions
+export const ARROW_SCORE_DEFINITIONS: ArrowScoreDefinition[] = [
   {
-    level: 'high',
-    label: 'High Trust',
-    description:
-      'You would trust this person with critical decisions, confidential information, and your reputation. You have complete confidence in their integrity and competence.',
+    score: 'high',
+    label: 'High Confidence',
+    description: 'You are highly confident about this direction of approach.',
     color: '#00B87C',
-    icon: 'ShieldCheck',
+    badge: 'H',
   },
   {
-    level: 'moderate',
-    label: 'Moderate Trust',
-    description:
-      'You trust this person with routine tasks and standard information, but you\'d hesitate to involve them in critical decisions. You have partial confidence in their abilities and intentions.',
+    score: 'medium',
+    label: 'Medium Confidence',
+    description: 'You have moderate confidence about this direction of approach.',
     color: '#0052CC',
-    icon: 'Shield',
+    badge: 'M',
   },
   {
-    level: 'low',
-    label: 'Low Trust',
-    description:
-      'You trust this person with basic information or minor tasks, but you\'d avoid involving them in anything important. You have limited confidence and proceed with caution.',
+    score: 'low',
+    label: 'Low Confidence',
+    description: 'You have low confidence about this direction of approach.',
     color: '#FFAB00',
-    icon: 'ShieldWarning',
+    badge: 'L',
   },
   {
-    level: 'none',
-    label: 'No Trust',
-    description:
-      'You do not trust this person with anything significant. You have no confidence in their integrity, competence, or intentions, and you minimize interactions.',
-    color: '#FF5630',
-    icon: 'ShieldSlash',
+    score: 'unscored',
+    label: 'Not Yet Scored',
+    description: 'You have not yet rated confidence for this direction.',
+    color: '#C1C7D0',
+    badge: '?',
   },
 ];
 
-// Trust level color map (for quick lookup)
-export const TRUST_COLORS: Record<TrustLevel, string> = {
+// Arrow score color map (for quick lookup)
+export const ARROW_SCORE_COLORS: Record<ArrowScore, string> = {
   high: '#00B87C',
-  moderate: '#0052CC',
+  medium: '#0052CC',
   low: '#FFAB00',
-  none: '#FF5630',
+  unscored: '#C1C7D0',
 };
 
-// Trust level labels (for quick lookup)
-export const TRUST_LABELS: Record<TrustLevel, string> = {
-  high: 'High Trust',
-  moderate: 'Moderate Trust',
-  low: 'Low Trust',
-  none: 'No Trust',
+// Arrow score badge labels
+export const ARROW_SCORE_LABELS: Record<ArrowScore, string> = {
+  high: 'H',
+  medium: 'M',
+  low: 'L',
+  unscored: '?',
 };
 
-// Trust level order (for canvas grouping)
-export const TRUST_LEVEL_ORDER: TrustLevel[] = ['high', 'moderate', 'low', 'none'];
+// Click-to-cycle order
+export const ARROW_SCORE_CYCLE: ArrowScore[] = ['unscored', 'high', 'medium', 'low'];
+
+export function cycleArrowScore(current: ArrowScore): ArrowScore {
+  const idx = ARROW_SCORE_CYCLE.indexOf(current);
+  return ARROW_SCORE_CYCLE[(idx + 1) % ARROW_SCORE_CYCLE.length];
+}
 
 // Design system colors
 export const COLORS = {
@@ -83,12 +82,3 @@ export const COLORS = {
   warning: '#FFAB00',
   info: '#0052CC',
 } as const;
-
-// Step configuration
-export const STEPS = {
-  naming: { index: 0, label: 'Name Relationships' },
-  scoring: { index: 1, label: 'Score Trust' },
-  canvas: { index: 2, label: 'View Canvas' },
-} as const;
-
-export const STEP_LABELS = ['Name Relationships', 'Score Trust', 'View Canvas'];

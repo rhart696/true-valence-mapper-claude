@@ -1,0 +1,262 @@
+'use client';
+
+import { useSession } from '../context/SessionContext';
+import { ARROW_SCORE_COLORS, ARROW_SCORE_LABELS, cycleArrowScore } from '../constants';
+import type { ArrowDirection, ArrowScore, Relationship } from '../types';
+
+const HUB_R = 42;
+const NODE_R = 28;
+const OFFSET = 12; // perpendicular px offset per arrow
+
+function getSpokRadius(count: number): number {
+  if (count <= 4) return 180;
+  if (count <= 8) return 200;
+  if (count <= 14) return 220;
+  return 240;
+}
+
+function truncateLabel(name: string, maxChars = 8): string {
+  return name.length > maxChars ? name.slice(0, maxChars) + '\u2026' : name;
+}
+
+// Bezier midpoint at t=0.5: B(0.5) = 0.25*P0 + 0.5*CP + 0.25*P2
+function bezierMid(p0x: number, p0y: number, cpx: number, cpy: number, p2x: number, p2y: number) {
+  return {
+    x: 0.25 * p0x + 0.5 * cpx + 0.25 * p2x,
+    y: 0.25 * p0y + 0.5 * cpy + 0.25 * p2y,
+  };
+}
+
+interface ArrowGroupProps {
+  rel: Relationship;
+  direction: ArrowDirection;
+  sx: number; sy: number;
+  ex: number; ey: number;
+  cpx: number; cpy: number;
+  midX: number; midY: number;
+  onCycle: (id: string, dir: ArrowDirection) => void;
+}
+
+function ArrowGroup({ rel, direction, sx, sy, ex, ey, cpx, cpy, midX, midY, onCycle }: ArrowGroupProps) {
+  const score: ArrowScore = direction === 'outbound' ? rel.outbound : rel.inbound;
+  const color = ARROW_SCORE_COLORS[score];
+  const badge = ARROW_SCORE_LABELS[score];
+  const isUnscored = score === 'unscored';
+  const markerId = `arrowhead-${score}`;
+  const dirLabel = direction === 'outbound' ? 'I will go to them' : 'They will come to me';
+
+  function handleCycle() {
+    onCycle(rel.id, direction);
+  }
+
+  return (
+    <g
+      role="button"
+      tabIndex={0}
+      aria-label={`${dirLabel} (${rel.name}): ${score}. Click to change.`}
+      style={{ cursor: 'pointer' }}
+      onClick={handleCycle}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleCycle();
+        }
+      }}
+    >
+      {/* Arrow path */}
+      <path
+        d={`M ${sx},${sy} Q ${cpx},${cpy} ${ex},${ey}`}
+        stroke={color}
+        strokeWidth={isUnscored ? 1.8 : 2.5}
+        strokeDasharray={isUnscored ? '6 4' : undefined}
+        fill="none"
+        markerEnd={`url(#${markerId})`}
+        strokeLinecap="round"
+      />
+      {/* Wide transparent hit zone */}
+      <path
+        d={`M ${sx},${sy} Q ${cpx},${cpy} ${ex},${ey}`}
+        stroke="transparent"
+        strokeWidth={24}
+        fill="none"
+      />
+      {/* Midpoint badge */}
+      <circle
+        cx={midX}
+        cy={midY}
+        r={11}
+        fill={isUnscored ? 'white' : color}
+        stroke={isUnscored ? '#C1C7D0' : 'none'}
+        strokeWidth={1.5}
+      />
+      <text
+        x={midX}
+        y={midY}
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontSize={9}
+        fontWeight="bold"
+        fill={isUnscored ? '#6B778C' : 'white'}
+        style={{ userSelect: 'none', pointerEvents: 'none' }}
+      >
+        {badge}
+      </text>
+    </g>
+  );
+}
+
+interface HubSpokeCanvasProps {
+  id?: string;
+}
+
+export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
+  const { relationships, setArrowScore } = useSession();
+  const n = relationships.length;
+  const R = getSpokRadius(n);
+
+  function handleCycle(relId: string, direction: ArrowDirection) {
+    const rel = relationships.find((r) => r.id === relId);
+    if (!rel) return;
+    const current = direction === 'outbound' ? rel.outbound : rel.inbound;
+    setArrowScore(relId, direction, cycleArrowScore(current));
+  }
+
+  return (
+    <svg
+      id={id}
+      viewBox="-450 -350 900 700"
+      preserveAspectRatio="xMidYMid meet"
+      width="100%"
+      height="100%"
+      aria-label="Hub and spoke relationship map"
+      style={{ display: 'block' }}
+    >
+      <defs>
+        {(['high', 'medium', 'low', 'unscored'] as ArrowScore[]).map((score) => (
+          <marker
+            key={score}
+            id={`arrowhead-${score}`}
+            markerWidth={8}
+            markerHeight={6}
+            refX={7}
+            refY={3}
+            orient="auto"
+          >
+            <polygon points="0 0, 8 3, 0 6" fill={ARROW_SCORE_COLORS[score]} />
+          </marker>
+        ))}
+      </defs>
+
+      {/* Canvas background */}
+      <rect x="-450" y="-350" width="900" height="700" fill="#F4F5F7" />
+
+      {/* Hub circle */}
+      <circle cx={0} cy={0} r={HUB_R} fill="#0052CC" />
+      <text
+        x={0}
+        y={0}
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontSize={16}
+        fontWeight="bold"
+        fill="white"
+        style={{ userSelect: 'none', pointerEvents: 'none' }}
+      >
+        You
+      </text>
+
+      {/* Empty state hint */}
+      {n === 0 && (
+        <text
+          x={160}
+          y={0}
+          textAnchor="start"
+          dominantBaseline="central"
+          fontSize={13}
+          fill="#6B778C"
+          style={{ userSelect: 'none', pointerEvents: 'none' }}
+        >
+          ← Add names in the panel
+        </text>
+      )}
+
+      {/* Relationship spokes */}
+      {relationships.map((rel, i) => {
+        const angle = (2 * Math.PI * i) / n - Math.PI / 2;
+        const dx = Math.cos(angle);
+        const dy = Math.sin(angle);
+        const px = -dy; // perpendicular unit vector
+        const py = dx;
+
+        const nodeX = R * dx;
+        const nodeY = R * dy;
+
+        // Outbound: hub edge → node edge, offset +OFFSET on perpendicular
+        const outSx = HUB_R * dx + OFFSET * px;
+        const outSy = HUB_R * dy + OFFSET * py;
+        const outEx = nodeX - NODE_R * dx + OFFSET * px;
+        const outEy = nodeY - NODE_R * dy + OFFSET * py;
+        const outCpx = (outSx + outEx) / 2 + 18 * px;
+        const outCpy = (outSy + outEy) / 2 + 18 * py;
+        const outMid = bezierMid(outSx, outSy, outCpx, outCpy, outEx, outEy);
+
+        // Inbound: node edge → hub edge, offset -OFFSET on perpendicular
+        const inSx = nodeX - NODE_R * dx - OFFSET * px;
+        const inSy = nodeY - NODE_R * dy - OFFSET * py;
+        const inEx = HUB_R * dx - OFFSET * px;
+        const inEy = HUB_R * dy - OFFSET * py;
+        const inCpx = (inSx + inEx) / 2 - 18 * px;
+        const inCpy = (inSy + inEy) / 2 - 18 * py;
+        const inMid = bezierMid(inSx, inSy, inCpx, inCpy, inEx, inEy);
+
+        return (
+          <g key={rel.id}>
+            {/* Outbound arrow (hub → node) */}
+            <ArrowGroup
+              rel={rel}
+              direction="outbound"
+              sx={outSx} sy={outSy}
+              ex={outEx} ey={outEy}
+              cpx={outCpx} cpy={outCpy}
+              midX={outMid.x} midY={outMid.y}
+              onCycle={handleCycle}
+            />
+
+            {/* Inbound arrow (node → hub) */}
+            <ArrowGroup
+              rel={rel}
+              direction="inbound"
+              sx={inSx} sy={inSy}
+              ex={inEx} ey={inEy}
+              cpx={inCpx} cpy={inCpy}
+              midX={inMid.x} midY={inMid.y}
+              onCycle={handleCycle}
+            />
+
+            {/* Node circle */}
+            <circle
+              cx={nodeX}
+              cy={nodeY}
+              r={NODE_R}
+              fill="white"
+              stroke="#DFE1E6"
+              strokeWidth={2}
+            />
+            <text
+              x={nodeX}
+              y={nodeY}
+              textAnchor="middle"
+              dominantBaseline="central"
+              fontSize={11}
+              fontWeight="500"
+              fill="#091E42"
+              style={{ userSelect: 'none', pointerEvents: 'none' }}
+            >
+              {truncateLabel(rel.name)}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}

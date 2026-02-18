@@ -89,3 +89,21 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Floating panel responsive styles */
+.floating-panel {
+  /* Desktop (default): fixed top-left */
+}
+
+/* Mobile stub — full implementation is Option C (future) */
+@media (max-width: 640px) {
+  .floating-panel {
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-height: 50vh !important;
+    border-radius: 16px 16px 0 0 !important;
+  }
+}

@@ -1,20 +1,19 @@
 'use client';
 
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import type { SessionState, Step, TrustLevel } from '../types';
+import type { ArrowDirection, ArrowScore, SessionState, Step } from '../types';
 
 interface SessionContextValue extends SessionState {
   addRelationship: (name: string) => void;
   removeRelationship: (id: string) => void;
   updateRelationship: (id: string, name: string) => void;
-  setTrustLevel: (id: string, level: TrustLevel) => void;
+  setArrowScore: (id: string, direction: ArrowDirection, score: ArrowScore) => void;
   setCurrentStep: (step: Step) => void;
   clearSession: () => void;
 }
 
 const initialState: SessionState = {
   relationships: [],
-  trustLevels: {},
   currentStep: 'landing',
 };
 
@@ -32,21 +31,18 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     const id = generateId();
     setState((prev) => ({
       ...prev,
-      relationships: [...prev.relationships, { id, name: name.trim() }],
+      relationships: [
+        ...prev.relationships,
+        { id, name: name.trim(), outbound: 'unscored', inbound: 'unscored' },
+      ],
     }));
   }, []);
 
   const removeRelationship = useCallback((id: string) => {
-    setState((prev) => {
-      const remainingTrust = Object.fromEntries(
-        Object.entries(prev.trustLevels).filter(([k]) => k !== id)
-      ) as typeof prev.trustLevels;
-      return {
-        ...prev,
-        relationships: prev.relationships.filter((r) => r.id !== id),
-        trustLevels: remainingTrust,
-      };
-    });
+    setState((prev) => ({
+      ...prev,
+      relationships: prev.relationships.filter((r) => r.id !== id),
+    }));
   }, []);
 
   const updateRelationship = useCallback((id: string, name: string) => {
@@ -58,10 +54,12 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
-  const setTrustLevel = useCallback((id: string, level: TrustLevel) => {
+  const setArrowScore = useCallback((id: string, direction: ArrowDirection, score: ArrowScore) => {
     setState((prev) => ({
       ...prev,
-      trustLevels: { ...prev.trustLevels, [id]: level },
+      relationships: prev.relationships.map((r) =>
+        r.id === id ? { ...r, [direction]: score } : r
+      ),
     }));
   }, []);
 
@@ -80,11 +78,11 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       addRelationship,
       removeRelationship,
       updateRelationship,
-      setTrustLevel,
+      setArrowScore,
       setCurrentStep,
       clearSession,
     }),
-    [state, addRelationship, removeRelationship, updateRelationship, setTrustLevel, setCurrentStep, clearSession]
+    [state, addRelationship, removeRelationship, updateRelationship, setArrowScore, setCurrentStep, clearSession]
   );
 
   return (

@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import type { RelationshipFormProps } from '../types';
-import { validateRelationshipName, validateRelationshipsCount } from '../lib/validation';
+import { MAX_RELATIONSHIPS } from '../constants';
+import { validateRelationshipName } from '../lib/validation';
 
 export function RelationshipForm({ onAdd, existingNames, relationshipCount }: RelationshipFormProps) {
   const [name, setName] = useState('');
   const [error, setError] = useState<string | undefined>();
 
-  const { canAdd } = validateRelationshipsCount(relationshipCount);
+  const canAdd = relationshipCount < MAX_RELATIONSHIPS;
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -36,23 +37,28 @@ export function RelationshipForm({ onAdd, existingNames, relationshipCount }: Re
             setName(e.target.value);
             setError(undefined);
           }}
-          placeholder="Enter a name..."
+          placeholder="Enter a name…"
           disabled={!canAdd}
           maxLength={50}
-          className="w-full rounded-lg border-2 border-border-subtle px-4 py-3 text-base text-gray-dark placeholder:text-gray-medium focus:border-primary focus:outline-none disabled:opacity-50"
+          className="w-full rounded-lg border-2 border-border-subtle px-3 py-2 text-sm text-gray-dark placeholder:text-gray-medium focus:border-primary focus:outline-none disabled:opacity-50"
           aria-invalid={!!error}
           aria-describedby={error ? 'name-error' : undefined}
         />
         {error && (
-          <p id="name-error" role="alert" className="mt-1 text-sm text-error">
+          <p id="name-error" role="alert" className="mt-1 text-xs text-error">
             {error}
+          </p>
+        )}
+        {!canAdd && (
+          <p className="mt-1 text-xs text-gray-medium">
+            Maximum {MAX_RELATIONSHIPS} relationships reached
           </p>
         )}
       </div>
       <button
         type="submit"
         disabled={!canAdd || name.trim().length === 0}
-        className="rounded-lg bg-primary px-6 py-3 font-semibold text-white transition-colors hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50"
+        className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50"
       >
         Add
       </button>
