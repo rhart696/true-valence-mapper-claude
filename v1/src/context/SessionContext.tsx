@@ -8,6 +8,7 @@ interface SessionContextValue extends SessionState {
   removeRelationship: (id: string) => void;
   updateRelationship: (id: string, name: string) => void;
   setArrowScore: (id: string, direction: ArrowDirection, score: ArrowScore) => void;
+  setRelationshipNote: (id: string, note: string) => void;
   setCurrentStep: (step: Step) => void;
   clearSession: () => void;
 }
@@ -63,6 +64,15 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
+  const setRelationshipNote = useCallback((id: string, note: string) => {
+    setState((prev) => ({
+      ...prev,
+      relationships: prev.relationships.map((r) =>
+        r.id === id ? { ...r, note } : r
+      ),
+    }));
+  }, []);
+
   const setCurrentStep = useCallback((step: Step) => {
     setState((prev) => ({ ...prev, currentStep: step }));
   }, []);
@@ -79,10 +89,11 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       removeRelationship,
       updateRelationship,
       setArrowScore,
+      setRelationshipNote,
       setCurrentStep,
       clearSession,
     }),
-    [state, addRelationship, removeRelationship, updateRelationship, setArrowScore, setCurrentStep, clearSession]
+    [state, addRelationship, removeRelationship, updateRelationship, setArrowScore, setRelationshipNote, setCurrentStep, clearSession]
   );
 
   return (

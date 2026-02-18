@@ -8,11 +8,10 @@ const HUB_R = 42;
 const NODE_R = 28;
 const OFFSET = 12; // perpendicular px offset per arrow
 
-function getSpokRadius(count: number): number {
-  if (count <= 4) return 180;
-  if (count <= 8) return 200;
-  if (count <= 14) return 220;
-  return 240;
+function getEllipseRadii(count: number): { rx: number; ry: number } {
+  const ry = 200;
+  const rx = Math.min(320, 200 + Math.max(0, count - 4) * 10);
+  return { rx, ry };
 }
 
 function truncateLabel(name: string, maxChars = 8): string {
@@ -112,7 +111,6 @@ interface HubSpokeCanvasProps {
 export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
   const { relationships, setArrowScore } = useSession();
   const n = relationships.length;
-  const R = getSpokRadius(n);
 
   function handleCycle(relId: string, direction: ArrowDirection) {
     const rel = relationships.find((r) => r.id === relId);
@@ -182,14 +180,17 @@ export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
 
       {/* Relationship spokes */}
       {relationships.map((rel, i) => {
+        const { rx, ry } = getEllipseRadii(n);
         const angle = (2 * Math.PI * i) / n - Math.PI / 2;
-        const dx = Math.cos(angle);
-        const dy = Math.sin(angle);
+        const nodeX = rx * Math.cos(angle);
+        const nodeY = ry * Math.sin(angle);
+
+        // Normalize spoke direction from actual position (not angle) — required for ellipse
+        const len = Math.sqrt(nodeX * nodeX + nodeY * nodeY);
+        const dx = nodeX / len;
+        const dy = nodeY / len;
         const px = -dy; // perpendicular unit vector
         const py = dx;
-
-        const nodeX = R * dx;
-        const nodeY = R * dy;
 
         // Outbound: hub edge → node edge, offset +OFFSET on perpendicular
         const outSx = HUB_R * dx + OFFSET * px;

@@ -9,12 +9,12 @@ import { ExportSuccessScreen } from '../components/ExportSuccessScreen';
 import { TrustDefinitionsModal } from '../components/TrustDefinitionsModal';
 
 function AppContent() {
-  const { currentStep, setCurrentStep, clearSession } = useSession();
+  const { currentStep, setCurrentStep, clearSession, relationships } = useSession();
   const [showDefinitions, setShowDefinitions] = useState(false);
   const { isExporting, exportPDF } = usePDFExport();
 
   async function handleExport() {
-    await exportPDF('hub-spoke-svg');
+    await exportPDF('hub-spoke-svg', relationships);
     setCurrentStep('complete');
   }
 

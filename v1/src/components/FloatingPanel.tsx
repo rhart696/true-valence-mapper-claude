@@ -54,8 +54,9 @@ function ScorePill({ score, direction, onClick }: {
 }
 
 export function FloatingPanel({ onExport }: FloatingPanelProps) {
-  const { relationships, addRelationship, removeRelationship, setArrowScore } = useSession();
+  const { relationships, addRelationship, removeRelationship, setArrowScore, setRelationshipNote } = useSession();
   const [showDefinitions, setShowDefinitions] = useState(false);
+  const [expandedNoteId, setExpandedNoteId] = useState<string | null>(null);
 
   const existingNames = relationships.map((r) => r.name);
 
@@ -141,67 +142,149 @@ export function FloatingPanel({ onExport }: FloatingPanelProps) {
               key={rel.id}
               className="card-enter"
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
                 padding: '9px 12px',
                 borderBottom: '1px solid #EBECF0',
               }}
             >
-              {/* Name */}
-              <span
-                style={{
-                  flex: 1,
-                  fontSize: '13px',
-                  fontWeight: 500,
-                  color: '#091E42',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                  minWidth: 0,
-                }}
-              >
-                {rel.name}
-              </span>
+              {/* Top row: name + pills + remove */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                {/* Name — click toggles note */}
+                <span
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setExpandedNoteId(expandedNoteId === rel.id ? null : rel.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setExpandedNoteId(expandedNoteId === rel.id ? null : rel.id);
+                    }
+                  }}
+                  style={{
+                    flex: 1,
+                    fontSize: '13px',
+                    fontWeight: 500,
+                    color: '#091E42',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    minWidth: 0,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {rel.name}
+                </span>
 
-              {/* Outbound score pill */}
-              <ScorePill
-                score={rel.outbound}
-                direction="outbound"
-                onClick={() => handleCycleScore(rel.id, 'outbound')}
-              />
+                {/* Outbound score pill */}
+                <ScorePill
+                  score={rel.outbound}
+                  direction="outbound"
+                  onClick={() => handleCycleScore(rel.id, 'outbound')}
+                />
 
-              {/* Inbound score pill */}
-              <ScorePill
-                score={rel.inbound}
-                direction="inbound"
-                onClick={() => handleCycleScore(rel.id, 'inbound')}
-              />
+                {/* Inbound score pill */}
+                <ScorePill
+                  score={rel.inbound}
+                  direction="inbound"
+                  onClick={() => handleCycleScore(rel.id, 'inbound')}
+                />
 
-              {/* Remove */}
-              <button
-                onClick={() => removeRelationship(rel.id)}
-                title={`Remove ${rel.name}`}
-                aria-label={`Remove ${rel.name}`}
-                style={{
-                  width: '22px',
-                  height: '22px',
-                  borderRadius: '50%',
-                  border: 'none',
-                  backgroundColor: 'transparent',
-                  color: '#6B778C',
-                  cursor: 'pointer',
-                  fontSize: '18px',
-                  lineHeight: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                  padding: 0,
-                }}
-              >
-                ×
-              </button>
+                {/* Remove */}
+                <button
+                  onClick={() => removeRelationship(rel.id)}
+                  title={`Remove ${rel.name}`}
+                  aria-label={`Remove ${rel.name}`}
+                  style={{
+                    width: '22px',
+                    height: '22px',
+                    borderRadius: '50%',
+                    border: 'none',
+                    backgroundColor: 'transparent',
+                    color: '#6B778C',
+                    cursor: 'pointer',
+                    fontSize: '18px',
+                    lineHeight: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    padding: 0,
+                  }}
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* Note area */}
+              {expandedNoteId === rel.id ? (
+                <textarea
+                  autoFocus
+                  rows={2}
+                  placeholder="Add a note…"
+                  value={rel.note ?? ''}
+                  onChange={(e) => setRelationshipNote(rel.id, e.target.value)}
+                  onBlur={() => setExpandedNoteId(null)}
+                  style={{
+                    marginTop: '6px',
+                    width: '100%',
+                    boxSizing: 'border-box',
+                    fontSize: '12px',
+                    color: '#091E42',
+                    border: '1px solid #C1C7D0',
+                    borderRadius: '4px',
+                    padding: '4px 6px',
+                    resize: 'none',
+                    outline: 'none',
+                    fontFamily: 'inherit',
+                  }}
+                />
+              ) : rel.note?.trim() ? (
+                /* Note preview */
+                <p
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setExpandedNoteId(rel.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setExpandedNoteId(rel.id);
+                    }
+                  }}
+                  style={{
+                    margin: '4px 0 0',
+                    fontSize: '11px',
+                    fontStyle: 'italic',
+                    color: '#6B778C',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {rel.note}
+                </p>
+              ) : (
+                /* Note affordance */
+                <span
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setExpandedNoteId(rel.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setExpandedNoteId(rel.id);
+                    }
+                  }}
+                  style={{
+                    display: 'block',
+                    marginTop: '3px',
+                    fontSize: '11px',
+                    color: '#97A0AF',
+                    cursor: 'pointer',
+                  }}
+                >
+                  + note
+                </span>
+              )}
             </div>
           ))}
         </div>

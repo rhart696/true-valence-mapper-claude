@@ -8,6 +8,7 @@ export interface Relationship {
   name: string;
   outbound: ArrowScore; // hub→node: "I will go to them"
   inbound: ArrowScore;  // node→hub: "They will come to me"
+  note?: string;
 }
 
 export type Step = 'landing' | 'map' | 'complete';
