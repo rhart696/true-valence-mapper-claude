@@ -2,6 +2,7 @@
 
 import { HubSpokeCanvas } from './HubSpokeCanvas';
 import { FloatingPanel } from './FloatingPanel';
+import { useSession } from '../context/SessionContext';
 
 interface MapScreenProps {
   isExporting: boolean;
@@ -9,6 +10,8 @@ interface MapScreenProps {
 }
 
 export function MapScreen({ isExporting, onExport }: MapScreenProps) {
+  const { relationships } = useSession();
+
   return (
     <div
       style={{
@@ -22,6 +25,26 @@ export function MapScreen({ isExporting, onExport }: MapScreenProps) {
       <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
         <HubSpokeCanvas />
       </div>
+
+      {/* Empty-state hint — positioned at right edge of floating panel */}
+      {relationships.length === 0 && (
+        <div
+          style={{
+            position: 'absolute',
+            left: '316px', // panel left(20) + width(280) + gap(16)
+            top: '50%',
+            transform: 'translateY(-50%)',
+            fontSize: '13px',
+            fontStyle: 'italic',
+            color: '#7A9BC6',
+            pointerEvents: 'none',
+            userSelect: 'none',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          ← Add names in the panel
+        </div>
+      )}
 
       {/* Floating panel (z-index 10) */}
       <FloatingPanel onExport={onExport} />

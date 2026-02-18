@@ -95,7 +95,7 @@ function ArrowGroup({ rel, direction, sx, sy, ex, ey, cpx, cpy, midX, midY, onCy
         dominantBaseline="central"
         fontSize={9}
         fontWeight="bold"
-        fill={isUnscored ? '#6B778C' : 'white'}
+        fill={isUnscored ? '#6B778C' : '#003087'}
         style={{ userSelect: 'none', pointerEvents: 'none' }}
       >
         {badge}
@@ -148,8 +148,8 @@ export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
       {/* Canvas background */}
       <rect x="-450" y="-350" width="900" height="700" fill="#F4F5F7" />
 
-      {/* Hub circle */}
-      <circle cx={0} cy={0} r={HUB_R} fill="#0052CC" />
+      {/* Hub circle — ProActive PMS 280 navy */}
+      <circle cx={0} cy={0} r={HUB_R} fill="#003087" />
       <text
         x={0}
         y={0}
@@ -163,20 +163,7 @@ export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
         You
       </text>
 
-      {/* Empty state hint */}
-      {n === 0 && (
-        <text
-          x={160}
-          y={0}
-          textAnchor="start"
-          dominantBaseline="central"
-          fontSize={13}
-          fill="#6B778C"
-          style={{ userSelect: 'none', pointerEvents: 'none' }}
-        >
-          ← Add names in the panel
-        </text>
-      )}
+      {/* Empty state hint rendered as HTML overlay in MapScreen */}
 
       {/* Relationship spokes */}
       {relationships.map((rel, i) => {
@@ -234,13 +221,13 @@ export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
               onCycle={handleCycle}
             />
 
-            {/* Node circle */}
+            {/* Node circle — light navy tint, distinct from arrow colours */}
             <circle
               cx={nodeX}
               cy={nodeY}
               r={NODE_R}
-              fill="#EEF2FF"
-              stroke="#A5B4FC"
+              fill="#EBF0F8"
+              stroke="#7A9BC6"
               strokeWidth={2}
             />
             <text

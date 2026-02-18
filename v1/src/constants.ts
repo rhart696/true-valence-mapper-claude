@@ -7,27 +7,27 @@ export const MAX_RELATIONSHIPS = 25;
 export const MAX_NAME_LENGTH = 50;
 export const MIN_NAME_LENGTH = 1;
 
-// Arrow score definitions
+// Arrow score definitions — ProActive ReSolutions brand palette
 export const ARROW_SCORE_DEFINITIONS: ArrowScoreDefinition[] = [
   {
     score: 'high',
     label: 'High Confidence',
     description: 'You are highly confident about this direction of approach.',
-    color: '#00B87C',
+    color: '#7DC242', // PMS 375 green
     badge: 'H',
   },
   {
     score: 'medium',
     label: 'Medium Confidence',
     description: 'You have moderate confidence about this direction of approach.',
-    color: '#0052CC',
+    color: '#00AEEF', // ProActive sky blue
     badge: 'M',
   },
   {
     score: 'low',
     label: 'Low Confidence',
     description: 'You have low confidence about this direction of approach.',
-    color: '#FFAB00',
+    color: '#FFD100', // PMS 109 yellow
     badge: 'L',
   },
   {
@@ -41,9 +41,9 @@ export const ARROW_SCORE_DEFINITIONS: ArrowScoreDefinition[] = [
 
 // Arrow score color map (for quick lookup)
 export const ARROW_SCORE_COLORS: Record<ArrowScore, string> = {
-  high: '#00B87C',
-  medium: '#0052CC',
-  low: '#FFAB00',
+  high: '#7DC242',
+  medium: '#00AEEF',
+  low: '#FFD100',
   unscored: '#C1C7D0',
 };
 
@@ -63,13 +63,14 @@ export function cycleArrowScore(current: ArrowScore): ArrowScore {
   return ARROW_SCORE_CYCLE[(idx + 1) % ARROW_SCORE_CYCLE.length];
 }
 
-// Design system colors
+// Design system colors — ProActive ReSolutions brand
 export const COLORS = {
-  primary: '#0052CC',
-  primaryHover: '#0047B3',
-  primaryActive: '#003A8F',
-  secondary: '#00B87C',
-  accent: '#FF6B35',
+  primary: '#003087',       // PMS 280 navy
+  primaryHover: '#002070',
+  primaryActive: '#001555',
+  secondary: '#7DC242',     // PMS 375 green
+  accent: '#FFD100',        // PMS 109 yellow
+  brandSky: '#00AEEF',      // ProActive sky blue
   grayLight: '#F4F5F7',
   grayMedium: '#6B778C',
   grayDark: '#091E42',

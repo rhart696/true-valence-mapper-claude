@@ -93,11 +93,13 @@ export function TrustDefinitionsModal({ isOpen, onClose }: TrustDefinitionsModal
           <div className="space-y-2 text-sm text-gray-medium">
             <p>
               <span className="font-semibold text-gray-dark">↗ Outbound</span>{' '}
-              — &ldquo;How confident am I that <em>I will go to them</em>?&rdquo;
+              — &ldquo;How confident am I that{' '}
+              <em>I would go to them when I have a problem with them</em>?&rdquo;
             </p>
             <p>
               <span className="font-semibold text-gray-dark">↙ Inbound</span>{' '}
-              — &ldquo;How confident am I that <em>they will come to me</em>?&rdquo;
+              — &ldquo;How confident am I that{' '}
+              <em>they would come to me when they have a problem with me</em>?&rdquo;
             </p>
           </div>
           <p className="mt-2 text-xs text-gray-medium">

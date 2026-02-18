@@ -4,23 +4,24 @@
 /* Generated from 09-DESIGN-SYSTEM.md */
 
 @theme inline {
-  /* Primary colors */
-  --color-primary: #0052CC;
-  --color-primary-hover: #0047B3;
-  --color-primary-active: #003A8F;
-  --color-secondary: #00B87C;
-  --color-accent: #FF6B35;
+  /* Primary colors — ProActive ReSolutions brand palette */
+  --color-primary: #003087;        /* PMS 280 navy */
+  --color-primary-hover: #002070;
+  --color-primary-active: #001555;
+  --color-secondary: #7DC242;      /* PMS 375 green */
+  --color-accent: #FFD100;         /* PMS 109 yellow */
+  --color-brand-sky: #00AEEF;      /* ProActive sky blue */
 
   /* Gray scale */
   --color-gray-light: #F4F5F7;
   --color-gray-medium: #6B778C;
   --color-gray-dark: #091E42;
 
-  /* Trust level colors */
-  --color-trust-high: #00B87C;
-  --color-trust-moderate: #0052CC;
-  --color-trust-low: #FFAB00;
-  --color-trust-none: #FF5630;
+  /* Arrow score colors — ProActive brand */
+  --color-trust-high: #7DC242;     /* PMS 375 green */
+  --color-trust-moderate: #00AEEF; /* ProActive sky blue */
+  --color-trust-low: #FFD100;      /* PMS 109 yellow */
+  --color-trust-none: #C1C7D0;
 
   /* Semantic colors */
   --color-success: #00B87C;
@@ -57,7 +58,7 @@ body {
 
 /* Focus-visible for keyboard navigation */
 :focus-visible {
-  outline: 2px solid #0052CC;
+  outline: 2px solid #003087;
   outline-offset: 2px;
 }
 
