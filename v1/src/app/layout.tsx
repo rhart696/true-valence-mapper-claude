@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "True Valence Mapper",
+  title: "True Valence Relationship Mapper",
   description:
     "A visual trust mapping tool for coaching sessions. Help your coachee see their relationship landscape clearly.",
 };

@@ -120,7 +120,7 @@ export function FloatingPanel({ onExport }: FloatingPanelProps) {
                   lineHeight: 1.2,
                 }}
               >
-                True Valence<br />Mapper
+                True Valence<br />Relationship Mapper
               </h2>
             </div>
             {relationships.length > 0 && (

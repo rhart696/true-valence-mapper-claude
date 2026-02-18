@@ -14,15 +14,17 @@ export function LandingScreen({ onStartSession, onOpenDefinitions }: LandingScre
       />
 
       <h1 className="mb-4 text-4xl font-bold text-gray-dark">
-        True Valence Mapper
+        True Valence Relationship Mapper
       </h1>
 
       <p className="mb-2 max-w-md text-lg text-gray-medium">
-        A relationship trust-mapping tool for ProActive coaching sessions.
+        A relationship trust-mapping tool for<br />ProActive coaching sessions.
       </p>
       <p className="mb-2 max-w-md text-lg text-gray-medium">
-        See who you&rsquo;d go to. See who&rsquo;d come to you.{' '}
-        <span style={{ color: '#003087', fontWeight: 600 }}>Work with what you find.</span>
+        Who would you go to? Who would come to you?
+      </p>
+      <p className="mb-2 max-w-md text-lg text-gray-medium">
+        <span style={{ color: '#003087', fontWeight: 600, whiteSpace: 'nowrap' }}>Work with what you find.</span>
       </p>
       <p className="mb-8 max-w-md text-sm text-gray-medium">
         No sign-up required. No data stored. Session-only.
