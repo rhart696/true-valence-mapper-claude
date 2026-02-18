@@ -14,6 +14,7 @@ export interface Relationship {
 export type Step = 'landing' | 'map' | 'complete';
 
 export interface SessionState {
+  coacheeName: string;
   relationships: Relationship[];
   currentStep: Step;
 }

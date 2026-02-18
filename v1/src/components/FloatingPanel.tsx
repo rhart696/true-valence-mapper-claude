@@ -54,7 +54,7 @@ function ScorePill({ score, direction, onClick }: {
 }
 
 export function FloatingPanel({ onExport }: FloatingPanelProps) {
-  const { relationships, addRelationship, removeRelationship, setArrowScore, setRelationshipNote } = useSession();
+  const { coacheeName, setCoacheeName, relationships, addRelationship, removeRelationship, setArrowScore, setRelationshipNote } = useSession();
   const [showDefinitions, setShowDefinitions] = useState(false);
   const [expandedNoteId, setExpandedNoteId] = useState<string | null>(null);
 
@@ -138,6 +138,28 @@ export function FloatingPanel({ onExport }: FloatingPanelProps) {
               </span>
             )}
           </div>
+          {/* Coachee name — optional, updates hub label */}
+          <input
+            type="text"
+            value={coacheeName}
+            onChange={(e) => setCoacheeName(e.target.value)}
+            placeholder="Your name (optional)"
+            maxLength={24}
+            style={{
+              display: 'block',
+              width: '100%',
+              boxSizing: 'border-box',
+              fontSize: '11px',
+              color: '#091E42',
+              background: 'transparent',
+              border: 'none',
+              borderBottom: '1px solid #DFE1E6',
+              padding: '3px 0 4px',
+              marginBottom: '10px',
+              outline: 'none',
+            }}
+          />
+
           <RelationshipForm
             onAdd={addRelationship}
             existingNames={existingNames}

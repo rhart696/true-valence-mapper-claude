@@ -109,7 +109,9 @@ interface HubSpokeCanvasProps {
 }
 
 export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
-  const { relationships, setArrowScore } = useSession();
+  const { coacheeName, relationships, setArrowScore } = useSession();
+  const hubLabel = truncateLabel(coacheeName.trim() || 'Me', 6);
+  const hubFontSize = hubLabel.length <= 3 ? 16 : hubLabel.length <= 5 ? 13 : 11;
   const n = relationships.length;
 
   function handleCycle(relId: string, direction: ArrowDirection) {
@@ -155,12 +157,12 @@ export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
         y={0}
         textAnchor="middle"
         dominantBaseline="central"
-        fontSize={16}
+        fontSize={hubFontSize}
         fontWeight="bold"
         fill="white"
         style={{ userSelect: 'none', pointerEvents: 'none' }}
       >
-        You
+        {hubLabel}
       </text>
 
       {/* Empty state hint rendered as HTML overlay in MapScreen */}

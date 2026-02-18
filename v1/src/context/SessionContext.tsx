@@ -4,6 +4,7 @@ import { createContext, useCallback, useContext, useMemo, useState } from 'react
 import type { ArrowDirection, ArrowScore, SessionState, Step } from '../types';
 
 interface SessionContextValue extends SessionState {
+  setCoacheeName: (name: string) => void;
   addRelationship: (name: string) => void;
   removeRelationship: (id: string) => void;
   updateRelationship: (id: string, name: string) => void;
@@ -14,6 +15,7 @@ interface SessionContextValue extends SessionState {
 }
 
 const initialState: SessionState = {
+  coacheeName: '',
   relationships: [],
   currentStep: 'landing',
 };
@@ -27,6 +29,10 @@ function generateId(): string {
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<SessionState>(initialState);
+
+  const setCoacheeName = useCallback((name: string) => {
+    setState((prev) => ({ ...prev, coacheeName: name }));
+  }, []);
 
   const addRelationship = useCallback((name: string) => {
     const id = generateId();
@@ -85,6 +91,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<SessionContextValue>(
     () => ({
       ...state,
+      setCoacheeName,
       addRelationship,
       removeRelationship,
       updateRelationship,
@@ -93,7 +100,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       setCurrentStep,
       clearSession,
     }),
-    [state, addRelationship, removeRelationship, updateRelationship, setArrowScore, setRelationshipNote, setCurrentStep, clearSession]
+    [state, setCoacheeName, addRelationship, removeRelationship, updateRelationship, setArrowScore, setRelationshipNote, setCurrentStep, clearSession]
   );
 
   return (

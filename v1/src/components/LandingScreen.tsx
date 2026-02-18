@@ -21,7 +21,7 @@ export function LandingScreen({ onStartSession, onOpenDefinitions }: LandingScre
         A relationship trust-mapping tool for<br />ProActive coaching sessions.
       </p>
       <p className="mb-2 max-w-md text-lg text-gray-medium">
-        Who would you go to? Who would come to you?
+        Who would I go to? Who would come to me?
       </p>
       <p className="mb-2 max-w-md text-lg text-gray-medium">
         <span style={{ color: '#003087', fontWeight: 600, whiteSpace: 'nowrap' }}>Work with what you find.</span>
