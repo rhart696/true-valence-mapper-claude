@@ -71,8 +71,10 @@ export function TrustDefinitionsModal({ isOpen, onClose }: TrustDefinitionsModal
     >
       <div
         ref={modalRef}
-        className="screen-enter mx-4 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-8 shadow-xl"
+        className="screen-enter mx-4 max-h-[90vh] w-full max-w-lg rounded-2xl bg-white shadow-xl"
+        style={{ position: 'relative', overflow: 'hidden' }}
       >
+        <div style={{ overflowY: 'auto', maxHeight: '90vh', padding: '32px' }}>
         <div className="mb-6 flex items-center justify-between border-b border-border-subtle pb-4">
           <h2 id="definitions-title" className="text-2xl font-semibold text-gray-dark">
             Confidence Score Definitions
@@ -132,6 +134,20 @@ export function TrustDefinitionsModal({ isOpen, onClose }: TrustDefinitionsModal
             </p>
           </div>
         </div>
+        </div>
+        {/* Bottom fade gradient — signals scrollable content below */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '48px',
+            background: 'linear-gradient(to bottom, transparent, white)',
+            pointerEvents: 'none',
+            borderRadius: '0 0 16px 16px',
+          }}
+        />
       </div>
     </div>
   );

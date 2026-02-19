@@ -10,7 +10,7 @@ export function LandingScreen({ onStartSession, onOpenDefinitions }: LandingScre
       <img
         src="/brand/ProActive-ReSolutions-full-logo.png"
         alt="ProActive ReSolutions"
-        style={{ height: '64px', width: 'auto', marginBottom: '32px' }}
+        style={{ height: '80px', width: 'auto', marginBottom: '32px' }}
       />
 
       <h1 className="mb-4 text-4xl font-bold text-gray-dark">

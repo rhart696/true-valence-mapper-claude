@@ -174,8 +174,9 @@ export function FloatingPanel({ onExport }: FloatingPanelProps) {
           />
         </div>
 
-        {/* Relationship list */}
-        <div style={{ overflowY: 'auto', flex: 1 }}>
+        {/* Relationship list — relative wrapper for scroll-fade affordance */}
+        <div style={{ position: 'relative', flex: 1, overflow: 'hidden' }}>
+          <div style={{ overflowY: 'auto', height: '100%' }}>
           {relationships.map((rel) => (
             <div
               key={rel.id}
@@ -296,8 +297,9 @@ export function FloatingPanel({ onExport }: FloatingPanelProps) {
                     fontStyle: 'italic',
                     color: '#6B778C',
                     overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical' as const,
                     cursor: 'pointer',
                   }}
                 >
@@ -328,6 +330,19 @@ export function FloatingPanel({ onExport }: FloatingPanelProps) {
               )}
             </div>
           ))}
+          </div>
+          {/* Fade gradient — visible when list overflows, invisible over empty space */}
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: '40px',
+              background: 'linear-gradient(to bottom, transparent, white)',
+              pointerEvents: 'none',
+            }}
+          />
         </div>
 
         {/* Footer */}
