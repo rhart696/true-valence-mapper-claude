@@ -9,12 +9,12 @@ import { ExportSuccessScreen } from '../components/ExportSuccessScreen';
 import { TrustDefinitionsModal } from '../components/TrustDefinitionsModal';
 
 function AppContent() {
-  const { currentStep, setCurrentStep, clearSession, relationships } = useSession();
+  const { currentStep, setCurrentStep, clearSession, relationships, coacheeName } = useSession();
   const [showDefinitions, setShowDefinitions] = useState(false);
   const { isExporting, exportPDF } = usePDFExport();
 
   async function handleExport() {
-    await exportPDF('hub-spoke-svg', relationships);
+    await exportPDF('hub-spoke-svg', relationships, coacheeName);
     setCurrentStep('complete');
   }
 
@@ -35,7 +35,7 @@ function AppContent() {
 
       {currentStep === 'complete' && (
         <div key="complete" className="screen-enter">
-          <ExportSuccessScreen onNewSession={clearSession} />
+          <ExportSuccessScreen onNewSession={clearSession} onBackToMap={() => setCurrentStep('map')} />
         </div>
       )}
 

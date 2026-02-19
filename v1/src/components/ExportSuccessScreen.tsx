@@ -3,7 +3,7 @@
 import { CheckCircle } from '@phosphor-icons/react';
 import type { ExportSuccessScreenProps } from '../types';
 
-export function ExportSuccessScreen({ onNewSession }: ExportSuccessScreenProps) {
+export function ExportSuccessScreen({ onNewSession, onBackToMap }: ExportSuccessScreenProps) {
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
       <CheckCircle size={64} className="mb-4 text-success" weight="fill" />
@@ -19,6 +19,12 @@ export function ExportSuccessScreen({ onNewSession }: ExportSuccessScreenProps) 
         className="rounded-lg bg-primary px-8 py-3 text-lg font-semibold text-white transition-colors hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         Start New Session
+      </button>
+      <button
+        onClick={onBackToMap}
+        className="mt-4 text-sm text-primary underline hover:text-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      >
+        Back to map
       </button>
     </div>
   );

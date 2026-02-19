@@ -56,6 +56,7 @@ export interface LandingScreenProps {
 
 export interface ExportSuccessScreenProps {
   onNewSession: () => void;
+  onBackToMap: () => void;
 }
 
 export interface RelationshipFormProps {
