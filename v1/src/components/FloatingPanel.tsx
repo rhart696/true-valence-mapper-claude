@@ -150,7 +150,7 @@ export function FloatingPanel({ onExport }: FloatingPanelProps) {
             type="text"
             value={coacheeName}
             onChange={(e) => setCoacheeName(e.target.value)}
-            placeholder="Your name (optional)"
+            placeholder="Coachee's name (optional)"
             maxLength={24}
             style={{
               display: 'block',

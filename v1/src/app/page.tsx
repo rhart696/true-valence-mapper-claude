@@ -35,7 +35,7 @@ function AppContent() {
 
       {currentStep === 'complete' && (
         <div key="complete" className="screen-enter">
-          <ExportSuccessScreen onNewSession={clearSession} onBackToMap={() => setCurrentStep('map')} />
+          <ExportSuccessScreen onNewSession={clearSession} onBackToMap={() => setCurrentStep('map')} coacheeName={coacheeName} />
         </div>
       )}
 

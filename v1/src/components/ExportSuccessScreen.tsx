@@ -3,7 +3,8 @@
 import { CheckCircle } from '@phosphor-icons/react';
 import type { ExportSuccessScreenProps } from '../types';
 
-export function ExportSuccessScreen({ onNewSession, onBackToMap }: ExportSuccessScreenProps) {
+export function ExportSuccessScreen({ onNewSession, onBackToMap, coacheeName }: ExportSuccessScreenProps) {
+  const name = coacheeName?.trim();
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
       <CheckCircle size={64} className="mb-4 text-success" weight="fill" />
@@ -11,7 +12,7 @@ export function ExportSuccessScreen({ onNewSession, onBackToMap }: ExportSuccess
         PDF Downloaded Successfully!
       </h1>
       <p className="mb-8 max-w-md text-gray-medium">
-        Your coachee&apos;s trust map has been exported. They can use this artifact to
+        {name ? `${name}'s` : "Your coachee\u2019s"} trust map has been exported. They can use this artifact to
         reflect on their relationship landscape between sessions.
       </p>
       <button

@@ -57,6 +57,7 @@ export interface LandingScreenProps {
 export interface ExportSuccessScreenProps {
   onNewSession: () => void;
   onBackToMap: () => void;
+  coacheeName?: string;
 }
 
 export interface RelationshipFormProps {
