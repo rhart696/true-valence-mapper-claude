@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+/* True Valence Mapper v1.0 — Design System Tokens */
+/* Generated from 09-DESIGN-SYSTEM.md */
+
+@theme inline {
+  /* Primary colors — ProActive ReSolutions brand palette */
+  --color-primary: #003087;        /* PMS 280 navy */
+  --color-primary-hover: #002070;
+  --color-primary-active: #001555;
+  --color-secondary: #7DC242;      /* PMS 375 green */
+  --color-accent: #FFD100;         /* PMS 109 yellow */
+  --color-brand-sky: #00AEEF;      /* ProActive sky blue */
+
+  /* Gray scale */
+  --color-gray-light: #F4F5F7;
+  --color-gray-medium: #6B778C;
+  --color-gray-dark: #091E42;
+
+  /* Arrow score colors — ProActive brand */
+  --color-trust-high: #7DC242;     /* PMS 375 green */
+  --color-trust-moderate: #00AEEF; /* ProActive sky blue */
+  --color-trust-low: #FFD100;      /* PMS 109 yellow */
+  --color-trust-none: #C1C7D0;
+
+  /* Semantic colors */
+  --color-success: #00B87C;
+  --color-error: #FF5630;
+  --color-warning: #FFAB00;
+  --color-info: #0052CC;
+
+  /* Border colors */
+  --color-border-default: #DFE1E6;
+  --color-border-subtle: #EBECF0;
+  --color-border-strong: #6B778C;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(9, 30, 66, 0.25);
+  --shadow-md: 0 4px 8px rgba(9, 30, 66, 0.15);
+  --shadow-lg: 0 8px 16px rgba(9, 30, 66, 0.15);
+  --shadow-xl: 0 16px 32px rgba(9, 30, 66, 0.15);
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Font */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  background: #ffffff;
+  color: #091E42;
+  font-family: var(--font-sans);
+}
+
+/* Focus-visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid #003087;
+  outline-offset: 2px;
+}
+
+/* Screen fade-in transition */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.screen-enter {
+  animation: fadeIn 200ms ease-out both;
+}
+
+/* Relationship card slide-in */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.card-enter {
+  animation: slideIn 150ms ease-out both;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Floating panel responsive styles */
+.floating-panel {
+  /* Desktop (default): fixed top-left */
+}
+
+/* Mobile stub — full implementation is Option C (future) */
+@media (max-width: 640px) {
+  .floating-panel {
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-height: 50vh !important;
+    border-radius: 16px 16px 0 0 !important;
+  }
+}
