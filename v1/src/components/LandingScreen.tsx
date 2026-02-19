@@ -26,6 +26,9 @@ export function LandingScreen({ onStartSession, onOpenDefinitions }: LandingScre
       <p className="mb-2 max-w-md text-lg text-gray-medium">
         <span style={{ color: '#003087', fontWeight: 600, whiteSpace: 'nowrap' }}>Work with what you find.</span>
       </p>
+      <p className="mb-4 max-w-sm text-sm text-gray-medium">
+        Add the key people in your work life and rate your confidence in each relationship — in both directions.
+      </p>
       <p className="mb-8 max-w-md text-sm text-gray-medium">
         No sign-up required. No data stored.
       </p>
