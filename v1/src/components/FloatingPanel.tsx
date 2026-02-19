@@ -11,22 +11,25 @@ interface FloatingPanelProps {
   onExport: () => void;
 }
 
-function ScorePill({ score, direction, onClick }: {
+function ScorePill({ score, direction, onClick, onReset }: {
   score: ArrowScore;
   direction: ArrowDirection;
   onClick: () => void;
+  onReset: () => void;
 }) {
   const color = ARROW_SCORE_COLORS[score];
   const badge = ARROW_SCORE_LABELS[score];
   const isUnscored = score === 'unscored';
   const dirArrow = direction === 'outbound' ? '↗' : '↙';
-  const title = direction === 'outbound'
-    ? `Outbound (I will go to them): ${score}`
-    : `Inbound (They will come to me): ${score}`;
+  const dirLabel = direction === 'outbound' ? 'Outbound (I will go to them)' : 'Inbound (They will come to me)';
+  const title = isUnscored
+    ? `${dirLabel}: not yet scored — click to set`
+    : `${dirLabel}: ${score} — click to change, right-click to reset`;
 
   return (
     <button
       onClick={onClick}
+      onContextMenu={(e) => { e.preventDefault(); if (!isUnscored) onReset(); }}
       title={title}
       aria-label={title}
       style={{
@@ -65,6 +68,10 @@ export function FloatingPanel({ onExport }: FloatingPanelProps) {
     if (!rel) return;
     const current: ArrowScore = direction === 'outbound' ? rel.outbound : rel.inbound;
     setArrowScore(id, direction, cycleArrowScore(current));
+  }
+
+  function handleResetScore(id: string, direction: ArrowDirection) {
+    setArrowScore(id, direction, 'unscored');
   }
 
   return (
@@ -211,6 +218,7 @@ export function FloatingPanel({ onExport }: FloatingPanelProps) {
                   score={rel.outbound}
                   direction="outbound"
                   onClick={() => handleCycleScore(rel.id, 'outbound')}
+                  onReset={() => handleResetScore(rel.id, 'outbound')}
                 />
 
                 {/* Inbound score pill */}
@@ -218,6 +226,7 @@ export function FloatingPanel({ onExport }: FloatingPanelProps) {
                   score={rel.inbound}
                   direction="inbound"
                   onClick={() => handleCycleScore(rel.id, 'inbound')}
+                  onReset={() => handleResetScore(rel.id, 'inbound')}
                 />
 
                 {/* Remove */}
