@@ -27,18 +27,18 @@ export function LandingScreen({ onStartSession, onOpenDefinitions }: LandingScre
         <span style={{ color: '#003087', fontWeight: 600, whiteSpace: 'nowrap' }}>Work with what you find.</span>
       </p>
       <p className="mb-8 max-w-md text-sm text-gray-medium">
-        No sign-up required. No data stored. Session-only.
+        No sign-up required. No data stored.
       </p>
 
       <button
         onClick={onStartSession}
-        className="rounded-lg bg-primary px-8 py-3 text-lg font-semibold text-white transition-colors hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        className="rounded-lg bg-primary px-8 py-3 text-lg font-semibold text-white transition-all duration-150 hover:bg-primary-hover hover:shadow-md hover:scale-[1.02] active:scale-[0.99] active:bg-primary-active focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         Start Session
       </button>
       <button
         onClick={onOpenDefinitions}
-        className="mt-4 text-sm text-primary underline hover:text-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        className="mt-4 text-sm text-primary underline underline-offset-2 transition-all duration-150 hover:text-primary-active hover:underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         What do confidence levels mean?
       </button>
