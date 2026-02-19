@@ -105,7 +105,7 @@ export function TrustDefinitionsModal({ isOpen, onClose }: TrustDefinitionsModal
             </p>
           </div>
           <p className="mt-2 text-xs text-gray-medium">
-            Click an arrow or badge on the map, or the ↗/↙ buttons in the panel, to cycle through scores.
+            Click an arrow or badge on the map, or the ↗/↙ buttons in the panel, to cycle through scores. Right-click a scored button to reset it.
           </p>
         </div>
 
