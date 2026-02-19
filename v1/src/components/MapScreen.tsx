@@ -19,10 +19,12 @@ export function MapScreen({ isExporting, onExport }: MapScreenProps) {
         width: '100vw',
         height: '100vh',
         overflow: 'hidden',
+        background: '#F4F5F7',
       }}
     >
-      {/* Full-screen SVG canvas (z-index 0) */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+      {/* SVG canvas — starts after the floating panel (left: 20 + width: 280 + gap: 10 = 310px)
+          so the hub is centred in the visible canvas area, not the full viewport */}
+      <div style={{ position: 'absolute', left: '310px', right: 0, top: 0, bottom: 0, zIndex: 0 }}>
         <HubSpokeCanvas />
       </div>
 
