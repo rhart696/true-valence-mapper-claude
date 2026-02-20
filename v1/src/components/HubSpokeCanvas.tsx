@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useSession } from '../context/SessionContext';
 import { ARROW_SCORE_COLORS, ARROW_SCORE_LABELS, ARROW_SCORE_DASH_PATTERNS, ARROW_SCORE_DEFINITIONS, cycleArrowScore } from '../constants';
 import type { ArrowDirection, ArrowScore, Relationship } from '../types';
@@ -62,6 +63,7 @@ function ArrowGroup({ rel, direction, sx, sy, ex, ey, cpx, cpy, midX, midY, onCy
   const markerId = `arrowhead-${score}`;
   const dirLabel = direction === 'outbound' ? 'I will go to them' : 'They will come to me';
   const dashPattern = ARROW_SCORE_DASH_PATTERNS[score];
+  const [isFocused, setIsFocused] = useState(false);
 
   function handleCycle() {
     onCycle(rel.id, direction);
@@ -74,6 +76,8 @@ function ArrowGroup({ rel, direction, sx, sy, ex, ey, cpx, cpy, midX, midY, onCy
       aria-label={`${dirLabel} (${rel.name}): ${score}. Click to change.`}
       style={{ cursor: 'pointer' }}
       onClick={handleCycle}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -119,6 +123,19 @@ function ArrowGroup({ rel, direction, sx, sy, ex, ey, cpx, cpy, midX, midY, onCy
       >
         {badge}
       </text>
+      {/* Keyboard focus ring — visible when element is focused via keyboard */}
+      {isFocused && (
+        <circle
+          cx={midX}
+          cy={midY}
+          r={17}
+          fill="none"
+          stroke="#003087"
+          strokeWidth={2}
+          strokeDasharray="4 3"
+          style={{ pointerEvents: 'none' }}
+        />
+      )}
     </g>
   );
 }

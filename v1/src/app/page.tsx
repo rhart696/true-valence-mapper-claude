@@ -2,17 +2,32 @@
 
 import { SessionProvider, useSession } from '../context/SessionContext';
 import { usePDFExport } from '../hooks/usePDFExport';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LandingScreen } from '../components/LandingScreen';
 import { MapScreen } from '../components/MapScreen';
 import { ExportSuccessScreen } from '../components/ExportSuccessScreen';
 import { TrustDefinitionsModal } from '../components/TrustDefinitionsModal';
+import { WelcomeModal, WELCOME_STORAGE_KEY } from '../components/WelcomeModal';
 import { DEMO_RELATIONSHIPS } from '../constants';
 
 function AppContent() {
   const { currentStep, setCurrentStep, clearSession, relationships, coacheeName, loadDemo } = useSession();
   const [showDefinitions, setShowDefinitions] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
   const { isExporting, exportPDF, exportPNG } = usePDFExport();
+
+  // Show welcome modal on first visit (localStorage gate)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!localStorage.getItem(WELCOME_STORAGE_KEY)) {
+      setShowWelcome(true);
+    }
+  }, []);
+
+  function handleWelcomeComplete() {
+    localStorage.setItem(WELCOME_STORAGE_KEY, '1');
+    setShowWelcome(false);
+  }
 
   async function handleExport() {
     await exportPDF('hub-spoke-svg', relationships, coacheeName);
@@ -49,12 +64,15 @@ function AppContent() {
         </div>
       )}
 
-      {/* Modal for landing screen */}
+      {/* Modals for landing screen */}
       {currentStep === 'landing' && (
-        <TrustDefinitionsModal
-          isOpen={showDefinitions}
-          onClose={() => setShowDefinitions(false)}
-        />
+        <>
+          <WelcomeModal isOpen={showWelcome} onComplete={handleWelcomeComplete} />
+          <TrustDefinitionsModal
+            isOpen={showDefinitions && !showWelcome}
+            onClose={() => setShowDefinitions(false)}
+          />
+        </>
       )}
     </main>
   );
