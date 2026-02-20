@@ -52,6 +52,7 @@ export interface ExportResult {
 export interface LandingScreenProps {
   onStartSession: () => void;
   onOpenDefinitions: () => void;
+  onLoadDemo: () => void;
 }
 
 export interface ExportSuccessScreenProps {

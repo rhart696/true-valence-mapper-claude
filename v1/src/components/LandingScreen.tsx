@@ -2,7 +2,7 @@
 
 import type { LandingScreenProps } from '../types';
 
-export function LandingScreen({ onStartSession, onOpenDefinitions }: LandingScreenProps) {
+export function LandingScreen({ onStartSession, onOpenDefinitions, onLoadDemo }: LandingScreenProps) {
   return (
     <div className="flex min-h-[80vh] flex-col items-center justify-center px-4 text-center">
       {/* ProActive full logo */}
@@ -39,6 +39,14 @@ export function LandingScreen({ onStartSession, onOpenDefinitions }: LandingScre
       >
         Start Session
       </button>
+
+      <button
+        onClick={onLoadDemo}
+        className="mt-3 rounded-lg border-2 border-primary px-8 py-2.5 text-sm font-semibold text-primary transition-all duration-150 hover:bg-blue-50 hover:shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      >
+        Load example map
+      </button>
+
       <button
         onClick={onOpenDefinitions}
         className="mt-4 text-sm text-primary underline underline-offset-2 transition-all duration-150 hover:text-primary-active hover:underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"

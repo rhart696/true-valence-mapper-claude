@@ -7,15 +7,20 @@ import { LandingScreen } from '../components/LandingScreen';
 import { MapScreen } from '../components/MapScreen';
 import { ExportSuccessScreen } from '../components/ExportSuccessScreen';
 import { TrustDefinitionsModal } from '../components/TrustDefinitionsModal';
+import { DEMO_RELATIONSHIPS } from '../constants';
 
 function AppContent() {
-  const { currentStep, setCurrentStep, clearSession, relationships, coacheeName } = useSession();
+  const { currentStep, setCurrentStep, clearSession, relationships, coacheeName, loadDemo } = useSession();
   const [showDefinitions, setShowDefinitions] = useState(false);
   const { isExporting, exportPDF } = usePDFExport();
 
   async function handleExport() {
     await exportPDF('hub-spoke-svg', relationships, coacheeName);
     setCurrentStep('complete');
+  }
+
+  function handleLoadDemo() {
+    loadDemo(DEMO_RELATIONSHIPS);
   }
 
   return (
@@ -25,6 +30,7 @@ function AppContent() {
           <LandingScreen
             onStartSession={() => setCurrentStep('map')}
             onOpenDefinitions={() => setShowDefinitions(true)}
+            onLoadDemo={handleLoadDemo}
           />
         </div>
       )}

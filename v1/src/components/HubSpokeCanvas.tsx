@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from '../context/SessionContext';
-import { ARROW_SCORE_COLORS, ARROW_SCORE_LABELS, cycleArrowScore } from '../constants';
+import { ARROW_SCORE_COLORS, ARROW_SCORE_LABELS, ARROW_SCORE_DASH_PATTERNS, ARROW_SCORE_DEFINITIONS, cycleArrowScore } from '../constants';
 import type { ArrowDirection, ArrowScore, Relationship } from '../types';
 
 const HUB_R = 42;
@@ -43,6 +43,7 @@ function ArrowGroup({ rel, direction, sx, sy, ex, ey, cpx, cpy, midX, midY, onCy
   const isUnscored = score === 'unscored';
   const markerId = `arrowhead-${score}`;
   const dirLabel = direction === 'outbound' ? 'I will go to them' : 'They will come to me';
+  const dashPattern = ARROW_SCORE_DASH_PATTERNS[score];
 
   function handleCycle() {
     onCycle(rel.id, direction);
@@ -62,12 +63,12 @@ function ArrowGroup({ rel, direction, sx, sy, ex, ey, cpx, cpy, midX, midY, onCy
         }
       }}
     >
-      {/* Arrow path */}
+      {/* Arrow path — colour + dash pattern per score for WCAG 1.4.1 */}
       <path
         d={`M ${sx},${sy} Q ${cpx},${cpy} ${ex},${ey}`}
         stroke={color}
         strokeWidth={isUnscored ? 1.8 : 2.5}
-        strokeDasharray={isUnscored ? '6 4' : undefined}
+        strokeDasharray={dashPattern}
         fill="none"
         markerEnd={`url(#${markerId})`}
         strokeLinecap="round"
@@ -100,6 +101,87 @@ function ArrowGroup({ rel, direction, sx, sy, ex, ey, cpx, cpy, midX, midY, onCy
       >
         {badge}
       </text>
+    </g>
+  );
+}
+
+// Persistent legend — always visible in bottom-right corner of SVG
+function CanvasLegend() {
+  const legendItems = ARROW_SCORE_DEFINITIONS.filter((d) => d.score !== 'unscored');
+  const unscoredDef = ARROW_SCORE_DEFINITIONS.find((d) => d.score === 'unscored')!;
+  const allItems = [...legendItems, unscoredDef];
+
+  const LX = 200;  // left edge of legend box (SVG coords)
+  const LY = 260;  // top edge
+  const ROW_H = 18;
+  const BOX_W = 160;
+  const BOX_H = allItems.length * ROW_H + 20;
+
+  return (
+    <g aria-label="Score legend" style={{ pointerEvents: 'none' }}>
+      {/* Background */}
+      <rect
+        x={LX}
+        y={LY}
+        width={BOX_W}
+        height={BOX_H}
+        rx={6}
+        fill="white"
+        fillOpacity={0.88}
+        stroke="#DFE1E6"
+        strokeWidth={1}
+      />
+      {allItems.map((def, i) => {
+        const rowY = LY + 12 + i * ROW_H;
+        const lineX1 = LX + 10;
+        const lineX2 = LX + 40;
+        const lineY = rowY + 4;
+        return (
+          <g key={def.score}>
+            {/* Sample line showing dash pattern */}
+            <line
+              x1={lineX1}
+              y1={lineY}
+              x2={lineX2}
+              y2={lineY}
+              stroke={def.color}
+              strokeWidth={2.5}
+              strokeDasharray={ARROW_SCORE_DASH_PATTERNS[def.score]}
+              strokeLinecap="round"
+            />
+            {/* Badge circle */}
+            <circle
+              cx={lineX2 + 8}
+              cy={lineY}
+              r={7}
+              fill={def.score === 'unscored' ? 'white' : def.color}
+              stroke={def.score === 'unscored' ? '#C1C7D0' : 'none'}
+              strokeWidth={1.2}
+            />
+            <text
+              x={lineX2 + 8}
+              y={lineY}
+              textAnchor="middle"
+              dominantBaseline="central"
+              fontSize={7}
+              fontWeight="bold"
+              fill={def.score === 'unscored' ? '#6B778C' : '#003087'}
+            >
+              {def.badge}
+            </text>
+            {/* Label */}
+            <text
+              x={lineX2 + 20}
+              y={lineY}
+              dominantBaseline="central"
+              fontSize={9}
+              fill="#6B778C"
+            >
+              {def.label}
+            </text>
+          </g>
+        );
+      })}
     </g>
   );
 }
@@ -247,6 +329,9 @@ export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
           </g>
         );
       })}
+
+      {/* Persistent legend — always visible, bottom-right */}
+      <CanvasLegend />
     </svg>
   );
 }

@@ -12,6 +12,7 @@ interface SessionContextValue extends SessionState {
   setRelationshipNote: (id: string, note: string) => void;
   setCurrentStep: (step: Step) => void;
   clearSession: () => void;
+  loadDemo: (items: Array<{ name: string; outbound: ArrowScore; inbound: ArrowScore; note?: string }>) => void;
 }
 
 const initialState: SessionState = {
@@ -88,6 +89,21 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     setState(initialState);
   }, []);
 
+  const loadDemo = useCallback(
+    (items: Array<{ name: string; outbound: ArrowScore; inbound: ArrowScore; note?: string }>) => {
+      nextId = 1;
+      const relationships = items.map((item) => ({
+        id: generateId(),
+        name: item.name.trim(),
+        outbound: item.outbound,
+        inbound: item.inbound,
+        note: item.note,
+      }));
+      setState({ coacheeName: '', relationships, currentStep: 'map' });
+    },
+    []
+  );
+
   const value = useMemo<SessionContextValue>(
     () => ({
       ...state,
@@ -99,8 +115,9 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       setRelationshipNote,
       setCurrentStep,
       clearSession,
+      loadDemo,
     }),
-    [state, setCoacheeName, addRelationship, removeRelationship, updateRelationship, setArrowScore, setRelationshipNote, setCurrentStep, clearSession]
+    [state, setCoacheeName, addRelationship, removeRelationship, updateRelationship, setArrowScore, setRelationshipNote, setCurrentStep, clearSession, loadDemo]
   );
 
   return (

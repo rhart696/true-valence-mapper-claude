@@ -55,6 +55,14 @@ export const ARROW_SCORE_LABELS: Record<ArrowScore, string> = {
   unscored: '?',
 };
 
+// Arrow stroke dash patterns — colour + dash pattern for WCAG 1.4.1 (non-colour distinction)
+export const ARROW_SCORE_DASH_PATTERNS: Record<ArrowScore, string | undefined> = {
+  high: undefined,         // solid
+  medium: '8 4',           // dashes
+  low: '3 3',              // dots
+  unscored: '10 6',        // long dashes
+};
+
 // Click-to-cycle order
 export const ARROW_SCORE_CYCLE: ArrowScore[] = ['unscored', 'high', 'medium', 'low'];
 
@@ -62,6 +70,22 @@ export function cycleArrowScore(current: ArrowScore): ArrowScore {
   const idx = ARROW_SCORE_CYCLE.indexOf(current);
   return ARROW_SCORE_CYCLE[(idx + 1) % ARROW_SCORE_CYCLE.length];
 }
+
+// Demo data — pre-built map showing all score patterns for demos and first-time users
+export const DEMO_RELATIONSHIPS: Array<{
+  name: string;
+  outbound: ArrowScore;
+  inbound: ArrowScore;
+  note?: string;
+}> = [
+  { name: 'Kate', outbound: 'high', inbound: 'high', note: 'Trusted ally — go-to for political guidance.' },
+  { name: 'James', outbound: 'high', inbound: 'medium' },
+  { name: 'Marcus', outbound: 'medium', inbound: 'medium' },
+  { name: 'Priya', outbound: 'high', inbound: 'low' },
+  { name: 'David', outbound: 'low', inbound: 'medium' },
+  { name: 'Amara', outbound: 'medium', inbound: 'high' },
+  { name: 'Chen', outbound: 'unscored', inbound: 'unscored' },
+];
 
 // Design system colors — ProActive ReSolutions brand
 export const COLORS = {
