@@ -47,6 +47,10 @@ export interface ExportResult {
   error?: string;
 }
 
+// Persistence
+
+export const SESSION_STORAGE_KEY = 'tvm_session_v1';
+
 // Component Props
 
 export interface LandingScreenProps {

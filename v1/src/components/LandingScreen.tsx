@@ -30,7 +30,7 @@ export function LandingScreen({ onStartSession, onOpenDefinitions, onLoadDemo }:
         Add the key people in your work life and rate your confidence in each relationship — in both directions.
       </p>
       <p className="mb-8 max-w-md text-sm text-gray-medium">
-        No sign-up required. No data stored.
+        No sign-up required. Session saved locally in your browser.
       </p>
 
       <button

@@ -1,7 +1,8 @@
 'use client';
 
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { ArrowDirection, ArrowScore, SessionState, Step } from '../types';
+import { SESSION_STORAGE_KEY } from '../types';
 
 interface SessionContextValue extends SessionState {
   setCoacheeName: (name: string) => void;
@@ -13,6 +14,9 @@ interface SessionContextValue extends SessionState {
   setCurrentStep: (step: Step) => void;
   clearSession: () => void;
   loadDemo: (items: Array<{ name: string; outbound: ArrowScore; inbound: ArrowScore; note?: string }>) => void;
+  // Persistence
+  savedSession: SessionState | null;
+  restoreSession: () => void;
 }
 
 const initialState: SessionState = {
@@ -20,6 +24,52 @@ const initialState: SessionState = {
   relationships: [],
   currentStep: 'landing',
 };
+
+// --- localStorage helpers ---
+
+function readFromStorage(): SessionState | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(SESSION_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as SessionState;
+    if (
+      typeof parsed.coacheeName !== 'string' ||
+      !Array.isArray(parsed.relationships) ||
+      typeof parsed.currentStep !== 'string'
+    ) {
+      return null;
+    }
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function writeToStorage(state: SessionState): void {
+  if (typeof window === 'undefined') return;
+  const hasData = state.coacheeName !== '' || state.relationships.length > 0;
+  if (!hasData) {
+    localStorage.removeItem(SESSION_STORAGE_KEY);
+    return;
+  }
+  try {
+    localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // Quota exceeded — silently ignore
+  }
+}
+
+// Parse the numeric counter out of a rel-N-timestamp id so we avoid collisions after restore
+function maxIdFrom(relationships: SessionState['relationships']): number {
+  if (relationships.length === 0) return 0;
+  return relationships.reduce((max, r) => {
+    const n = parseInt(r.id.split('-')[1] ?? '0', 10);
+    return Number.isNaN(n) ? max : Math.max(max, n);
+  }, 0);
+}
+
+// ---
 
 const SessionContext = createContext<SessionContextValue | null>(null);
 
@@ -29,7 +79,20 @@ function generateId(): string {
 }
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
+  // Detect saved session once at mount (before first render via lazy init)
+  const [savedSession] = useState<SessionState | null>(() => {
+    const saved = readFromStorage();
+    if (!saved) return null;
+    if (saved.coacheeName === '' && saved.relationships.length === 0) return null;
+    return saved;
+  });
+
   const [state, setState] = useState<SessionState>(initialState);
+
+  // Auto-save to localStorage on every state change
+  useEffect(() => {
+    writeToStorage(state);
+  }, [state]);
 
   const setCoacheeName = useCallback((name: string) => {
     setState((prev) => ({ ...prev, coacheeName: name }));
@@ -86,7 +149,18 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
 
   const clearSession = useCallback(() => {
     nextId = 1;
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(SESSION_STORAGE_KEY);
+    }
     setState(initialState);
+  }, []);
+
+  const restoreSession = useCallback(() => {
+    const saved = readFromStorage();
+    if (!saved) return;
+    nextId = maxIdFrom(saved.relationships) + 1;
+    // Always return to map when resuming — 'complete' is a dead-end step
+    setState({ ...saved, currentStep: saved.currentStep === 'complete' ? 'map' : saved.currentStep });
   }, []);
 
   const loadDemo = useCallback(
@@ -116,8 +190,10 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       setCurrentStep,
       clearSession,
       loadDemo,
+      savedSession,
+      restoreSession,
     }),
-    [state, setCoacheeName, addRelationship, removeRelationship, updateRelationship, setArrowScore, setRelationshipNote, setCurrentStep, clearSession, loadDemo]
+    [state, setCoacheeName, addRelationship, removeRelationship, updateRelationship, setArrowScore, setRelationshipNote, setCurrentStep, clearSession, loadDemo, savedSession, restoreSession]
   );
 
   return (
