@@ -7,9 +7,10 @@ import { useSession } from '../context/SessionContext';
 interface MapScreenProps {
   isExporting: boolean;
   onExport: () => void;
+  onExportPNG?: () => void;
 }
 
-export function MapScreen({ isExporting, onExport }: MapScreenProps) {
+export function MapScreen({ isExporting, onExport, onExportPNG }: MapScreenProps) {
   const { relationships } = useSession();
 
   return (
@@ -49,7 +50,7 @@ export function MapScreen({ isExporting, onExport }: MapScreenProps) {
       )}
 
       {/* Floating panel (z-index 10) */}
-      <FloatingPanel onExport={onExport} />
+      <FloatingPanel onExport={onExport} onExportPNG={onExportPNG} />
 
       {/* PDF export loading overlay */}
       {isExporting && (

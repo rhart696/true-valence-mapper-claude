@@ -6,6 +6,47 @@ import type { Relationship } from '../types';
 interface UsePDFExportReturn {
   isExporting: boolean;
   exportPDF: (canvasElementId: string, relationships?: Relationship[], coacheeName?: string) => Promise<void>;
+  exportPNG: (canvasElementId: string, coacheeName?: string) => Promise<void>;
+}
+
+/** Serialise SVG element → offscreen canvas → PNG data URL. */
+async function svgToImageData(
+  canvasElementId: string,
+  scale: number,
+): Promise<{ imgData: string; canvasW: number; canvasH: number } | null> {
+  const svgEl = document.getElementById(canvasElementId) as SVGSVGElement | null;
+  if (!svgEl) return null;
+
+  const serialized = new XMLSerializer().serializeToString(svgEl);
+  const svgBlob = new Blob([serialized], { type: 'image/svg+xml;charset=utf-8' });
+  const svgUrl = URL.createObjectURL(svgBlob);
+
+  const vb = svgEl.viewBox.baseVal;
+  const canvasW = (vb.width || 900) * scale;
+  const canvasH = (vb.height || 700) * scale;
+
+  const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const i = new Image();
+    i.onload = () => resolve(i);
+    i.onerror = reject;
+    i.src = svgUrl;
+  });
+
+  const canvas = document.createElement('canvas');
+  canvas.width = canvasW;
+  canvas.height = canvasH;
+  const ctx = canvas.getContext('2d')!;
+  ctx.drawImage(img, 0, 0, canvasW, canvasH);
+  URL.revokeObjectURL(svgUrl);
+
+  return { imgData: canvas.toDataURL('image/png'), canvasW, canvasH };
+}
+
+/** Produce a URL-safe slug prefix from the coachee name, e.g. "sarah-" or "". */
+function filePrefix(coacheeName?: string): string {
+  const trimmed = coacheeName?.trim();
+  if (!trimmed) return '';
+  return trimmed.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-';
 }
 
 export function usePDFExport(): UsePDFExportReturn {
@@ -16,35 +57,10 @@ export function usePDFExport(): UsePDFExportReturn {
     try {
       const jsPDF = (await import('jspdf')).default;
 
-      const svgEl = document.getElementById(canvasElementId) as SVGSVGElement | null;
-      if (!svgEl) throw new Error(`Element #${canvasElementId} not found`);
-
-      // Serialize SVG → canvas → PNG (bypasses html2canvas cloned-iframe limitation)
-      const serialized = new XMLSerializer().serializeToString(svgEl);
-      const svgBlob = new Blob([serialized], { type: 'image/svg+xml;charset=utf-8' });
-      const svgUrl = URL.createObjectURL(svgBlob);
-
-      const SCALE = 2;
-      // Use viewBox dimensions for pixel-perfect rendering at any display size
-      const vb = svgEl.viewBox.baseVal;
-      const canvasW = (vb.width || 900) * SCALE;
-      const canvasH = (vb.height || 700) * SCALE;
-
-      const img = await new Promise<HTMLImageElement>((resolve, reject) => {
-        const i = new Image();
-        i.onload = () => resolve(i);
-        i.onerror = reject;
-        i.src = svgUrl;
-      });
-
-      const canvas = document.createElement('canvas');
-      canvas.width = canvasW;
-      canvas.height = canvasH;
-      const ctx = canvas.getContext('2d')!;
-      ctx.drawImage(img, 0, 0, canvasW, canvasH);
-      URL.revokeObjectURL(svgUrl);
-
-      const imgData = canvas.toDataURL('image/png');
+      // SVG → canvas (scale 2× for PDF quality)
+      const result = await svgToImageData(canvasElementId, 2);
+      if (!result) throw new Error(`Element #${canvasElementId} not found`);
+      const { imgData, canvasW, canvasH } = result;
 
       const pdf = new jsPDF('landscape', 'mm', 'a4');
       const pageWidth = pdf.internal.pageSize.getWidth();
@@ -89,7 +105,7 @@ export function usePDFExport(): UsePDFExportReturn {
       }
 
       const dateStr = new Date().toISOString().split('T')[0];
-      pdf.save(`trust-map-${dateStr}.pdf`);
+      pdf.save(`${filePrefix(coacheeName)}trust-map-${dateStr}.pdf`);
     } catch (error) {
       console.error('PDF export failed:', error);
       // Fallback: browser print dialog
@@ -99,5 +115,23 @@ export function usePDFExport(): UsePDFExportReturn {
     }
   }, []);
 
-  return { isExporting, exportPDF };
+  const exportPNG = useCallback(async (canvasElementId: string, coacheeName?: string) => {
+    setIsExporting(true);
+    try {
+      // Scale 3× for a crisp PNG suitable for slide decks
+      const result = await svgToImageData(canvasElementId, 3);
+      if (!result) throw new Error(`Element #${canvasElementId} not found`);
+      const dateStr = new Date().toISOString().split('T')[0];
+      const link = document.createElement('a');
+      link.download = `${filePrefix(coacheeName)}trust-map-${dateStr}.png`;
+      link.href = result.imgData;
+      link.click();
+    } catch (error) {
+      console.error('PNG export failed:', error);
+    } finally {
+      setIsExporting(false);
+    }
+  }, []);
+
+  return { isExporting, exportPDF, exportPNG };
 }

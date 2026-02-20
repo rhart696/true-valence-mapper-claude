@@ -9,6 +9,7 @@ import type { ArrowDirection, ArrowScore } from '../types';
 
 interface FloatingPanelProps {
   onExport: () => void;
+  onExportPNG?: () => void;
 }
 
 function ScorePill({ score, direction, onClick, onReset }: {
@@ -137,7 +138,7 @@ function InsightsPanel({ relationships }: { relationships: ReturnType<typeof use
   );
 }
 
-export function FloatingPanel({ onExport }: FloatingPanelProps) {
+export function FloatingPanel({ onExport, onExportPNG }: FloatingPanelProps) {
   const {
     coacheeName,
     setCoacheeName,
@@ -617,22 +618,45 @@ export function FloatingPanel({ onExport }: FloatingPanelProps) {
           >
             What do confidence levels mean?
           </button>
-          <button
-            onClick={onExport}
-            style={{
-              backgroundColor: '#003087',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              padding: '10px 16px',
-              fontSize: '13px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              width: '100%',
-            }}
-          >
-            Export PDF
-          </button>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button
+              onClick={onExport}
+              style={{
+                backgroundColor: '#003087',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                padding: '10px 16px',
+                fontSize: '13px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                flex: 1,
+              }}
+            >
+              Export PDF
+            </button>
+            {onExportPNG && (
+              <button
+                onClick={onExportPNG}
+                title="Save map as PNG image"
+                aria-label="Save as PNG"
+                style={{
+                  backgroundColor: 'white',
+                  color: '#003087',
+                  border: '2px solid #003087',
+                  borderRadius: '8px',
+                  padding: '10px 12px',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  flexShrink: 0,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                PNG
+              </button>
+            )}
+          </div>
         </div>
       </div>
 

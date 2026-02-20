@@ -18,6 +18,24 @@ function truncateLabel(name: string, maxChars = 8): string {
   return name.length > maxChars ? name.slice(0, maxChars) + '\u2026' : name;
 }
 
+/**
+ * Split a hub name into 1 or 2 display lines that fit inside r=42.
+ * - ≤ 8 chars → single line
+ * - Has a space in first 9 chars → split there
+ * - Otherwise → hard-split at char 7
+ */
+function hubLabelLines(name: string): [string] | [string, string] {
+  const t = name.trim() || 'Me';
+  if (t.length <= 8) return [t];
+  const spaceIdx = t.indexOf(' ');
+  if (spaceIdx > 0 && spaceIdx <= 9) {
+    const rest = t.slice(spaceIdx + 1);
+    return [t.slice(0, spaceIdx), rest.length > 8 ? rest.slice(0, 7) + '\u2026' : rest];
+  }
+  const second = t.slice(7);
+  return [t.slice(0, 7), second.length > 8 ? second.slice(0, 7) + '\u2026' : second];
+}
+
 // Bezier midpoint at t=0.5: B(0.5) = 0.25*P0 + 0.5*CP + 0.25*P2
 function bezierMid(p0x: number, p0y: number, cpx: number, cpy: number, p2x: number, p2y: number) {
   return {
@@ -192,8 +210,8 @@ interface HubSpokeCanvasProps {
 
 export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
   const { coacheeName, relationships, setArrowScore } = useSession();
-  const hubLabel = truncateLabel(coacheeName.trim() || 'Me', 6);
-  const hubFontSize = hubLabel.length <= 3 ? 16 : hubLabel.length <= 5 ? 13 : 11;
+  const hubLines = hubLabelLines(coacheeName.trim() || 'Me');
+  const hubFontSize = hubLines.length === 2 ? 10 : hubLines[0].length <= 3 ? 16 : hubLines[0].length <= 5 ? 13 : 11;
   const n = relationships.length;
 
   function handleCycle(relId: string, direction: ArrowDirection) {
@@ -234,18 +252,34 @@ export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
 
       {/* Hub circle — ProActive PMS 280 navy */}
       <circle cx={0} cy={0} r={HUB_R} fill="#003087" />
-      <text
-        x={0}
-        y={0}
-        textAnchor="middle"
-        dominantBaseline="central"
-        fontSize={hubFontSize}
-        fontWeight="bold"
-        fill="white"
-        style={{ userSelect: 'none', pointerEvents: 'none' }}
-      >
-        {hubLabel}
-      </text>
+      {hubLines.length === 1 ? (
+        <text
+          x={0}
+          y={0}
+          textAnchor="middle"
+          dominantBaseline="central"
+          fontSize={hubFontSize}
+          fontWeight="bold"
+          fill="white"
+          style={{ userSelect: 'none', pointerEvents: 'none' }}
+        >
+          {hubLines[0]}
+        </text>
+      ) : (
+        <text
+          x={0}
+          y={-7}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fontSize={hubFontSize}
+          fontWeight="bold"
+          fill="white"
+          style={{ userSelect: 'none', pointerEvents: 'none' }}
+        >
+          <tspan x={0}>{hubLines[0]}</tspan>
+          <tspan x={0} dy="14">{hubLines[1]}</tspan>
+        </text>
+      )}
 
       {/* Empty state hint rendered as HTML overlay in MapScreen */}
 

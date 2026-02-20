@@ -12,11 +12,15 @@ import { DEMO_RELATIONSHIPS } from '../constants';
 function AppContent() {
   const { currentStep, setCurrentStep, clearSession, relationships, coacheeName, loadDemo } = useSession();
   const [showDefinitions, setShowDefinitions] = useState(false);
-  const { isExporting, exportPDF } = usePDFExport();
+  const { isExporting, exportPDF, exportPNG } = usePDFExport();
 
   async function handleExport() {
     await exportPDF('hub-spoke-svg', relationships, coacheeName);
     setCurrentStep('complete');
+  }
+
+  async function handleExportPNG() {
+    await exportPNG('hub-spoke-svg', coacheeName);
   }
 
   function handleLoadDemo() {
@@ -36,7 +40,7 @@ function AppContent() {
       )}
 
       {currentStep === 'map' && (
-        <MapScreen isExporting={isExporting} onExport={handleExport} />
+        <MapScreen isExporting={isExporting} onExport={handleExport} onExportPNG={handleExportPNG} />
       )}
 
       {currentStep === 'complete' && (
