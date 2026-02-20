@@ -18,3 +18,4 @@ background-assets/reviews-evaluations/
 # Local AI tool state
 .claude/
 .brv/
+.vercel
