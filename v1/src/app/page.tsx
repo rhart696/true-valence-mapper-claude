@@ -9,6 +9,8 @@ import { ExportSuccessScreen } from '../components/ExportSuccessScreen';
 import { TrustDefinitionsModal } from '../components/TrustDefinitionsModal';
 import { WelcomeModal, WELCOME_STORAGE_KEY } from '../components/WelcomeModal';
 import { DEMO_RELATIONSHIPS } from '../constants';
+import { loadSession } from '../lib/shareSession';
+import type { SessionState } from '../types';
 
 // --- Resume Prompt ---
 
@@ -59,14 +61,113 @@ function ResumePrompt({ coacheeName, relationshipCount, onResume, onStartFresh }
   );
 }
 
+// --- Load Shared Session Prompt ---
+
+interface LoadSharedPromptProps {
+  sharedSession: SessionState;
+  shareCode: string;
+  hasCurrentData: boolean;
+  onLoad: () => void;
+  onDismiss: () => void;
+}
+
+function LoadSharedPrompt({ sharedSession, shareCode, hasCurrentData, onLoad, onDismiss }: LoadSharedPromptProps) {
+  const count = sharedSession.relationships.length;
+  const name = sharedSession.coacheeName;
+  const label = name
+    ? `"${name}" — ${count} relationship${count !== 1 ? 's' : ''}`
+    : `${count} relationship${count !== 1 ? 's' : ''}`;
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="load-shared-title"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
+    >
+      <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-2xl">
+        <h2 id="load-shared-title" className="mb-2 text-xl font-bold text-gray-dark">
+          Load shared session?
+        </h2>
+        <p className="mb-1 text-sm text-gray-medium">
+          Code <span style={{ fontFamily: 'ui-monospace, monospace', fontWeight: 700, color: '#003087' }}>{shareCode}</span>
+        </p>
+        <p className="mb-6 rounded-lg bg-gray-50 px-4 py-2 text-sm font-medium text-gray-dark">
+          {label}
+        </p>
+
+        {hasCurrentData && (
+          <p className="mb-4 text-xs text-gray-medium">
+            Your current session will be replaced. Export it first if you want to keep it.
+          </p>
+        )}
+
+        <button
+          onClick={onLoad}
+          autoFocus
+          className="mb-3 w-full rounded-lg bg-primary px-6 py-3 font-semibold text-white transition-all duration-150 hover:bg-primary-hover hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
+          Load session
+        </button>
+
+        <button
+          onClick={onDismiss}
+          className="w-full rounded-lg border-2 border-gray-300 px-6 py-2.5 text-sm font-semibold text-gray-dark transition-all duration-150 hover:border-gray-400 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
+          Dismiss
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // --- App ---
 
 function AppContent() {
-  const { currentStep, setCurrentStep, clearSession, relationships, coacheeName, loadDemo, savedSession, restoreSession } = useSession();
+  const { currentStep, setCurrentStep, clearSession, relationships, coacheeName, setCoacheeName, loadDemo, savedSession, restoreSession } = useSession();
   const [showDefinitions, setShowDefinitions] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
   const [showResumePrompt, setShowResumePrompt] = useState(false);
+  const [pendingShared, setPendingShared] = useState<{ session: SessionState; code: string } | null>(null);
   const { isExporting, exportPDF, exportPNG } = usePDFExport();
+
+  // Check for ?share= param and load session from Supabase
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const shareCode = params.get('share');
+    if (!shareCode) return;
+
+    // Remove the param from the URL immediately so refreshing doesn't re-trigger
+    const clean = new URL(window.location.href);
+    clean.searchParams.delete('share');
+    window.history.replaceState({}, '', clean.toString());
+
+    loadSession(shareCode).then((session) => {
+      if (!session) return; // silently ignore invalid/expired codes
+      const hasData = relationships.length > 0 || coacheeName !== '';
+      if (hasData) {
+        // Prompt before overwriting
+        setPendingShared({ session, code: shareCode });
+      } else {
+        // Nothing to lose — apply directly and go to map
+        applySharedSession(session);
+      }
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function applySharedSession(session: SessionState) {
+    loadDemo(session.relationships.map((r) => ({
+      name: r.name,
+      outbound: r.outbound,
+      inbound: r.inbound,
+      note: r.note,
+    })));
+    // loadDemo resets coacheeName to '' — restore it from the shared session
+    if (session.coacheeName) setCoacheeName(session.coacheeName);
+    setPendingShared(null);
+    setCurrentStep('map');
+  }
 
   // Show welcome modal on first-ever visit (localStorage gate)
   useEffect(() => {
@@ -142,12 +243,23 @@ function AppContent() {
       )}
 
       {/* Resume prompt — shown above everything when a saved session is detected */}
-      {showResumePrompt && savedSession && !showWelcome && (
+      {showResumePrompt && savedSession && !showWelcome && !pendingShared && (
         <ResumePrompt
           coacheeName={savedSession.coacheeName}
           relationshipCount={savedSession.relationships.length}
           onResume={handleResume}
           onStartFresh={handleStartFresh}
+        />
+      )}
+
+      {/* Load shared session prompt — takes priority over resume prompt */}
+      {pendingShared && (
+        <LoadSharedPrompt
+          sharedSession={pendingShared.session}
+          shareCode={pendingShared.code}
+          hasCurrentData={relationships.length > 0 || coacheeName !== ''}
+          onLoad={() => applySharedSession(pendingShared.session)}
+          onDismiss={() => setPendingShared(null)}
         />
       )}
     </main>

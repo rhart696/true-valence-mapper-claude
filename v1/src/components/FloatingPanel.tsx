@@ -5,6 +5,8 @@ import { useSession } from '../context/SessionContext';
 import { ARROW_SCORE_COLORS, ARROW_SCORE_LABELS, cycleArrowScore } from '../constants';
 import { RelationshipForm } from './RelationshipForm';
 import { TrustDefinitionsModal } from './TrustDefinitionsModal';
+import { ShareModal } from './ShareModal';
+import { saveSession } from '../lib/shareSession';
 import type { ArrowDirection, ArrowScore } from '../types';
 
 interface FloatingPanelProps {
@@ -143,6 +145,7 @@ export function FloatingPanel({ onExport, onExportPNG }: FloatingPanelProps) {
     coacheeName,
     setCoacheeName,
     relationships,
+    currentStep,
     addRelationship,
     removeRelationship,
     updateRelationship,
@@ -150,10 +153,26 @@ export function FloatingPanel({ onExport, onExportPNG }: FloatingPanelProps) {
     setRelationshipNote,
   } = useSession();
 
+  async function handleSaveAndShare() {
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      const result = await saveSession({ coacheeName, relationships, currentStep });
+      setShareResult(result);
+    } catch {
+      setSaveError('Could not save — check your connection and try again.');
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
   const [showDefinitions, setShowDefinitions] = useState(false);
   const [expandedNoteId, setExpandedNoteId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
+  const [shareResult, setShareResult] = useState<{ shareCode: string; shareUrl: string } | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const existingNames = relationships.map((r) => r.name);
 
@@ -657,6 +676,34 @@ export function FloatingPanel({ onExport, onExportPNG }: FloatingPanelProps) {
               </button>
             )}
           </div>
+          {relationships.length > 0 && (
+            <button
+              onClick={handleSaveAndShare}
+              disabled={isSaving}
+              title="Save this session to the cloud and get a shareable link"
+              style={{
+                backgroundColor: isSaving ? '#DFE1E6' : 'white',
+                color: isSaving ? '#6B778C' : '#003087',
+                border: '2px solid',
+                borderColor: isSaving ? '#DFE1E6' : '#003087',
+                borderRadius: '8px',
+                padding: '9px 16px',
+                fontSize: '13px',
+                fontWeight: 600,
+                cursor: isSaving ? 'not-allowed' : 'pointer',
+                width: '100%',
+                textAlign: 'center',
+                transition: 'all 0.15s',
+              }}
+            >
+              {isSaving ? 'Saving…' : '↗ Save & Share'}
+            </button>
+          )}
+          {saveError && (
+            <p style={{ fontSize: '11px', color: '#FF5630', margin: 0, textAlign: 'center' }}>
+              {saveError}
+            </p>
+          )}
         </div>
       </div>
 
@@ -664,6 +711,14 @@ export function FloatingPanel({ onExport, onExportPNG }: FloatingPanelProps) {
         isOpen={showDefinitions}
         onClose={() => setShowDefinitions(false)}
       />
+
+      {shareResult && (
+        <ShareModal
+          shareCode={shareResult.shareCode}
+          shareUrl={shareResult.shareUrl}
+          onClose={() => setShareResult(null)}
+        />
+      )}
     </>
   );
 }
