@@ -71,11 +71,20 @@ export function TrustDefinitionsModal({ isOpen, onClose }: TrustDefinitionsModal
     >
       <div
         ref={modalRef}
-        className="screen-enter mx-4 max-h-[90vh] w-full max-w-lg rounded-2xl bg-white shadow-xl"
-        style={{ position: 'relative', overflow: 'hidden' }}
+        className="screen-enter mx-4 w-full max-w-lg rounded-2xl bg-white shadow-xl"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          maxHeight: '90vh',
+          overflow: 'hidden',
+          position: 'relative',
+        }}
       >
-        <div style={{ overflowY: 'auto', maxHeight: '90vh', padding: '32px 32px 64px' }}>
-        <div className="mb-6 flex items-center justify-between border-b border-border-subtle pb-4">
+        {/* Pinned header — always visible */}
+        <div
+          className="flex items-center justify-between border-b border-border-subtle"
+          style={{ padding: '24px 32px', flexShrink: 0 }}
+        >
           <h2 id="definitions-title" className="text-2xl font-semibold text-gray-dark">
             Confidence Score Definitions
           </h2>
@@ -89,52 +98,55 @@ export function TrustDefinitionsModal({ isOpen, onClose }: TrustDefinitionsModal
           </button>
         </div>
 
-        {/* Arrow directions explained */}
-        <div className="mb-5 rounded-lg bg-gray-light p-4">
-          <h3 className="mb-2 text-sm font-semibold text-gray-dark">Two directions, two questions</h3>
-          <div className="space-y-2 text-sm text-gray-medium">
-            <p>
-              <span className="font-semibold text-gray-dark">↗ Outbound</span>{' '}
-              — &ldquo;How confident am I that{' '}
-              <em>I would go to them when I have a problem with them</em>?&rdquo;
-            </p>
-            <p>
-              <span className="font-semibold text-gray-dark">↙ Inbound</span>{' '}
-              — &ldquo;How confident am I that{' '}
-              <em>they would come to me when they have a problem with me</em>?&rdquo;
+        {/* Scrollable body */}
+        <div style={{ overflowY: 'auto', flex: 1, padding: '24px 32px 40px', position: 'relative' }}>
+          {/* Arrow directions explained */}
+          <div className="mb-5 rounded-lg bg-gray-light p-4">
+            <h3 className="mb-2 text-sm font-semibold text-gray-dark">Two directions, two questions</h3>
+            <div className="space-y-2 text-sm text-gray-medium">
+              <p>
+                <span className="font-semibold text-gray-dark">↗ Outbound</span>{' '}
+                — &ldquo;How confident am I that{' '}
+                <em>I would go to them when I have a problem with them</em>?&rdquo;
+              </p>
+              <p>
+                <span className="font-semibold text-gray-dark">↙ Inbound</span>{' '}
+                — &ldquo;How confident am I that{' '}
+                <em>they would come to me when they have a problem with me</em>?&rdquo;
+              </p>
+            </div>
+            <p className="mt-2 text-xs text-gray-medium">
+              Click an arrow or badge on the map, or the ↗/↙ buttons in the panel, to cycle through scores. Right-click a scored button to reset it.
             </p>
           </div>
-          <p className="mt-2 text-xs text-gray-medium">
-            Click an arrow or badge on the map, or the ↗/↙ buttons in the panel, to cycle through scores. Right-click a scored button to reset it.
-          </p>
+
+          {/* Score levels */}
+          <div className="space-y-4">
+            {ARROW_SCORE_DEFINITIONS.filter((d) => d.score !== 'unscored').map((def) => (
+              <div
+                key={def.score}
+                className="rounded-lg border-l-4 p-4"
+                style={{ borderLeftColor: ARROW_SCORE_COLORS[def.score] }}
+              >
+                <h3
+                  className="mb-1 font-semibold"
+                  style={{ color: ARROW_SCORE_COLORS[def.score] }}
+                >
+                  {def.badge} — {def.label}
+                </h3>
+                <p className="text-sm leading-relaxed text-gray-medium">{def.description}</p>
+              </div>
+            ))}
+            {/* Unscored */}
+            <div className="rounded-lg border-l-4 p-4" style={{ borderLeftColor: '#C1C7D0' }}>
+              <h3 className="mb-1 font-semibold text-gray-medium">? — Not Yet Scored</h3>
+              <p className="text-sm leading-relaxed text-gray-medium">
+                The default state. Grey dashed arrows indicate this direction has not been rated yet.
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Score levels */}
-        <div className="space-y-4">
-          {ARROW_SCORE_DEFINITIONS.filter((d) => d.score !== 'unscored').map((def) => (
-            <div
-              key={def.score}
-              className="rounded-lg border-l-4 p-4"
-              style={{ borderLeftColor: ARROW_SCORE_COLORS[def.score] }}
-            >
-              <h3
-                className="mb-1 font-semibold"
-                style={{ color: ARROW_SCORE_COLORS[def.score] }}
-              >
-                {def.badge} — {def.label}
-              </h3>
-              <p className="text-sm leading-relaxed text-gray-medium">{def.description}</p>
-            </div>
-          ))}
-          {/* Unscored */}
-          <div className="rounded-lg border-l-4 p-4" style={{ borderLeftColor: '#C1C7D0' }}>
-            <h3 className="mb-1 font-semibold text-gray-medium">? — Not Yet Scored</h3>
-            <p className="text-sm leading-relaxed text-gray-medium">
-              The default state. Grey dashed arrows indicate this direction has not been rated yet.
-            </p>
-          </div>
-        </div>
-        </div>
         {/* Bottom fade gradient — signals scrollable content below */}
         <div
           style={{
@@ -142,7 +154,7 @@ export function TrustDefinitionsModal({ isOpen, onClose }: TrustDefinitionsModal
             bottom: 0,
             left: 0,
             right: 0,
-            height: '48px',
+            height: '40px',
             background: 'linear-gradient(to bottom, transparent, white)',
             pointerEvents: 'none',
             borderRadius: '0 0 16px 16px',
