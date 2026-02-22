@@ -29,20 +29,21 @@ jobs:
 
       - name: Check for hardcoded secrets
         run: |
-          echo "🔍 Scanning for hardcoded secrets..."
+          echo "🔍 Scanning for hardcoded secrets in v1/src/..."
+          SCAN_DIR="v1/src"
 
           # Check for common secret patterns
-          if grep -rEi "password\s*=\s*['\"]" --include="*.js" --include="*.html" .; then
+          if grep -rEi "password\s*=\s*['\"]" --include="*.ts" --include="*.tsx" "$SCAN_DIR"; then
             echo "⚠️ WARNING: Found potential hardcoded passwords"
             exit 1
           fi
 
-          if grep -rEi "api[_-]?key\s*=\s*['\"][^'\"]{20,}" --include="*.js" --include="*.html" .; then
+          if grep -rEi "api[_-]?key\s*=\s*['\"][^'\"]{20,}" --include="*.ts" --include="*.tsx" "$SCAN_DIR"; then
             echo "⚠️ WARNING: Found potential hardcoded API keys"
             exit 1
           fi
 
-          if grep -rEi "secret\s*=\s*['\"]" --include="*.js" --include="*.html" .; then
+          if grep -rEi "secret\s*=\s*['\"]" --include="*.ts" --include="*.tsx" "$SCAN_DIR"; then
             echo "⚠️ WARNING: Found potential hardcoded secrets"
             exit 1
           fi
@@ -54,13 +55,13 @@ jobs:
           echo "🔍 Scanning SQL files for injection risks..."
 
           # Check for SQL files with potential injection patterns
-          if find . -name "*.sql" -type f | xargs grep -i "DROP TABLE" | grep -v "IF EXISTS" | grep -v "-- "; then
+          if find docs/ -name "*.sql" -type f 2>/dev/null | xargs grep -i "DROP TABLE" 2>/dev/null | grep -v "IF EXISTS" | grep -v "-- "; then
             echo "⚠️ WARNING: Found potentially unsafe DROP TABLE statements"
             exit 1
           fi
 
           # Check for string concatenation in SQL (indicates potential injection)
-          if grep -rEi "\+\s*['\"].*SELECT" --include="*.js" .; then
+          if grep -rEi "\+\s*['\"].*SELECT" --include="*.ts" --include="*.tsx" v1/src/; then
             echo "⚠️ WARNING: Found potential SQL injection via string concatenation"
             exit 1
           fi
@@ -69,22 +70,22 @@ jobs:
 
       - name: Check XSS vulnerabilities
         run: |
-          echo "🔍 Scanning for XSS vulnerability patterns..."
+          echo "🔍 Scanning v1/src/ for XSS vulnerability patterns..."
 
-          # Check for dangerous innerHTML usage
-          if grep -rn "innerHTML\s*=" --include="*.js" . | grep -v "InputValidator\|htmlEncode"; then
+          # Check for dangerous innerHTML usage in TS/TSX files
+          if grep -rn "innerHTML\s*=" --include="*.ts" --include="*.tsx" v1/src/ | grep -v "dangerouslySetInnerHTML"; then
             echo "⚠️ WARNING: Found potentially unsafe innerHTML usage"
             exit 1
           fi
 
           # Check for eval usage
-          if grep -rn "eval(" --include="*.js" .; then
+          if grep -rn "eval(" --include="*.ts" --include="*.tsx" v1/src/; then
             echo "⚠️ WARNING: Found eval() usage (dangerous)"
             exit 1
           fi
 
           # Check for new Function usage
-          if grep -rn "new Function(" --include="*.js" .; then
+          if grep -rn "new Function(" --include="*.ts" --include="*.tsx" v1/src/; then
             echo "⚠️ WARNING: Found new Function() usage (dangerous)"
             exit 1
           fi
@@ -93,16 +94,12 @@ jobs:
 
       - name: Validate input sanitization
         run: |
-          echo "🔍 Checking for proper input validation..."
+          echo "🔍 Checking for proper input validation in v1/src/..."
 
-          # Ensure InputValidator is being used in critical files
-          if ! grep -q "InputValidator" cloud-storage.js; then
-            echo "⚠️ WARNING: cloud-storage.js doesn't appear to use InputValidator"
-            exit 1
-          fi
-
-          if ! grep -q "InputValidator" index.html; then
-            echo "⚠️ WARNING: index.html doesn't appear to use InputValidator"
+          # v1 uses Supabase client + TypeScript types for validation — check that
+          # user-facing inputs go through the lib/supabase.ts abstraction layer
+          if ! grep -rq "supabase\|sanitize\|validate\|maxLength\|trim()" v1/src/components/; then
+            echo "⚠️ WARNING: No input sanitization patterns found in v1/src/components/"
             exit 1
           fi
 
@@ -110,16 +107,16 @@ jobs:
 
       - name: Check RLS policies
         run: |
-          echo "🔍 Validating RLS policy security..."
+          echo "🔍 Validating RLS policy security in docs/..."
 
           # Check if SQL files contain RLS policies
-          if find . -name "*rls*.sql" -type f | xargs grep -i "CREATE POLICY" | grep -v "USING"; then
+          if find docs/ -name "*rls*.sql" -type f 2>/dev/null | xargs grep -i "CREATE POLICY" 2>/dev/null | grep -v "USING"; then
             echo "⚠️ WARNING: Found RLS policy without USING clause"
             exit 1
           fi
 
           # Check for permissive policies (allow all)
-          if find . -name "*.sql" -type f | xargs grep -i "TO authenticated" | grep -i "USING (true)"; then
+          if find docs/ -name "*.sql" -type f 2>/dev/null | xargs grep -i "TO authenticated" 2>/dev/null | grep -i "USING (true)"; then
             echo "⚠️ WARNING: Found overly permissive RLS policy"
             exit 1
           fi

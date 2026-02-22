@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>True Valence Mapper - UI Components</title>
+    <style>
+        /* ===== DESIGN SYSTEM ===== */
+        :root {
+            /* ProActive Brand Colors */
+            --primary-blue: #0066CC;
+            --primary-dark: #003D7A;
+            --accent-green: #00A651;
+            --neutral-gray: #F5F5F5;
+            --text-dark: #333333;
+            --text-light: #666666;
+            
+            /* Trust Scale Colors (Accessible) */
+            --trust-none: #D32F2F;      /* Red */
+            --trust-low: #F57C00;       /* Orange */
+            --trust-moderate: #FBC02D;  /* Yellow */
+            --trust-high: #388E3C;      /* Green */
+            
+            /* Spacing */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 32px;
+            --space-xl: 48px;
+            
+            /* Typography */
+            --font-body: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-heading: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: #fff;
+        }
+        
+        /* ===== MODAL OVERLAY ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: var(--space-md);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* ===== WELCOME MODAL ===== */
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--neutral-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-logo {
+            max-width: 200px;
+            height: auto;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: var(--space-xs);
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        
+        .modal-close:hover {
+            color: var(--text-dark);
+        }
+        
+        .modal-body {
+            padding: var(--space-lg);
+        }
+        
+        .modal-title {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: var(--space-md);
+            text-align: center;
+        }
+        
+        .modal-subtitle {
+            font-size: 18px;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .modal-section {
+            margin-bottom: var(--space-lg);
+        }
+        
+        .modal-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .modal-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .modal-list li {
+            padding: var(--space-xs) 0;
+            padding-left: 28px;
+            position: relative;
+        }
+        
+        .modal-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .privacy-notice {
+            background-color: #FFF3E0;
+            border-left: 4px solid #F57C00;
+            padding: var(--space-sm);
+            margin: var(--space-md) 0;
+            border-radius: 4px;
+        }
+        
+        .privacy-notice strong {
+            color: #E65100;
+        }
+        
+        .modal-footer {
+            padding: var(--space-lg);
+            border-top: 1px solid var(--neutral-gray);
+            display: flex;
+            gap: var(--space-sm);
+            justify-content: center;
+        }
+        
+        /* ===== BUTTONS ===== */
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 140px;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--neutral-gray);
+        }
+        
+        /* ===== TRUST SCALE SELECTOR ===== */
+        .trust-scale {
+            margin: var(--space-md) 0;
+        }
+        
+        .trust-label {
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+            color: var(--text-dark);
+            display: block;
+        }
+        
+        .scale-buttons {
+            display: flex;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .scale-btn {
+            flex: 1;
+            padding: var(--space-md);
+            border: 2px solid #DDD;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .scale-btn:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .scale-btn.selected {
+            border-width: 3px;
+            transform: translateY(-2px);
+        }
+        
+        /* Color coding for accessibility - includes patterns */
+        .scale-btn[data-value="0"] {
+            border-color: var(--trust-none);
+        }
+        
+        .scale-btn[data-value="0"].selected {
+            background-color: var(--trust-none);
+            color: white;
+        }
+        
+        .scale-btn[data-value="0"].selected .scale-pattern {
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255,255,255,0.2),
+                rgba(255,255,255,0.2) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+        }
+        
+        .scale-btn[data-value="1"] {
+            border-color: var(--trust-low);
+        }
+        
+        .scale-btn[data-value="1"].selected {
+            background-color: var(--trust-low);
+            color: white;
+        }
+        
+        .scale-btn[data-value="1"].selected .scale-pattern {
+            background: repeating-linear-gradient(
+                90deg,
+                rgba(255,255,255,0.2),
+                rgba(255,255,255,0.2) 4px,
+                transparent 4px,
+                transparent 8px
+            );
+        }
+        
+        .scale-btn[data-value="2"] {
+            border-color: var(--trust-moderate);
+        }
+        
+        .scale-btn[data-value="2"].selected {
+            background-color: var(--trust-moderate);
+            color: white;
+        }
+        
+        .scale-btn[data-value="2"].selected .scale-pattern {
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255,255,255,0.2),
+                rgba(255,255,255,0.2) 4px,
+                transparent 4px,
+                transparent 8px
+            );
+        }
+        
+        .scale-btn[data-value="3"] {
+            border-color: var(--trust-high);
+        }
+        
+        .scale-btn[data-value="3"].selected {
+            background-color: var(--trust-high);
+            color: white;
+        }
+        
+        .scale-btn[data-value="3"].selected .scale-pattern {
+            background: radial-gradient(
+                circle,
+                rgba(255,255,255,0.2) 20%,
+                transparent 20%
+            );
+            background-size: 10px 10px;
+        }
+        
+        .scale-number {
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .scale-label-text {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .scale-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 6px;
+            pointer-events: none;
+        }
+        
+        .scale-description {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+        
+        .selected-indicator {
+            margin-top: var(--space-sm);
+            padding: var(--space-sm);
+            background-color: var(--neutral-gray);
+            border-radius: 6px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        /* ===== RELATIONSHIP CARD ===== */
+        .relationship-card {
+            border: 2px solid #E0E0E0;
+            border-radius: 12px;
+            padding: var(--space-md);
+            margin-bottom: var(--space-md);
+            background: white;
+            transition: all 0.2s;
+        }
+        
+        .relationship-card:hover {
+            border-color: var(--primary-blue);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .card-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: var(--space-xs);
+        }
+        
+        .card-btn {
+            padding: 6px 12px;
+            border: 1px solid #DDD;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        
+        .card-btn:hover {
+            background-color: var(--neutral-gray);
+        }
+        
+        .context-tags {
+            display: flex;
+            gap: var(--space-xs);
+            margin-bottom: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .context-tag {
+            padding: 4px 12px;
+            background-color: #E3F2FD;
+            color: #1976D2;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .trust-summary {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm);
+            background-color: var(--neutral-gray);
+            border-radius: 6px;
+            margin-top: var(--space-sm);
+        }
+        
+        .trust-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .trust-none { background-color: var(--trust-none); }
+        .trust-low { background-color: var(--trust-low); }
+        .trust-moderate { background-color: var(--trust-moderate); }
+        .trust-high { background-color: var(--trust-high); }
+        
+        .trust-text {
+            flex: 1;
+        }
+        
+        .trust-direction {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+        
+        .trust-level {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .alert-asymmetric {
+            margin-top: var(--space-md);
+            padding: var(--space-sm);
+            background-color: #FFF3E0;
+            border-left: 4px solid #F57C00;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        /* ===== ACCESSIBILITY ===== */
+        
+        /* Focus states for keyboard navigation */
+        .btn:focus,
+        .scale-btn:focus,
+        .card-btn:focus,
+        .modal-close:focus {
+            outline: 3px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+        
+        /* Screen reader only text */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .modal-content {
+                max-width: 100%;
+                margin: var(--space-sm);
+                max-height: calc(100vh - 32px);
+            }
+            
+            .modal-header,
+            .modal-body,
+            .modal-footer {
+                padding: var(--space-md);
+            }
+            
+            .modal-title {
+                font-size: 24px;
+            }
+            
+            .scale-buttons {
+                flex-direction: column;
+            }
+            
+            .scale-btn {
+                min-height: 60px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .modal-footer {
+                flex-direction: column;
+            }
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .scale-btn {
+                border-width: 3px;
+            }
+            
+            .relationship-card {
+                border-width: 3px;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== WELCOME MODAL ===== -->
+    <div class="modal-overlay" id="welcomeModal">
+        <div class="modal-content" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
+            <div class="modal-header">
+                <img src="background-assets/ProActive-ReSolutions-full-logo.png" alt="ProActive ReSolutions" class="modal-logo">
+                <button class="modal-close" aria-label="Close modal" onclick="closeModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <h1 class="modal-title" id="modal-title">Welcome to the True Valence Mapper</h1>
+                <p class="modal-subtitle" id="modal-description">Understanding your workplace relationships is the first step toward building a more connected, effective professional life.</p>
+                
+                <div class="modal-section">
+                    <h3>In the next 15 minutes, you'll:</h3>
+                    <ul class="modal-list">
+                        <li>Map 6-8 key relationships in your work network</li>
+                        <li>Reflect on trust flow—both ways</li>
+                        <li>Discover patterns you may not have noticed</li>
+                        <li>Identify opportunities to strengthen connections</li>
+                    </ul>
+                </div>
+                
+                <div class="privacy-notice" role="alert">
+                    <strong>⚠️ Your privacy matters:</strong> All data stays on your device. Nothing is shared unless you choose to export your map.
+                </div>
+                
+                <div class="modal-section">
+                    <p><strong>This exercise is for you.</strong> There are no right or wrong answers. The goal isn't perfection—it's understanding. Where you are today is simply the starting point for where you want to go.</p>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="learnMore()">Learn More</button>
+                <button class="btn btn-primary" onclick="startMapping()">Start Mapping</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== EXAMPLE: TRUST SCALE COMPONENT ===== -->
+    <div style="max-width: 800px; margin: 40px auto; padding: 20px;">
+        <h2 style="margin-bottom: 24px; color: var(--primary-dark);">Example: Trust Scale Component</h2>
+        
+        <div class="relationship-card">
+            <div class="card-header">
+                <div class="card-name">Sarah Chen</div>
+                <div class="card-actions">
+                    <button class="card-btn">Edit</button>
+                    <button class="card-btn">×</button>
+                </div>
+            </div>
+            
+            <div class="context-tags">
+                <span class="context-tag">Power dynamic</span>
+            </div>
+            
+            <div class="trust-scale">
+                <label class="trust-label" for="trust-to-sarah">
+                    Trust to them (YOU → SARAH):
+                </label>
+                <div class="scale-buttons" role="radiogroup" aria-labelledby="trust-to-sarah">
+                    <button class="scale-btn" data-value="0" role="radio" aria-checked="false" onclick="selectScale(this)">
+                        <span class="scale-pattern"></span>
+                        <span class="scale-number">0</span>
+                        <span class="scale-label-text">Not established</span>
+                        <span class="sr-only">Red - Trust not yet established</span>
+                    </button>
+                    <button class="scale-btn" data-value="1" role="radio" aria-checked="false" onclick="selectScale(this)">
+                        <span class="scale-pattern"></span>
+                        <span class="scale-number">1</span>
+                        <span class="scale-label-text">Low</span>
+                        <span class="sr-only">Orange - Low trust</span>
+                    </button>
+                    <button class="scale-btn selected" data-value="2" role="radio" aria-checked="true" onclick="selectScale(this)">
+                        <span class="scale-pattern"></span>
+                        <span class="scale-number">2</span>
+                        <span class="scale-label-text">Moderate</span>
+                        <span class="sr-only">Yellow - Moderate trust</span>
+                    </button>
+                    <button class="scale-btn" data-value="3" role="radio" aria-checked="false" onclick="selectScale(this)">
+                        <span class="scale-pattern"></span>
+                        <span class="scale-number">3</span>
+                        <span class="scale-label-text">High</span>
+                        <span class="sr-only">Green - High trust</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="trust-scale">
+                <label class="trust-label" for="trust-from-sarah">
+                    Trust from them (SARAH → YOU):
+                </label>
+                <div class="scale-buttons" role="radiogroup" aria-labelledby="trust-from-sarah">
+                    <button class="scale-btn" data-value="0" role="radio" aria-checked="false" onclick="selectScale(this)">
+                        <span class="scale-pattern"></span>
+                        <span class="scale-number">0</span>
+                        <span class="scale-label-text">Not established</span>
+                    </button>
+                    <button class="scale-btn selected" data-value="1" role="radio" aria-checked="true" onclick="selectScale(this)">
+                        <span class="scale-pattern"></span>
+                        <span class="scale-number">1</span>
+                        <span class="scale-label-text">Low</span>
+                    </button>
+                    <button class="scale-btn" data-value="2" role="radio" aria-checked="false" onclick="selectScale(this)">
+                        <span class="scale-pattern"></span>
+                        <span class="scale-number">2</span>
+                        <span class="scale-label-text">Moderate</span>
+                    </button>
+                    <button class="scale-btn" data-value="3" role="radio" aria-checked="false" onclick="selectScale(this)">
+                        <span class="scale-pattern"></span>
+                        <span class="scale-number">3</span>
+                        <span class="scale-label-text">High</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="alert-asymmetric" role="alert">
+                ⚠️ <strong>Asymmetric relationship:</strong> You trust Sarah more than you perceive she trusts you. Consider what might explain this difference.
+            </div>
+        </div>
+        
+        <!-- Example of completed relationship summary -->
+        <div class="relationship-card">
+            <div class="card-header">
+                <div class="card-name">Marcus Johnson</div>
+                <div class="card-actions">
+                    <button class="card-btn">Edit</button>
+                    <button class="card-btn">×</button>
+                </div>
+            </div>
+            
+            <div class="trust-summary">
+                <div class="trust-indicator trust-high">3</div>
+                <div class="trust-text">
+                    <div class="trust-direction">You → Marcus</div>
+                    <div class="trust-level">High trust</div>
+                </div>
+            </div>
+            
+            <div class="trust-summary">
+                <div class="trust-indicator trust-high">3</div>
+                <div class="trust-text">
+                    <div class="trust-direction">Marcus → You</div>
+                    <div class="trust-level">High trust</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 16px; padding: 12px; background-color: #E8F5E9; border-left: 4px solid #4CAF50; border-radius: 4px;">
+                ✓ <strong>Strong mutual trust</strong> - This is a relationship asset
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== JAVASCRIPT FUNCTIONALITY =====
+        
+        function closeModal() {
+            document.getElementById('welcomeModal').style.display = 'none';
+            // Set cookie to not show again
+            localStorage.setItem('welcomeModalSeen', 'true');
+        }
+        
+        function learnMore() {
+            // Expand modal with additional methodology information
+            alert('Learn More content would go here - methodology, research basis, etc.');
+        }
+        
+        function startMapping() {
+            closeModal();
+            // Initialize the mapping interface
+            alert('Starting mapping interface...');
+        }
+        
+        // Trust scale selection
+        function selectScale(button) {
+            // Get the parent scale buttons container
+            const container = button.parentElement;
+            const buttons = container.querySelectorAll('.scale-btn');
+            
+            // Remove selected class and aria-checked from all buttons
+            buttons.forEach(btn => {
+                btn.classList.remove('selected');
+                btn.setAttribute('aria-checked', 'false');
+            });
+            
+            // Add selected class and aria-checked to clicked button
+            button.classList.add('selected');
+            button.setAttribute('aria-checked', 'true');
+            
+            // Store the value
+            const value = button.getAttribute('data-value');
+            console.log('Selected trust level:', value);
+            
+            // You would update your data model here
+            // updateTrustScore(relationshipId, direction, value);
+        }
+        
+        // Check if modal should be shown on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const hasSeenModal = localStorage.getItem('welcomeModalSeen');
+            if (hasSeenModal !== 'true') {
+                document.getElementById('welcomeModal').style.display = 'flex';
+            } else {
+                document.getElementById('welcomeModal').style.display = 'none';
+            }
+        });
+        
+        // Keyboard accessibility for scale buttons
+        document.addEventListener('keydown', function(e) {
+            if (e.target.classList.contains('scale-btn')) {
+                const container = e.target.parentElement;
+                const buttons = Array.from(container.querySelectorAll('.scale-btn'));
+                const currentIndex = buttons.indexOf(e.target);
+                
+                let newIndex = currentIndex;
+                
+                switch(e.key) {
+                    case 'ArrowLeft':
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        newIndex = Math.max(0, currentIndex - 1);
+                        break;
+                    case 'ArrowRight':
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        newIndex = Math.min(buttons.length - 1, currentIndex + 1);
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        newIndex = 0;
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        newIndex = buttons.length - 1;
+                        break;
+                    case 'Enter':
+                    case ' ':
+                        e.preventDefault();
+                        selectScale(e.target);
+                        return;
+                }
+                
+                if (newIndex !== currentIndex) {
+                    buttons[newIndex].focus();
+                }
+            }
+        });
+        
+        // Save/Load functionality (example)
+        function saveMap() {
+            const mapData = {
+                // Collect all relationship data
+                timestamp: new Date().toISOString(),
+                relationships: []
+                // ... collect data from UI
+            };
+            
+            localStorage.setItem('trustMapData', JSON.stringify(mapData));
+            alert('Map saved successfully!');
+        }
+        
+        function loadMap() {
+            const savedData = localStorage.getItem('trustMapData');
+            if (savedData) {
+                const mapData = JSON.parse(savedData);
+                // Populate UI with saved data
+                console.log('Loaded map from:', mapData.timestamp);
+            } else {
+                alert('No saved map found.');
+            }
+        }
+        
+        // Export functionality
+        function exportMap() {
+            const mapData = localStorage.getItem('trustMapData');
+            if (!mapData) {
+                alert('No map to export. Please create a map first.');
+                return;
+            }
+            
+            // Create downloadable file
+            const blob = new Blob([mapData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `trust-map-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+
+</body>
+</html>
