@@ -1,46 +1,54 @@
 # True Valence Relationship Mapper (Claude Code Edition)
 
-**Short name:** True Valence Mapper  
+**Short name:** True Valence Mapper
 **Edition owner:** Claude Code agent implementation
 
 A visual tool for mapping trust flow in relationship networks. Perfect for coaching sessions, self-reflection, and understanding relationship dynamics. This repository houses the Claude Code-led build; additional orchestrator-led versions live in their own repositories as part of the multi-agent family.
 
-## Live Demo
-🚀 **LIVE NOW**: https://rhart696.github.io/true-valence-mapper/
+## Live App
+
+**v1 (canonical):** https://v1-rhart696s-projects.vercel.app/
+
+Deployed on Vercel from `v1/` (Next.js + Supabase). No sign-up required.
+The previous GitHub Pages deployment (v0 vanilla HTML) is retired — see `docs/archive/v0/`.
 
 ## What It Does
 - Visualize up to 8 key relationships
 - Score trust bidirectionally (1-3 scale)
 - See patterns instantly with color coding
-- Save and reload your maps
-- Works completely offline
+- Save and share maps via a 6-character code (30-day expiry)
+- Export to PDF or PNG
 
 ## Quick Start
 
-### Option 1: Direct Browser
-Just open `index.html` in your browser!
+Open the live app above, click **Start Session**, add the people in your work or personal life, and rate your confidence in each relationship.
 
-### Option 2: Local Server
+### Local Development (v1)
+
 ```bash
-python3 -m http.server 8000
-# Then visit http://localhost:8000
+cd v1
+npm install
+npm run dev
+# Visit http://localhost:3000
 ```
+
+Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `v1/.env.local` for Save & Share to work locally.
 
 ## How to Use
 
 1. **Add People**: Enter names of people in your relationship network (max 8)
 2. **Score Trust**: Click arrows to cycle through trust levels:
-   - 🟢 Green (1): High trust - "I'd definitely go to them / they'd come to me"
-   - 🟡 Yellow (2): Medium trust - "Maybe, depends on the situation"
-   - 🔴 Red (3): Low/No trust - "Unlikely or uncomfortable"
-   - ⚪ Gray (0): Not scored yet
+   - High confidence: "I'd definitely go to them / they'd come to me"
+   - Medium confidence: "Maybe, depends on the situation"
+   - Low confidence: "Unlikely or uncomfortable"
+   - Not yet scored
 
 3. **Interpret Patterns**:
    - Outward arrows: Your trust in approaching them
    - Inward arrows: Their perceived trust in approaching you
-   - Look for asymmetries and red zones
+   - Look for asymmetries and low-confidence zones
 
-4. **Save Progress**: Use Save/Load buttons to persist your map
+4. **Save & Share**: Click "Save & Share" in the panel to generate a 6-char code and shareable link
 
 ## The Questions
 
@@ -58,22 +66,17 @@ python3 -m http.server 8000
 - Conflict resolution planning
 
 ## Technical Details
-- Pure HTML/CSS/JavaScript (no dependencies!)
-- SVG-based visualization
-- localStorage for persistence
-- Mobile responsive
-- ~500 lines of clean code
+
+**v1 stack:** Next.js 14, TypeScript, React, Tailwind CSS, Supabase
+**v0 stack (archived):** Pure HTML/CSS/JavaScript, localStorage only
 
 ## Future Roadmap
-- Stage 2: Backend with multiple maps
-- Stage 3: Export to PNG/PDF
-- Stage 4: AI-assisted insights
-- Stage 5: Team/organizational maps
+
+See [`docs/planning/ROADMAP-V2-CANDIDATES.md`](docs/planning/ROADMAP-V2-CANDIDATES.md) for v2 feature candidates.
 
 ## Accessibility
 - Keyboard navigation support
 - Clear color contrast
-- Alternative to red/green for colorblind users (coming in v2)
 - Screen reader friendly labels
 
 ## Contributing
@@ -88,7 +91,7 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 **Quick Start for Contributors:**
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/your-feature-name`
-3. Make your changes
+3. Make your changes in `v1/`
 4. Test thoroughly (especially security!)
 5. Submit a pull request
 
@@ -101,9 +104,7 @@ Security is a top priority. This application implements:
 - SQL injection prevention
 - Secure data handling
 
-**Reporting Security Issues:** Please see our [Security Policy](.github/SECURITY.md) for responsible disclosure procedures. Do not open public issues for security vulnerabilities.
-
-**Security Documentation:** Detailed security implementation docs are available in [docs/security/](docs/security/).
+**Reporting Security Issues:** Please see our [Security Policy](.github/SECURITY.md) for responsible disclosure procedures.
 
 ## License
 
@@ -118,37 +119,31 @@ We use **GitHub Flow**:
 2. Make changes and commit
 3. Open pull request
 4. Pass security checks and review
-5. Merge to `main` (auto-deploys via GitHub Actions)
-
-**Branch Protection:** The `main` branch requires:
-- Pull request reviews
-- Passing status checks (security audit, HTML validation)
-- Up-to-date branches before merge
+5. Merge to `main` (auto-deploys to Vercel)
 
 ## Project Structure
 
 ```
 true-valence-mapper-claude/
-├── index.html                    # Main application
-├── styles.css                    # Core styles
-├── cloud-storage.js              # Supabase integration
-├── input-validation.js           # Security validation
-├── toast-notifications.js        # User notifications
-├── version-history.js            # Version control
-├── accessibility-improvements.js # A11y features
+├── v1/                           # Current app (Next.js)
+│   ├── src/
+│   │   ├── app/                  # Next.js app router
+│   │   ├── components/           # React components
+│   │   ├── hooks/                # Custom hooks
+│   │   ├── lib/                  # Supabase, share session logic
+│   │   └── types.ts
+│   └── package.json
+├── docs/
+│   ├── archive/v0/               # Retired v0 vanilla HTML files
+│   ├── planning/                 # Roadmap and planning docs
+│   ├── security/                 # Security documentation
+│   └── implementation/           # Feature guides
 ├── .github/                      # GitHub templates & workflows
-├── docs/                         # Documentation
-│   ├── security/                # Security documentation
-│   ├── implementation/          # Feature guides
-│   ├── planning/                # Architecture & planning
-│   └── reports/                 # Status reports
-└── LICENSE                       # MIT license
+└── LICENSE
 ```
 
 ## Created By
-Built in 7 days as part of the "ship, don't infrastructure" challenge.
+Built as part of the "ship, don't infrastructure" challenge.
 
 ---
-*Version 1.0 - Production*
-*Ship Date: November 9, 2025* ✅
-*Repository configured: January 2025 (Claude edition)*
+*v1 deployed on Vercel — February 2026*
