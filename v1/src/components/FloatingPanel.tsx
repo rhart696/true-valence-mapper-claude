@@ -329,7 +329,7 @@ export function FloatingPanel({ onExport, onExportPNG }: FloatingPanelProps) {
 
         {/* Relationship list — relative wrapper for scroll-fade affordance */}
         <div style={{ position: 'relative', flex: 1, overflow: 'hidden' }}>
-          <div style={{ overflowY: 'auto', height: '100%' }}>
+          <div className="panel-scroll" style={{ overflowY: 'auto', height: '100%' }}>
           {relationships.map((rel) => (
             <div
               key={rel.id}

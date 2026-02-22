@@ -15,8 +15,23 @@ function getEllipseRadii(count: number): { rx: number; ry: number } {
   return { rx, ry };
 }
 
-function truncateLabel(name: string, maxChars = 8): string {
-  return name.length > maxChars ? name.slice(0, maxChars) + '\u2026' : name;
+/**
+ * Word-aware node label: returns 1 or 2 lines that fit inside r=28.
+ * - ≤ 8 chars → single line
+ * - Has a space in first 9 chars → split at that space, truncate each part at 8 chars
+ * - Otherwise → hard-truncate at 7 chars + ellipsis
+ */
+function nodeLabel(name: string): { lines: string[] } {
+  const MAX = 8;
+  if (name.length <= MAX) return { lines: [name] };
+  const spaceIdx = name.indexOf(' ');
+  if (spaceIdx > 0 && spaceIdx <= MAX) {
+    const line1 = name.slice(0, spaceIdx);
+    const rest = name.slice(spaceIdx + 1);
+    const line2 = rest.length > MAX ? rest.slice(0, MAX - 1) + '\u2026' : rest;
+    return { lines: [line1, line2] };
+  }
+  return { lines: [name.slice(0, MAX - 1) + '\u2026'] };
 }
 
 /**
@@ -365,18 +380,34 @@ export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
               stroke="#7A9BC6"
               strokeWidth={2}
             />
-            <text
-              x={nodeX}
-              y={nodeY}
-              textAnchor="middle"
-              dominantBaseline="central"
-              fontSize={11}
-              fontWeight="500"
-              fill="#091E42"
-              style={{ userSelect: 'none', pointerEvents: 'none' }}
-            >
-              {truncateLabel(rel.name)}
-            </text>
+            {(() => {
+              const label = nodeLabel(rel.name);
+              return label.lines.length === 1 ? (
+                <text
+                  x={nodeX}
+                  y={nodeY}
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fontSize={11}
+                  fontWeight="500"
+                  fill="#091E42"
+                  style={{ userSelect: 'none', pointerEvents: 'none' }}
+                >
+                  {label.lines[0]}
+                </text>
+              ) : (
+                <text
+                  textAnchor="middle"
+                  fontSize={10}
+                  fontWeight="500"
+                  fill="#091E42"
+                  style={{ userSelect: 'none', pointerEvents: 'none' }}
+                >
+                  <tspan x={nodeX} y={nodeY - 7}>{label.lines[0]}</tspan>
+                  <tspan x={nodeX} y={nodeY + 7}>{label.lines[1]}</tspan>
+                </text>
+              );
+            })()}
           </g>
         );
       })}
