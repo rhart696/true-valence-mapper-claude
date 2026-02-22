@@ -74,7 +74,7 @@ export function TrustDefinitionsModal({ isOpen, onClose }: TrustDefinitionsModal
         className="screen-enter mx-4 max-h-[90vh] w-full max-w-lg rounded-2xl bg-white shadow-xl"
         style={{ position: 'relative', overflow: 'hidden' }}
       >
-        <div style={{ overflowY: 'auto', maxHeight: '90vh', padding: '32px' }}>
+        <div style={{ overflowY: 'auto', maxHeight: '90vh', padding: '32px 32px 64px' }}>
         <div className="mb-6 flex items-center justify-between border-b border-border-subtle pb-4">
           <h2 id="definitions-title" className="text-2xl font-semibold text-gray-dark">
             Confidence Score Definitions
