@@ -380,6 +380,18 @@ export function HubSpokeCanvas({ id = 'hub-spoke-svg' }: HubSpokeCanvasProps) {
               stroke="#7A9BC6"
               strokeWidth={2}
             />
+            {/* Note indicator — small dot when this relationship has a note */}
+            {rel.note?.trim() && (
+              <circle
+                cx={nodeX + 20}
+                cy={nodeY - 20}
+                r={5}
+                fill="#003087"
+                stroke="white"
+                strokeWidth={1.5}
+                aria-label={`${rel.name} has a note`}
+              />
+            )}
             {(() => {
               const label = nodeLabel(rel.name);
               return label.lines.length === 1 ? (
