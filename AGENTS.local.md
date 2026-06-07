@@ -1,5 +1,22 @@
 # AGENTS.local.md - Edition-Specific Governance (Claude Code)
 
+<!-- =================== START-HERE BANNER =================== -->
+> ## ▶ START HERE — PENDING DIRECTION DECISION (captured 2026-06-06)
+>
+> **Agent: when a session starts in this project, surface this to the human FIRST, before other work.**
+>
+> TVRM (Claude edition) development is **paused awaiting a direction decision**. The PRD core is DONE
+> (canvas, bidirectional trust scoring, Supabase Save & Share, PNG/PDF export — live on Vercel).
+> Open question — **what to build next:**
+> - **A. AI-Powered Insights** ⭐ *recommended* — auto-name trust asymmetries/patterns (needs Claude API → ask-first)
+> - **B. Guided interpretation / exercises** — fast, likely no new deps
+> - **C. Historical tracking** — snapshots over time
+> - **D. Core polish** — accessibility, mobile, multiple named maps
+>
+> **Action:** present A/B/C/D to the human and ask which. Full analysis + flip-thresholds:
+> [`docs/NEXT-SESSION.md`](./docs/NEXT-SESSION.md). **Remove this banner once a direction is chosen.**
+<!-- ========================================================= -->
+
 > **This file contains edition-specific guidance that extends or overrides [AGENTS.md](./AGENTS.md).**
 > Unlike AGENTS.md, this file is NOT auto-synced from the parent repository.
 > Edit this file directly in this edition's repository.
@@ -10,7 +27,23 @@
 |-----|-------|
 | Edition | Claude Code |
 | Focus | Reference implementation, security-first development, baseline architecture |
-| Last Updated | 2026-02-22 |
+| Last Updated | 2026-06-06 |
+
+## Stack & Commands (authoritative — overrides AGENTS.md)
+
+> ⚠️ The parent-template `AGENTS.md` / root `CLAUDE.md` describe a **Vite + Jest** stack on port 5173.
+> That is **stale/incorrect** for this edition. The actual app (`v1/`) is:
+
+| | |
+|---|---|
+| Framework | **Next.js 16.1.6** + **React 19.2.3** + TypeScript (strict) + Tailwind |
+| Backend | Supabase (`@supabase/supabase-js`) — Save & Share |
+| E2E tests | **Playwright** (`v1/playwright/`) — *not* Jest/RTL |
+| Dev | `cd v1 && npm run dev` → Next.js at **http://localhost:3000** |
+| Build / start | `npm run build` / `npm run start` |
+| Lint | `npm run lint` (eslint) |
+
+(`npm test` does not exist — use Playwright for e2e.)
 
 ## Deployment Context
 
