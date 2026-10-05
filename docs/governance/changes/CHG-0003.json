@@ -1,0 +1,32 @@
+{
+  "id": "CHG-0003",
+  "date": "2026-10-05",
+  "owner": "Richard Hart / ProActive ReSolutions",
+  "agent": "Codex",
+  "change_type": "governance",
+  "summary": "Record explicit publication authorization",
+  "rationale": "User approved publishing both prepared branches and creating paired draft PRs after the initial automatic review block. Git HTTPS credentials unavailable; connected GitHub account will publish the same validated file tree.",
+  "requirements": [
+    "REQ-0001",
+    "REQ-0002"
+  ],
+  "decisions": [
+    "DEC-0001",
+    "DEC-0006"
+  ],
+  "evidence": [
+    "SRC-0001"
+  ],
+  "risks": [
+    "RSK-0006"
+  ],
+  "tests": [
+    "TEST-0001"
+  ],
+  "validation": "Existing Phase 0 checks passed; metadata/index and changed-path checks repeated for delivery status.",
+  "paths": [
+    "docs/CURRENT-STATE.md",
+    "docs/governance/DELIVERY-STATUS.md",
+    "docs/governance/changes/CHG-0003.json"
+  ]
+}

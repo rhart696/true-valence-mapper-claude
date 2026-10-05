@@ -1,3 +1,11 @@
+# Superseded entry point — preserved for provenance
+
+Superseded 2026-10-05 by [docs/product/PRODUCT-SPEC.md](docs/product/PRODUCT-SPEC.md).
+The text below is historical; its completion, security, test and roadmap claims are not current authority.
+Original snapshot: `docs/archive/governance-2026-10-05/PRODUCT_REQUIREMENTS_DOCUMENT.md`.
+
+---
+
 # Product Requirements Document: True Valence Mapper
 
 ## 1. Overview

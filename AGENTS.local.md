@@ -1,97 +1,31 @@
-# AGENTS.local.md - Edition-Specific Governance (Claude Code)
+# Local authoritative TVM context
 
-<!-- =================== START-HERE BANNER =================== -->
-> ## ▶ START HERE — PENDING DIRECTION DECISION (captured 2026-06-06)
->
-> **Agent: when a session starts in this project, surface this to the human FIRST, before other work.**
->
-> TVRM (Claude edition) development is **paused awaiting a direction decision**. The PRD core is DONE
-> (canvas, bidirectional trust scoring, Supabase Save & Share, PNG/PDF export — live on Vercel).
-> Open question — **what to build next:**
-> - **A. AI-Powered Insights** ⭐ *recommended* — auto-name trust asymmetries/patterns (needs Claude API → ask-first)
-> - **B. Guided interpretation / exercises** — fast, likely no new deps
-> - **C. Historical tracking** — snapshots over time
-> - **D. Core polish** — accessibility, mobile, multiple named maps
->
-> **Action:** present A/B/C/D to the human and ask which. Full analysis + flip-thresholds:
-> [`docs/NEXT-SESSION.md`](./docs/NEXT-SESSION.md). **Remove this banner once a direction is chosen.**
-<!-- ========================================================= -->
+Reviewed: 2026-10-05. This file is not overwritten by legacy parent template sync.
 
-> **This file contains edition-specific guidance that extends or overrides [AGENTS.md](./AGENTS.md).**
-> Unlike AGENTS.md, this file is NOT auto-synced from the parent repository.
-> Edit this file directly in this edition's repository.
+## Resolved direction and precedence
 
-## Edition Context
+Richard Hart authorized convergence, evidence-governed product–service development and continued execution in the October 5, 2026 session. The June A/B/C/D pause is superseded: guided sense-making before generative AI, with security/privacy/persistence remediation before an executive pilot (DEC-0001–0006).
 
-| Key | Value |
-|-----|-------|
-| Edition | Claude Code |
-| Focus | Reference implementation, security-first development, baseline architecture |
-| Last Updated | 2026-06-06 |
+Read [START-HERE](docs/START-HERE.md), [CURRENT-STATE](docs/CURRENT-STATE.md), the charter and task-specific records. Those records and this local file override stale edition-template commands, parallel-edition roadmaps, pending-direction banners and unconditional asks for work already authorized. Preserve the human review and no-secrets/production-data restrictions in AI_POLICY. Legacy copies remain in docs/archive/governance-2026-10-05.
 
-## Stack & Commands (authoritative — overrides AGENTS.md)
+## Source-inspected stack
 
-> ⚠️ The parent-template `AGENTS.md` / root `CLAUDE.md` describe a **Vite + Jest** stack on port 5173.
-> That is **stale/incorrect** for this edition. The actual app (`v1/`) is:
+- App: `v1/`; Next.js 16.1.6, React/React DOM 19.2.3, strict TypeScript, Tailwind 4, Supabase.
+- `cd v1 && npm run dev` (port 3000), `npm run build`, `npm run start`, `npm run lint`.
+- No npm test script, committed Playwright directory or Playwright dependency in the inspected baseline. Do not claim existing tests ran.
+- UI maximum 25 relationships (`src/constants.ts`); older documentation says eight. Pilot default 8–12 remains a design hypothesis.
+- Dependency audit 2026-10-05: 23 affected package entries, two critical, fifteen high. See baseline report for scope.
 
-| | |
-|---|---|
-| Framework | **Next.js 16.1.6** + **React 19.2.3** + TypeScript (strict) + Tailwind |
-| Backend | Supabase (`@supabase/supabase-js`) — Save & Share |
-| E2E tests | **Playwright** (`v1/playwright/`) — *not* Jest/RTL |
-| Dev | `cd v1 && npm run dev` → Next.js at **http://localhost:3000** |
-| Build / start | `npm run build` / `npm run start` |
-| Lint | `npm run lint` (eslint) |
+## Existing approval preserved
 
-(`npm test` does not exist — use Playwright for e2e.)
+`@supabase/supabase-js ^2.97.0`: approved by rhart696 on 2026-02-22 for Feature #005. This approval does not imply the sharing authorization/retention design is secure or deployed as documented.
 
-## Deployment Context
+## Deployment and convergence
 
-| Version | Host | URL | Status |
-|---------|------|-----|--------|
-| v1 (Next.js) | Vercel | https://v1-rhart696s-projects.vercel.app/ | **Canonical — active** |
-| v0 (vanilla HTML/JS) | GitHub Pages | https://rhart696.github.io/true-valence-mapper/ | Pending retirement |
+README reports Vercel deployment from v1 and automatic deployment on main. Source disables push-triggered v0 Pages deployment but retains a manual workflow. Vercel account settings have not been inspected.
 
-v1 is deployed from `v1/` via Vercel. The GitHub Pages deploy workflow (`deploy.yml`) has been disabled
-as part of v0 retirement — it deployed root-level files that no longer represent the canonical app.
+Paired parent convergence proposal pins eight edition references, stops noncanonical automatic advancement and stops template overwrites. Its operational effect requires merge; no remote repository archive/delete/tag was performed. Work on reviewable branches; no merge/deploy in this work package.
 
-## Approved Dependencies
+## Current authorization
 
-Dependencies specifically approved for THIS edition (in addition to shared dependencies):
-
-| Package | Version | Approved By | Date | Reason |
-|---------|---------|-------------|------|--------|
-| @supabase/supabase-js | ^2.97.0 | rhart696 | 2026-02-22 | Feature #005: Save & Share via Supabase |
-
-## Edition-Specific Exceptions
-
-Exceptions to global governance that apply ONLY to this edition:
-
-_None documented yet._
-
-## Architecture Decisions
-
-Edition-specific architectural decisions and their rationale:
-
-### Feature #005 — Save & Share (Supabase-backed sessions)
-
-| Decision | Detail |
-|----------|--------|
-| **Supabase client pattern** | Lazy singleton (`lib/supabase.ts`) — client created once on first use, not at module load |
-| **Auth model** | Anonymous insert/select only; no user accounts. RLS policies allow anon insert + select by `share_code` |
-| **Share code format** | 6-character alphanumeric, unambiguous charset (no 0/O, 1/l/I). Codes are case-insensitive on lookup |
-| **Key format** | `sb_publishable_*` (new Supabase format, not legacy `eyJ...` JWT anon key). Set via `NEXT_PUBLIC_SUPABASE_ANON_KEY` env var |
-| **Share URL** | `?share=<CODE>` query param on the same origin (no separate route needed) |
-| **Expiry** | Sessions expire after 30 days (set at insert time, enforced by Supabase scheduled delete or TTL) |
-
-## Contact
-
-For questions about this edition's governance:
-- **Edition Lead:** Claude Code AI Agent
-- **Human Coordinator:** rhart696
-- **Parent Repo:** https://github.com/rhart696/true-valence-mapper
-
----
-
-*This file is edition-specific and will NOT be overwritten by parent repo syncs.*
-*Create date: 2025-12-02*
+Phase 0 docs/specification/governance checks and read-only source/dependency assessment are authorized. Record material implementation choices; no application dependencies or live database policies changed in Phase 0. Future sensitive runtime remediation still needs the recorded human review before merge. Detailed release gates apply before real client use.

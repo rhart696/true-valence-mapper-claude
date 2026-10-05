@@ -1,3 +1,5 @@
+> Current-context addendum, 2026-10-05: use AGENTS.local.md and CURRENT-STATE for the Next.js/React/TypeScript stack and existing tests. The vanilla-JS paths and unverified target metrics below are historical templates. Public Supabase publishable keys are not privileged secrets. Security-sensitive human review and risk-first, actionable review remain applicable. Review outcomes must state actual scope, not blanket assurance. Archived original is in docs/archive/governance-2026-10-05/REVIEW_STANDARDS.md.
+
 # AI Code Review Standards - Single Source of Truth
 
 **Version:** 1.0.0
