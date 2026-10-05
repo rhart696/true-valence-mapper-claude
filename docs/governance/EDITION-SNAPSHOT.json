@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "parent_commit": "82646a5f6a40a76f9a579f98f2960ebae4372c56",
+  "policy": "canonical application in standalone claude/v1; preserve reference commit pins",
+  "editions": [
+    {
+      "path": "versions/Gemini_3",
+      "repository_url": "https://github.com/rhart696/true-valence-mapper-Gemini_3",
+      "commit": "5c7f54b135dd787596d1682138f43c14aaaf27db",
+      "role": "reference",
+      "snapshot_date": "2026-10-05"
+    },
+    {
+      "path": "versions/bmad",
+      "repository_url": "https://github.com/rhart696/true-valence-mapper-bmad",
+      "commit": "84f99eda478a5bbecc0f2e9840c3834027ba11ca",
+      "role": "reference",
+      "snapshot_date": "2026-10-05"
+    },
+    {
+      "path": "versions/claude",
+      "repository_url": "https://github.com/rhart696/true-valence-mapper-claude",
+      "commit": "a460c6f589b712e66a973b123678cec9e68bbc3c",
+      "role": "canonical",
+      "snapshot_date": "2026-10-05"
+    },
+    {
+      "path": "versions/codex",
+      "repository_url": "https://github.com/rhart696/true-valence-mapper-codex",
+      "commit": "e420296af6a5601522cd59070c9fbea5f8ce9ee4",
+      "role": "reference",
+      "snapshot_date": "2026-10-05"
+    },
+    {
+      "path": "versions/magic-path",
+      "repository_url": "https://github.com/rhart696/true-valence-mapper-magic-path",
+      "commit": "50fd4fe52261bb6cd3c3ebb524312b5c216d6cce",
+      "role": "reference",
+      "snapshot_date": "2026-10-05"
+    },
+    {
+      "path": "versions/openspec",
+      "repository_url": "https://github.com/rhart696/true-valence-mapper-openspec",
+      "commit": "7d5acb33c0638d6bf504883e97881ecbea0ed907",
+      "role": "reference",
+      "snapshot_date": "2026-10-05"
+    },
+    {
+      "path": "versions/spec-kit",
+      "repository_url": "https://github.com/rhart696/true-valence-mapper-spec-kit",
+      "commit": "90779042d41b2fc62c064f455d78e0d5388b6352",
+      "role": "reference",
+      "snapshot_date": "2026-10-05"
+    },
+    {
+      "path": "versions/true-valence-mapper-antigravity",
+      "repository_url": "https://github.com/rhart696/true-valence-mapper-antigravity",
+      "commit": "a21fe85af92551ecf1a3374ed7b3cb2b5b93bd53",
+      "role": "reference",
+      "snapshot_date": "2026-10-05"
+    }
+  ]
+}

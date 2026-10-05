@@ -1,3 +1,11 @@
+# Superseded entry point — preserved for provenance
+
+Superseded 2026-10-05 by [docs/CURRENT-STATE.md](CURRENT-STATE.md).
+The text below is historical; its completion, security, test and roadmap claims are not current authority.
+Original snapshot: `docs/archive/governance-2026-10-05/docs/STATUS.md`.
+
+---
+
 # TVRM (Claude Edition) — STATUS / "Where do I look?"
 
 **One-line:** Trust-mapping web app. Core is DONE and live; paused awaiting a direction decision.

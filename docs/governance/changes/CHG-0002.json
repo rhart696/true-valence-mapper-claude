@@ -1,0 +1,32 @@
+{
+  "id": "CHG-0002",
+  "date": "2026-10-05",
+  "owner": "Richard Hart / ProActive ReSolutions",
+  "agent": "Codex",
+  "change_type": "governance",
+  "summary": "Record publication approval block and preserve reviewable local deliverables",
+  "rationale": "Automatic review rejected branch publication; preserve truthful delivery status and exact continuation rather than imply a remote PR exists.",
+  "requirements": [
+    "REQ-0001",
+    "REQ-0002"
+  ],
+  "decisions": [
+    "DEC-0001",
+    "DEC-0006"
+  ],
+  "evidence": [
+    "SRC-0001"
+  ],
+  "risks": [
+    "RSK-0006"
+  ],
+  "tests": [
+    "TEST-0001"
+  ],
+  "validation": "Existing Phase 0 checks passed; metadata/index and changed-path checks repeated for delivery status.",
+  "paths": [
+    "docs/CURRENT-STATE.md",
+    "docs/governance/DELIVERY-STATUS.md",
+    "docs/governance/changes/CHG-0002.json"
+  ]
+}

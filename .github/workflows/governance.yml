@@ -1,0 +1,29 @@
+name: Governance traceability
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: governance-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  context:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Validate records and generated indexes
+        run: python3 scripts/check-governance.py
+      - name: Test failure behavior
+        run: python3 -m unittest discover -s scripts/tests -v
+      - name: Validate PR change coverage
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          MERGE_BASE=$(git merge-base "$BASE_SHA" "$HEAD_SHA")
+          python3 scripts/check-governance.py --base "$MERGE_BASE" --head "$HEAD_SHA"

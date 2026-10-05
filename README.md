@@ -3,7 +3,9 @@
 **Short name:** True Valence Mapper
 **Edition owner:** Claude Code agent implementation
 
-A visual tool for mapping trust flow in relationship networks. Perfect for coaching sessions, self-reflection, and understanding relationship dynamics. This repository houses the Claude Code-led build; additional orchestrator-led versions live in their own repositories as part of the multi-agent family.
+A facilitated visual inquiry tool for exploring a leader's current relationship perceptions. This is the canonical production application. Other editions are preserved as research/reference lineage.
+
+Start with [the authoritative project context](docs/START-HERE.md), [current state](docs/CURRENT-STATE.md) and [product–service charter](docs/strategy/PRODUCT-SERVICE-CHARTER.md). Executive pilot status: **NOT READY — security, privacy, persistence and accessibility gates remain open**. See [release gates](docs/quality/RELEASE-GATES.md).
 
 ## Live App
 
@@ -13,10 +15,10 @@ Deployed on Vercel from `v1/` (Next.js + Supabase). No sign-up required.
 The previous GitHub Pages deployment (v0 vanilla HTML) is retired — see `docs/archive/v0/`.
 
 ## What It Does
-- Visualize up to 8 key relationships
-- Score trust bidirectionally (1-3 scale)
-- See patterns instantly with color coding
-- Save and share maps via a 6-character code (30-day expiry)
+- Visualize up to 25 relationships (source limit; pilot guidance starts with 8–12)
+- Record directional perceived approach confidence (High/Medium/Low/Unscored)
+- View entered categories with color and dash cues
+- Optional six-character-code sharing exists; authorization/retention review is pending (see release gates)
 - Export to PDF or PNG
 
 ## Quick Start
@@ -36,17 +38,17 @@ Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `v1/.env.l
 
 ## How to Use
 
-1. **Add People**: Enter names of people in your relationship network (max 8)
-2. **Score Trust**: Click arrows to cycle through trust levels:
+1. **Add People**: Enter names of people in your relationship network (current maximum 25)
+2. **Record approach confidence**: Click arrows to cycle through trust levels:
    - High confidence: "I'd definitely go to them / they'd come to me"
    - Medium confidence: "Maybe, depends on the situation"
    - Low confidence: "Unlikely or uncomfortable"
    - Not yet scored
 
-3. **Interpret Patterns**:
-   - Outward arrows: Your trust in approaching them
-   - Inward arrows: Their perceived trust in approaching you
-   - Look for asymmetries and low-confidence zones
+3. **Notice patterns in your perceptions**:
+   - Outward arrows: Your perceived confidence about approaching them
+   - Inward arrows: Your belief about their approach to you
+   - Reflect on directional differences; the map does not establish anyone else's actual perspective
 
 4. **Save & Share**: Click "Save & Share" in the panel to generate a 6-char code and shareable link
 
@@ -67,17 +69,17 @@ Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `v1/.env.l
 
 ## Technical Details
 
-**v1 stack:** Next.js 14, TypeScript, React, Tailwind CSS, Supabase
+**v1 stack at inspected baseline:** Next.js 16.1.6 / React 19.2.3, TypeScript, Tailwind CSS, Supabase
 **v0 stack (archived):** Pure HTML/CSS/JavaScript, localStorage only
 
 ## Future Roadmap
 
-See [`docs/planning/ROADMAP-V2-CANDIDATES.md`](docs/planning/ROADMAP-V2-CANDIDATES.md) for v2 feature candidates.
+See [the evidence-governed roadmap](docs/strategy/ROADMAP.md). Older candidate lists are historical proposals; guided sense-making precedes product generative AI.
 
 ## Accessibility
 - Keyboard navigation support
 - Clear color contrast
-- Screen reader friendly labels
+- Accessibility features require evaluation against the pilot WCAG 2.2 AA target; conformance has not been verified
 
 ## Contributing
 
@@ -97,12 +99,7 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 ## Security
 
-Security is a top priority. This application implements:
-- Comprehensive XSS protection
-- Input validation and sanitization
-- Row Level Security (RLS) with Supabase
-- SQL injection prevention
-- Secure data handling
+Security is a top priority. Source inspection found material unresolved sharing authorization, retention and dependency issues. Existing security claims are not an audit. See [security baseline](docs/risk/SECURITY.md) and [current dependency report](docs/quality/baseline/npm-audit-2026-10-05.json). The checked-in SQL is not proof of deployed policy.
 
 **Reporting Security Issues:** Please see our [Security Policy](.github/SECURITY.md) for responsible disclosure procedures.
 
