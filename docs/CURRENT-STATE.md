@@ -33,4 +33,4 @@ See [continuation](NEXT-SESSION.md) for exact resumption instructions. Update th
 
 ## Publication status
 
-User explicitly authorized publication and paired draft PRs on 2026-10-05 after the initial automatic review block. Publication is in progress; PR links will be recorded in delivery status. See [delivery status](governance/DELIVERY-STATUS.md).
+User explicitly authorized publication and paired draft PRs on 2026-10-05 after the initial automatic review block. Both branches are published and paired draft PRs are open; review links are recorded in delivery status. See [delivery status](governance/DELIVERY-STATUS.md).

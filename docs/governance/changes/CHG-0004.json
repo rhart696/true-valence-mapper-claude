@@ -1,0 +1,32 @@
+{
+  "id": "CHG-0004",
+  "date": "2026-10-05",
+  "owner": "Richard Hart / ProActive ReSolutions",
+  "agent": "Codex",
+  "change_type": "governance",
+  "summary": "Record completed publication and paired draft PR links",
+  "rationale": "Both authorized branches and draft PRs now exist. Record concrete review links and distinguish consolidated remote publication commits from local development history.",
+  "requirements": [
+    "REQ-0001",
+    "REQ-0002"
+  ],
+  "decisions": [
+    "DEC-0001",
+    "DEC-0006"
+  ],
+  "evidence": [
+    "SRC-0001"
+  ],
+  "risks": [
+    "RSK-0006"
+  ],
+  "tests": [
+    "TEST-0001"
+  ],
+  "validation": "Existing Phase 0 checks passed; metadata/index and changed-path checks repeated for delivery status.",
+  "paths": [
+    "docs/CURRENT-STATE.md",
+    "docs/governance/DELIVERY-STATUS.md",
+    "docs/governance/changes/CHG-0004.json"
+  ]
+}
