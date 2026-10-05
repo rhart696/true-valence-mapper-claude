@@ -21,7 +21,7 @@ Status: **Phase 0 branch prepared; executive pilot NOT READY**. Branch documents
 | Exports | PDF/PNG and optional relationship note | No verified round-trip/report fidelity results here |
 | Tests | No committed v1/playwright directory, test script or Playwright dependency found | Old local instruction claim is superseded; build/lint/browser checks pending |
 | Dependencies | npm lockfile audit: 23 affected entries, 2 critical/15 high | Raw report committed; not a runtime exploit assessment or current Dependabot count |
-| Governance | phase records, specifications, traceability/process checkers | Phase 1 branch; parent convergence #1 and foundation #12 unmerged, live activation unverified |
+| Governance | phase records, specifications, traceability/process checkers | Phase 1 branch; parent convergence #1 and foundation #12 unmerged, native main rulesets active; effective-rule command/deny test open |
 
 ## Next task
 
@@ -37,8 +37,8 @@ User explicitly authorized publication and paired draft PRs on 2026-10-05 after 
 
 ## Phase 1 increment — WP-0001
 
-Enforcement mechanisms, compatible dependencies, safe persistence and paired service protocol implemented on a stacked review branch. Read [enforcement](governance/ENFORCEMENT.md), [remediation backlog](product/REMEDIATION-BACKLOG.md), [validation](quality/PHASE-1-VALIDATION.md). Live GitHub activation unverified; sharing/database/retention/accessibility/pilot still open. Do not promote full requirements or pilot readiness from partial checks.
+Enforcement mechanisms, compatible dependencies, safe persistence and paired service protocol implemented on a stacked review branch. Read [enforcement](governance/ENFORCEMENT.md), [remediation backlog](product/REMEDIATION-BACKLOG.md), [validation](quality/PHASE-1-VALIDATION.md). Native main rulesets active (2026-10-05 browser + API evidence); sharing/database/retention/accessibility/pilot still open. Do not promote full requirements or pilot readiness from partial checks.
 
 Phase 1 results: 42 stdlib tests, five Node tests and six browser scenarios passed; lint/typecheck/build passed. Production audit zero findings; full audit five high development-chain entries. Next16.3.8/jsPDF4.2.1 proposed versions; deployed app remains uninspected. Sharing load now prompts before replacing a map; this is not database authorization remediation. Full SBOM, professional review, accessibility/report testing and staging privacy/sharing remain open.
 
-Phase 1 review: https://github.com/rhart696/true-valence-mapper-claude/pull/13 (draft, stacked on #12). Reviewable changes are published; live GitHub rules and client release remain unverified/not authorized.
+Phase 1 review: https://github.com/rhart696/true-valence-mapper-claude/pull/13 (draft, stacked on #12). Reviewable changes are published; native GitHub rules are active; client release remains not authorized. See docs/quality/phase1/github-ruleset-activation.json for scoped settings verification and remaining tests.

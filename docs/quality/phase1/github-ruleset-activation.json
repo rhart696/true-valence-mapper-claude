@@ -1,0 +1,151 @@
+{
+  "observed_at": "2026-10-05",
+  "method": "Authenticated GitHub browser administration; independent connector GET ruleset details",
+  "canonical": {
+    "id": 24546668,
+    "name": "TVM evidence-governed main",
+    "target": "branch",
+    "source_type": "Repository",
+    "source": "rhart696/true-valence-mapper-claude",
+    "enforcement": "active",
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "refs/heads/main"
+        ]
+      }
+    },
+    "rules": [
+      {
+        "type": "deletion"
+      },
+      {
+        "type": "non_fast_forward"
+      },
+      {
+        "type": "pull_request",
+        "parameters": {
+          "required_approving_review_count": 1,
+          "dismiss_stale_reviews_on_push": true,
+          "required_reviewers": [],
+          "require_code_owner_review": true,
+          "require_last_push_approval": true,
+          "required_review_thread_resolution": true,
+          "require_extra_approval_for_unattributed_changes": true,
+          "allowed_merge_methods": [
+            "merge",
+            "squash",
+            "rebase"
+          ]
+        }
+      },
+      {
+        "type": "required_status_checks",
+        "parameters": {
+          "strict_required_status_checks_policy": true,
+          "do_not_enforce_on_create": false,
+          "required_status_checks": [
+            {
+              "context": "TVM application",
+              "integration_id": 15368
+            },
+            {
+              "context": "TVM governance",
+              "integration_id": 15368
+            },
+            {
+              "context": "TVM process",
+              "integration_id": 15368
+            }
+          ]
+        }
+      }
+    ],
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5BJOZIzgF2jWw",
+    "created_at": "2026-10-05T16:51:15.998-07:00",
+    "updated_at": "2026-10-05T16:51:16.108-07:00",
+    "bypass_actors": [],
+    "current_user_can_bypass": "never",
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/rhart696/true-valence-mapper-claude/rulesets/24546668"
+      },
+      "html": {
+        "href": "https://github.com/rhart696/true-valence-mapper-claude/rules/24546668"
+      }
+    }
+  },
+  "parent": {
+    "id": 24546683,
+    "name": "TVM parent convergence main",
+    "target": "branch",
+    "source_type": "Repository",
+    "source": "rhart696/true-valence-mapper",
+    "enforcement": "active",
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "refs/heads/main"
+        ]
+      }
+    },
+    "rules": [
+      {
+        "type": "deletion"
+      },
+      {
+        "type": "non_fast_forward"
+      },
+      {
+        "type": "pull_request",
+        "parameters": {
+          "required_approving_review_count": 1,
+          "dismiss_stale_reviews_on_push": true,
+          "required_reviewers": [],
+          "require_code_owner_review": false,
+          "require_last_push_approval": true,
+          "required_review_thread_resolution": true,
+          "require_extra_approval_for_unattributed_changes": true,
+          "allowed_merge_methods": [
+            "merge",
+            "squash",
+            "rebase"
+          ]
+        }
+      },
+      {
+        "type": "required_status_checks",
+        "parameters": {
+          "strict_required_status_checks_policy": true,
+          "do_not_enforce_on_create": false,
+          "required_status_checks": [
+            {
+              "context": "provenance",
+              "integration_id": 15368
+            }
+          ]
+        }
+      }
+    ],
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5BhBDdzgF2jXs",
+    "created_at": "2026-10-05T16:52:14.726-07:00",
+    "updated_at": "2026-10-05T16:52:14.848-07:00",
+    "bypass_actors": [],
+    "current_user_can_bypass": "never",
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/rhart696/true-valence-mapper/rulesets/24546683"
+      },
+      "html": {
+        "href": "https://github.com/rhart696/true-valence-mapper/rules/24546683"
+      }
+    }
+  },
+  "limitations": [
+    "Effective branch-rules API is outside connector allowlist; ruleset details verify active policy targeting exact main.",
+    "Read-only gh activation command not run: gh unavailable locally.",
+    "No intentional blocked push/merge attempted, no merge/deploy/live database change."
+  ]
+}

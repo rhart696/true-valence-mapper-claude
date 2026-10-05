@@ -7,7 +7,7 @@
   "objective": "Enforce managed product-service increments and implement first reliability fixes",
   "problem": "Structural records alone do not enforce lifecycle/release decisions; baseline app can erase saved maps before resume and contains dependency findings.",
   "scope": "Executable process/activation/release checks, compatible dependency updates, scoped persistence repair, service handling/rehearsal and sharing design proposal. No live migration/merge/deployment.",
-  "uncertainty": "Live controls and database config unknown; synthetic checks do not establish human usability or efficacy; residual dev-tool advisory and complete SBOM unresolved.",
+  "uncertainty": "Native main settings active; effective-rule gh verification and deny/allow test unperformed. Database/hosting config unknown; synthetic tests do not establish usability or efficacy; residual dev advisory/full SBOM unresolved.",
   "alternatives": "Documentation alone insufficient; heavyweight external PM unnecessary now; reject breaking dependency downgrade; sharing architecture proposal awaits domain review.",
   "acceptance": "Incomplete lifecycle/traceability fails; release stays blocked; mount preserves maps, resume/clear and nested schema/error paths pass scoped tests; product/service impacts recorded.",
   "rollback": "Revert increment through reviewed PR; retain previous session key/parser compatibility; do not remove client records; no live migration to roll back.",
@@ -113,6 +113,12 @@
       "scope": "Actual live required merge controls",
       "status": "blocked",
       "evidence": null
+    },
+    {
+      "command": "Authenticated browser save + independent GET rulesets/24546668 and rulesets/24546683",
+      "scope": "Active main ruleset configuration, review thresholds, trusted check sources and empty bypass lists; excludes effective-rule command and deny/allow test",
+      "status": "passed",
+      "evidence": "docs/quality/phase1/github-ruleset-activation.json"
     }
   ],
   "paths": [
@@ -144,6 +150,7 @@
     "docs/governance/changes/CHG-0005.json",
     "docs/governance/changes/CHG-0006.json",
     "docs/governance/changes/CHG-0007.json",
+    "docs/governance/changes/CHG-0008.json",
     "docs/governance/github-ruleset.json",
     "docs/governance/parent-github-ruleset.json",
     "docs/governance/registry.json",
@@ -156,6 +163,7 @@
     "docs/quality/PHASE-1-VALIDATION.md",
     "docs/quality/RELEASE-GATES.md",
     "docs/quality/baseline/lockfile-inventory-phase1.json",
+    "docs/quality/phase1/github-ruleset-activation.json",
     "docs/quality/phase1/npm-audit-full.json",
     "docs/quality/phase1/npm-audit-production.json",
     "docs/quality/phase1/persistence-baseline-reproduction.txt",
