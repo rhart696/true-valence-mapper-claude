@@ -29,3 +29,7 @@ Paired parent convergence proposal pins eight edition references, stops noncanon
 ## Current authorization
 
 Phase 0 docs/specification/governance checks and read-only source/dependency assessment are authorized. Record material implementation choices; no application dependencies or live database policies changed in Phase 0. Future sensitive runtime remediation still needs the recorded human review before merge. Detailed release gates apply before real client use.
+
+## Phase 1 authorization and enforcement
+
+Richard authorized proceeding with reliability/service development and governance enforcement on 2026-10-05. Compatible dependency remediation, a scoped browser regression harness, persistence fixes and paired service specifications are authorized as reviewable branch work. No merge/deploy/live migration authorization. Read docs/governance/ENFORCEMENT.md and docs/product/REMEDIATION-BACKLOG.md. Every new increment requires a work package, immutable manifest, coordinated impacts and actual validation. Client release remains blocked; GitHub enforcement activation is unverified.

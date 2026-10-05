@@ -124,12 +124,25 @@ function LoadSharedPrompt({ sharedSession, shareCode, hasCurrentData, onLoad, on
 // --- App ---
 
 function AppContent() {
-  const { currentStep, setCurrentStep, clearSession, relationships, coacheeName, setCoacheeName, loadDemo, savedSession, restoreSession } = useSession();
+  const { currentStep, setCurrentStep, clearSession, relationships, coacheeName, setCoacheeName, loadDemo, savedSession, storageError, restoreSession } = useSession();
   const [showDefinitions, setShowDefinitions] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
   const [showResumePrompt, setShowResumePrompt] = useState(false);
   const [pendingShared, setPendingShared] = useState<{ session: SessionState; code: string } | null>(null);
   const { isExporting, exportPDF, exportPNG } = usePDFExport();
+
+  function applySharedSession(session: SessionState) {
+    loadDemo(session.relationships.map((r) => ({
+      name: r.name,
+      outbound: r.outbound,
+      inbound: r.inbound,
+      note: r.note,
+    })));
+    // loadDemo resets coacheeName to '' — restore it from the shared session
+    if (session.coacheeName) setCoacheeName(session.coacheeName);
+    setPendingShared(null);
+    setCurrentStep('map');
+  }
 
   // Check for ?share= param and load session from Supabase
   useEffect(() => {
@@ -145,45 +158,25 @@ function AppContent() {
 
     loadSession(shareCode).then((session) => {
       if (!session) return; // silently ignore invalid/expired codes
-      const hasData = relationships.length > 0 || coacheeName !== '';
-      if (hasData) {
-        // Prompt before overwriting
-        setPendingShared({ session, code: shareCode });
-      } else {
-        // Nothing to lose — apply directly and go to map
-        applySharedSession(session);
-      }
+      // A saved map may still be awaiting the resume choice. Always ask before
+      // applying a fetched map, including when that asynchronous choice is pending.
+      setPendingShared({ session, code: shareCode });
     });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
-  function applySharedSession(session: SessionState) {
-    loadDemo(session.relationships.map((r) => ({
-      name: r.name,
-      outbound: r.outbound,
-      inbound: r.inbound,
-      note: r.note,
-    })));
-    // loadDemo resets coacheeName to '' — restore it from the shared session
-    if (session.coacheeName) setCoacheeName(session.coacheeName);
-    setPendingShared(null);
-    setCurrentStep('map');
-  }
-
-  // Show welcome modal on first-ever visit (localStorage gate)
+  // Read welcome state after hydration; a restored map arrives asynchronously.
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (!localStorage.getItem(WELCOME_STORAGE_KEY)) {
-      setShowWelcome(true);
-    } else if (savedSession) {
-      // Only offer resume if the user has seen the welcome modal before
-      setShowResumePrompt(true);
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    queueMicrotask(() => {
+      let welcomed = false;
+      try { welcomed = !!localStorage.getItem(WELCOME_STORAGE_KEY); } catch { /* persistence banner explains browser restrictions */ }
+      setShowWelcome(!welcomed);
+      setShowResumePrompt(!!savedSession);
+    });
+  }, [savedSession]);
 
   function handleWelcomeComplete() {
-    localStorage.setItem(WELCOME_STORAGE_KEY, '1');
+    try { localStorage.setItem(WELCOME_STORAGE_KEY, '1'); } catch { /* continue without storage */ }
     setShowWelcome(false);
-    // Don't offer resume on very first visit — the user just onboarded
   }
 
   function handleResume() {
@@ -211,6 +204,7 @@ function AppContent() {
 
   return (
     <main id="main-content" className="min-h-screen bg-white">
+      {storageError && <p role="alert" className="border-b border-amber-300 bg-amber-50 px-4 py-3 text-sm text-gray-dark">{storageError}</p>}
       {currentStep === 'landing' && (
         <div key="landing" className="screen-enter">
           <LandingScreen
@@ -234,7 +228,7 @@ function AppContent() {
       {/* Modals for landing screen */}
       {currentStep === 'landing' && (
         <>
-          <WelcomeModal isOpen={showWelcome} onComplete={handleWelcomeComplete} />
+          {showWelcome && <WelcomeModal isOpen onComplete={handleWelcomeComplete} />}
           <TrustDefinitionsModal
             isOpen={showDefinitions && !showWelcome}
             onClose={() => setShowDefinitions(false)}
@@ -257,7 +251,7 @@ function AppContent() {
         <LoadSharedPrompt
           sharedSession={pendingShared.session}
           shareCode={pendingShared.code}
-          hasCurrentData={relationships.length > 0 || coacheeName !== ''}
+          hasCurrentData={relationships.length > 0 || coacheeName !== '' || !!savedSession || !!storageError}
           onLoad={() => applySharedSession(pendingShared.session)}
           onDismiss={() => setPendingShared(null)}
         />

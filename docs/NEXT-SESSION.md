@@ -9,3 +9,7 @@ Next task: use the committed audit to inspect applicable primary advisories for 
 The source maximum is 25; proposed 8–12 facilitation set is not a runtime cap. Product language retains conflict-specific question until explicit wording study. No product AI. No existing Playwright suite is committed in the baseline. Install/add a test harness only with documented applicable authorization; report app checks as pending until actually run.
 
 Continuation prompt: Continue the TVM programme from CURRENT-STATE and the linked change/validation records. Preserve canonical v1 and reference lineage, update sources and decisions proportionately, use synthetic data, prepare reviewable branches and do not merge/deploy/live-migrate without explicit authorization. Before ending, record exactly what changed, actual checks, blockers and next task.
+
+## Phase 1 continuation
+
+WP-0001 implements enforcement and first reliability fixes. Inspect TEST-0002 and OBS-0005 for exact current results. Review/merge order remains parent #1, foundation #12, then stacked increment; no merge authorized here. Activate and verify required GitHub rules using ENFORCEMENT. Finish remaining persistence/sharing/privacy/accessibility/report acceptance, full SBOM and time-bound development-tool risk disposition with designated humans. Use REHEARSAL-001 only with synthetic data until release gates pass. Do not repeat already-passing tests without new changes or unresolved concerns.

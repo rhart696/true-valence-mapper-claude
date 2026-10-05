@@ -19,3 +19,7 @@ Current pilot status: **NOT READY**. Gate owners/reviewers must be designated by
 | Release decision | Human sponsor/security review with linked evidence at build/config | Pending |
 
 Local synthetic demonstrations can proceed during engineering; real executive pilot requires applicable gates to pass. Any exception must specify scope, rationale, owner, expiry and residual risk; a baseline audit is not a remediation report.
+
+## Executable gate inventory
+
+[release.json](../governance/release.json) is the machine inventory; check-process.py validates structure and fails closed for release authorization. ENFORCEMENT explains actual GitHub review/build/config binding. Every gate remains blocked or pending. Dependency production audit improvement and partial persistence fixes do not close the full release criteria.

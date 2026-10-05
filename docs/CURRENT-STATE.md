@@ -7,7 +7,7 @@ Related: See START-HERE and registry.
 
 Inspected app commit: `a460c6f589b712e66a973b123678cec9e68bbc3c`.
 Inspected parent commit: `82646a5f6a40a76f9a579f98f2960ebae4372c56`.
-Status: **Phase 0 branch prepared; executive pilot NOT READY**. Branch documents become repository policy when merged; accepted user direction is already recorded. Application runtime has not been changed by this work package.
+Status: **Phase 0 branch prepared; executive pilot NOT READY**. Branch documents become repository policy when merged; accepted user direction is already recorded. Phase 0 left runtime unchanged; Phase 1 branch adds scoped persistence fixes and compatible dependency updates.
 
 | Area | Source-inspected implementation | Verification / intended change |
 |---|---|---|
@@ -21,7 +21,7 @@ Status: **Phase 0 branch prepared; executive pilot NOT READY**. Branch documents
 | Exports | PDF/PNG and optional relationship note | No verified round-trip/report fidelity results here |
 | Tests | No committed v1/playwright directory, test script or Playwright dependency found | Old local instruction claim is superseded; build/lint/browser checks pending |
 | Dependencies | npm lockfile audit: 23 affected entries, 2 critical/15 high | Raw report committed; not a runtime exploit assessment or current Dependabot count |
-| Governance | phase records, specifications, traceability checker | Phase 0 validation report; parent convergence PR needed |
+| Governance | phase records, specifications, traceability/process checkers | Phase 1 branch; parent convergence #1 and foundation #12 unmerged, live activation unverified |
 
 ## Next task
 
@@ -34,3 +34,9 @@ See [continuation](NEXT-SESSION.md) for exact resumption instructions. Update th
 ## Publication status
 
 User explicitly authorized publication and paired draft PRs on 2026-10-05 after the initial automatic review block. Both branches are published and paired draft PRs are open; review links are recorded in delivery status. See [delivery status](governance/DELIVERY-STATUS.md).
+
+## Phase 1 increment — WP-0001
+
+Enforcement mechanisms, compatible dependencies, safe persistence and paired service protocol implemented on a stacked review branch. Read [enforcement](governance/ENFORCEMENT.md), [remediation backlog](product/REMEDIATION-BACKLOG.md), [validation](quality/PHASE-1-VALIDATION.md). Live GitHub activation unverified; sharing/database/retention/accessibility/pilot still open. Do not promote full requirements or pilot readiness from partial checks.
+
+Phase 1 results: 42 stdlib tests, five Node tests and six browser scenarios passed; lint/typecheck/build passed. Production audit zero findings; full audit five high development-chain entries. Next16.3.8/jsPDF4.2.1 proposed versions; deployed app remains uninspected. Sharing load now prompts before replacing a map; this is not database authorization remediation. Full SBOM, professional review, accessibility/report testing and staging privacy/sharing remain open.

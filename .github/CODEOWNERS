@@ -13,3 +13,15 @@ cloud-storage.js @rhart696
 
 # Documentation
 *.md @rhart696
+
+# Product–service and enforcement controls: human domain review before merge.
+/scripts/ @rhart696
+/docs/governance/ @rhart696
+/docs/product/ @rhart696
+/docs/service/ @rhart696
+/docs/research/ @rhart696
+/v1/src/context/ @rhart696
+/v1/src/lib/ @rhart696
+/v1/package*.json @rhart696
+/AI_POLICY.md @rhart696
+/AGENTS* @rhart696

@@ -14,6 +14,8 @@ Canonical app: `v1/` in this repository. Parent repository preserves reference l
 
 Before material changes: identify linked requirements/decisions/evidence; state assumptions and conflicts; write acceptance/verification and service-evaluation methods separately; record alternatives and impacts when meaning/architecture changes. Sources support exact claims, not general authority. Partial source access and hypotheses remain explicit.
 
+Before implementation: create a work package under docs/governance/work-packages with ordered lifecycle, acceptance, product/service impacts, verification and review requirements. Read docs/governance/ENFORCEMENT.md.
+
 After changes: update current state, relevant records, generated indexes, immutable change manifest and validation/continuation record. Capture concise rationale, evidence and consequences; do not store private internal AI reasoning. Each change manifest names exact changed paths and record IDs. Use `python3 scripts/check-governance.py --render`, then validate with a merge base and meaningful tests.
 
 ## Working boundaries

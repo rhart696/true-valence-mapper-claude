@@ -24,3 +24,9 @@ Read detailed records for rationale, source access limits and validation.
 | SRC-0017 | [OECD Guidelines on Measuring Trust](sources/SRC-0017.md) | reviewed | bibliography-verified; review due 2026-11-05 |
 | SRC-0018 | [Updated OECD Guidelines on Measuring Trust and Trust Drivers in Public Institutions](sources/SRC-0018.md) | reviewed | verified-abstract; review due 2027-04-05 |
 | SRC-0019 | [Supabase Row Level Security documentation](sources/SRC-0019.md) | reviewed | verified-primary-text; review due 2026-11-05 |
+| SRC-0020 | [GitHub required merge rules](sources/SRC-0020.md) | reviewed | verified-primary-guidance; review due 2026-11-05 |
+| SRC-0021 | [React effect hydration constraints](sources/SRC-0021.md) | reviewed | verified-primary-guidance; review due 2026-11-05 |
+| SRC-0022 | [Next September 2026 security release](sources/SRC-0022.md) | reviewed | verified-primary-guidance; review due 2026-11-05 |
+| SRC-0023 | [jsPDF March 2026 security patch](sources/SRC-0023.md) | reviewed | verified-primary-guidance; review due 2026-11-05 |
+| SRC-0024 | [Playwright browser CI workflow](sources/SRC-0024.md) | reviewed | verified-primary-guidance; review due 2026-11-05 |
+| SRC-0025 | [braces stack-exhaustion advisory](sources/SRC-0025.md) | reviewed | verified-reviewed-advisory; review due 2026-11-05 |

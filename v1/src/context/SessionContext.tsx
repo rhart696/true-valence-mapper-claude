@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { ArrowDirection, ArrowScore, SessionState, Step } from '../types';
-import { SESSION_STORAGE_KEY } from '../types';
+import { readStoredSession, writeStoredSession } from '../lib/sessionStorage';
 
 interface SessionContextValue extends SessionState {
   setCoacheeName: (name: string) => void;
@@ -16,6 +16,7 @@ interface SessionContextValue extends SessionState {
   loadDemo: (items: Array<{ name: string; outbound: ArrowScore; inbound: ArrowScore; note?: string }>) => void;
   // Persistence
   savedSession: SessionState | null;
+  storageError: string | null;
   restoreSession: () => void;
 }
 
@@ -24,41 +25,6 @@ const initialState: SessionState = {
   relationships: [],
   currentStep: 'landing',
 };
-
-// --- localStorage helpers ---
-
-function readFromStorage(): SessionState | null {
-  if (typeof window === 'undefined') return null;
-  try {
-    const raw = localStorage.getItem(SESSION_STORAGE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as SessionState;
-    if (
-      typeof parsed.coacheeName !== 'string' ||
-      !Array.isArray(parsed.relationships) ||
-      typeof parsed.currentStep !== 'string'
-    ) {
-      return null;
-    }
-    return parsed;
-  } catch {
-    return null;
-  }
-}
-
-function writeToStorage(state: SessionState): void {
-  if (typeof window === 'undefined') return;
-  const hasData = state.coacheeName !== '' || state.relationships.length > 0;
-  if (!hasData) {
-    localStorage.removeItem(SESSION_STORAGE_KEY);
-    return;
-  }
-  try {
-    localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    // Quota exceeded — silently ignore
-  }
-}
 
 // Parse the numeric counter out of a rel-N-timestamp id so we avoid collisions after restore
 function maxIdFrom(relationships: SessionState['relationships']): number {
@@ -79,27 +45,44 @@ function generateId(): string {
 }
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
-  // Detect saved session once at mount (before first render via lazy init)
-  const [savedSession] = useState<SessionState | null>(() => {
-    const saved = readFromStorage();
-    if (!saved) return null;
-    if (saved.coacheeName === '' && saved.relationships.length === 0) return null;
-    return saved;
-  });
-
+  // Keep the server and initial client render identical. Never write the empty
+  // initial state over a saved map while the user is deciding whether to resume.
+  const [savedSession, setSavedSession] = useState<SessionState | null>(null);
+  const [storageError, setStorageError] = useState<string | null>(null);
   const [state, setState] = useState<SessionState>(initialState);
+  const [canSave, setCanSave] = useState(false);
 
-  // Auto-save to localStorage on every state change
   useEffect(() => {
-    writeToStorage(state);
-  }, [state]);
+    let active = true;
+    queueMicrotask(() => {
+      if (!active) return;
+      try {
+        const result = readStoredSession(window.localStorage);
+        setSavedSession(result.session && (result.session.coacheeName || result.session.relationships.length) ? result.session : null);
+        setStorageError(result.error);
+      } catch {
+        setStorageError('Saved maps are unavailable in this browser. Keep an export before closing this page.');
+      }
+    });
+    return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    if (!canSave) return;
+    queueMicrotask(() => {
+      try { setStorageError(writeStoredSession(window.localStorage, state)); }
+      catch { setStorageError('Changes could not be saved on this device. Keep an export before closing this page.'); }
+    });
+  }, [state, canSave]);
 
   const setCoacheeName = useCallback((name: string) => {
+    setCanSave(true);
     setState((prev) => ({ ...prev, coacheeName: name }));
   }, []);
 
   const addRelationship = useCallback((name: string) => {
     const id = generateId();
+    setCanSave(true);
     setState((prev) => ({
       ...prev,
       relationships: [
@@ -110,6 +93,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const removeRelationship = useCallback((id: string) => {
+    setCanSave(true);
     setState((prev) => ({
       ...prev,
       relationships: prev.relationships.filter((r) => r.id !== id),
@@ -117,6 +101,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const updateRelationship = useCallback((id: string, name: string) => {
+    setCanSave(true);
     setState((prev) => ({
       ...prev,
       relationships: prev.relationships.map((r) =>
@@ -126,6 +111,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const setArrowScore = useCallback((id: string, direction: ArrowDirection, score: ArrowScore) => {
+    setCanSave(true);
     setState((prev) => ({
       ...prev,
       relationships: prev.relationships.map((r) =>
@@ -135,6 +121,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const setRelationshipNote = useCallback((id: string, note: string) => {
+    setCanSave(true);
     setState((prev) => ({
       ...prev,
       relationships: prev.relationships.map((r) =>
@@ -144,24 +131,24 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const setCurrentStep = useCallback((step: Step) => {
+    setCanSave(true);
     setState((prev) => ({ ...prev, currentStep: step }));
   }, []);
 
   const clearSession = useCallback(() => {
     nextId = 1;
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem(SESSION_STORAGE_KEY);
-    }
-    setState(initialState);
+    setSavedSession(null);
+    setCanSave(true);
+    setState({ ...initialState, relationships: [] });
   }, []);
 
   const restoreSession = useCallback(() => {
-    const saved = readFromStorage();
-    if (!saved) return;
-    nextId = maxIdFrom(saved.relationships) + 1;
-    // Always return to map when resuming — 'complete' is a dead-end step
-    setState({ ...saved, currentStep: saved.currentStep === 'complete' ? 'map' : saved.currentStep });
-  }, []);
+    if (!savedSession) return;
+    nextId = maxIdFrom(savedSession.relationships) + 1;
+    setCanSave(true);
+    setState({ ...savedSession, currentStep: savedSession.currentStep === 'complete' ? 'map' : savedSession.currentStep });
+    setSavedSession(null);
+  }, [savedSession]);
 
   const loadDemo = useCallback(
     (items: Array<{ name: string; outbound: ArrowScore; inbound: ArrowScore; note?: string }>) => {
@@ -173,6 +160,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         inbound: item.inbound,
         note: item.note,
       }));
+      setCanSave(true);
       setState({ coacheeName: '', relationships, currentStep: 'map' });
     },
     []
@@ -191,9 +179,10 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       clearSession,
       loadDemo,
       savedSession,
+      storageError,
       restoreSession,
     }),
-    [state, setCoacheeName, addRelationship, removeRelationship, updateRelationship, setArrowScore, setRelationshipNote, setCurrentStep, clearSession, loadDemo, savedSession, restoreSession]
+    [state, setCoacheeName, addRelationship, removeRelationship, updateRelationship, setArrowScore, setRelationshipNote, setCurrentStep, clearSession, loadDemo, savedSession, storageError, restoreSession]
   );
 
   return (
