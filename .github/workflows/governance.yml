@@ -1,29 +1,68 @@
-name: Governance traceability
+name: TVM quality
 on:
   pull_request:
+  merge_group:
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: governance-${{ github.ref }}
+  group: tvm-quality-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  context:
+  governance:
+    name: TVM governance
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - name: Validate records and generated indexes
-        run: python3 scripts/check-governance.py
-      - name: Test failure behavior
-        run: python3 -m unittest discover -s scripts/tests -v
-      - name: Validate PR change coverage
-        if: github.event_name == 'pull_request'
+      - run: python3 scripts/check-governance.py
+      - run: python3 -m unittest discover -s scripts/tests -v
+      - name: Check exact change coverage
+        if: github.event_name == 'pull_request' || github.event_name == 'merge_group'
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
         run: |
           MERGE_BASE=$(git merge-base "$BASE_SHA" "$HEAD_SHA")
           python3 scripts/check-governance.py --base "$MERGE_BASE" --head "$HEAD_SHA"
+  process:
+    name: TVM process
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - run: python3 scripts/check-process.py
+      - name: Check lifecycle and append-only manifests
+        if: github.event_name == 'pull_request' || github.event_name == 'merge_group'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
+        run: |
+          MERGE_BASE=$(git merge-base "$BASE_SHA" "$HEAD_SHA")
+          python3 scripts/check-process.py --base "$MERGE_BASE" --head "$HEAD_SHA"
+  application:
+    name: TVM application
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: v1
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: v1/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test:unit
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
+      - run: npm audit --omit=dev --audit-level=high

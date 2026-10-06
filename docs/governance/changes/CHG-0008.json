@@ -1,0 +1,35 @@
+{
+  "id": "CHG-0008",
+  "date": "2026-10-05",
+  "owner": "Richard Hart / ProActive ReSolutions",
+  "agent": "Codex",
+  "change_type": "governance",
+  "summary": "Activate native main governance rules and capture scoped evidence",
+  "rationale": "User authorized browser settings activation; both saved active rulesets independently read through connector. Preserve remaining reviewer, effective-rule, deny-test and release boundaries.",
+  "requirements": [
+    "REQ-0013"
+  ],
+  "decisions": [
+    "DEC-0007"
+  ],
+  "evidence": [
+    "SRC-0020"
+  ],
+  "risks": [
+    "RSK-0001"
+  ],
+  "tests": [
+    "TEST-0002"
+  ],
+  "validation": "Browser saved Active for both main rulesets; connector detail GET verifies exact prepared minima and no bypass. Effective branch-rules endpoint disallowed, gh absent; no deny/allow attempt, merge, deployment or client release.",
+  "paths": [
+    "AGENTS.local.md",
+    "docs/governance/ENFORCEMENT.md",
+    "docs/governance/DELIVERY-STATUS.md",
+    "docs/CURRENT-STATE.md",
+    "docs/NEXT-SESSION.md",
+    "docs/quality/phase1/github-ruleset-activation.json",
+    "docs/governance/work-packages/WP-0001.json",
+    "docs/governance/changes/CHG-0008.json"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "release_type": "executive-pilot",
+  "approvers": {
+    "sponsor": "rhart696",
+    "security": null
+  },
+  "gates": {
+    "dependencies": {
+      "status": "blocked",
+      "owner": "Richard Hart \u2014 reviewer designation pending",
+      "criteria": "Current full/production audit, applicability, regressions and SBOM",
+      "evidence": [],
+      "build_sha": null,
+      "config_digest": null
+    },
+    "authorization": {
+      "status": "blocked",
+      "owner": "Richard Hart \u2014 reviewer designation pending",
+      "criteria": "Synthetic staging allow/deny tests and deployed policy inventory",
+      "evidence": [],
+      "build_sha": null,
+      "config_digest": null
+    },
+    "retention": {
+      "status": "blocked",
+      "owner": "Richard Hart \u2014 reviewer designation pending",
+      "criteria": "Expiry, revocation, physical deletion and backup statement",
+      "evidence": [],
+      "build_sha": null,
+      "config_digest": null
+    },
+    "persistence": {
+      "status": "blocked",
+      "owner": "Richard Hart \u2014 reviewer designation pending",
+      "criteria": "Reload/resume/clear/schema/storage-error browser tests",
+      "evidence": [],
+      "build_sha": null,
+      "config_digest": null
+    },
+    "privacy": {
+      "status": "pending",
+      "owner": "Richard Hart \u2014 reviewer designation pending",
+      "criteria": "Approved data flow, disclosure, pseudonyms and opt-in",
+      "evidence": [],
+      "build_sha": null,
+      "config_digest": null
+    },
+    "accessibility": {
+      "status": "pending",
+      "owner": "Richard Hart \u2014 reviewer designation pending",
+      "criteria": "Applicable WCAG 2.2 AA checks and remediation",
+      "evidence": [],
+      "build_sha": null,
+      "config_digest": null
+    },
+    "reports": {
+      "status": "pending",
+      "owner": "Richard Hart \u2014 reviewer designation pending",
+      "criteria": "PDF/PNG/text accuracy and failure handling",
+      "evidence": [],
+      "build_sha": null,
+      "config_digest": null
+    },
+    "facilitation": {
+      "status": "pending",
+      "owner": "Richard Hart \u2014 reviewer designation pending",
+      "criteria": "Approved framing, safe action, consent and rehearsal",
+      "evidence": [],
+      "build_sha": null,
+      "config_digest": null
+    },
+    "pilot-research": {
+      "status": "pending",
+      "owner": "Richard Hart \u2014 reviewer designation pending",
+      "criteria": "Approved bounded protocol, minimal dataset and stop rules",
+      "evidence": [],
+      "build_sha": null,
+      "config_digest": null
+    }
+  }
+}

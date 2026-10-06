@@ -1,22 +1,19 @@
-# Problem and resulting behavior
-
-Describe the concrete problem, resulting change and relevant example. Distinguish intended behavior from verified implementation.
+## Problem and resulting behavior
 
 ## Traceability
 
-Change record: `docs/governance/changes/CHG-xxxx.json`
-Requirements / decisions / evidence / risks / verification: list applicable IDs.
-Explain any partial evidence, conflicts or explicit minor-editorial exemption.
+Work package: WP-____. Change manifest: CHG-____. Requirements/decisions/evidence/risks/tests:
 
-## Validation
+## Product–service coordination
 
-List actual commands/results and relevant commit/configuration. Separate source inspection, executed tests and service evaluation. Record pending checks and unresolved risks. Do not claim live deployment or security/privacy/accessibility assurance without evidence.
+Product impact and specification:
+Service impact and specification (or explicit no-change rationale):
 
-## Review and deployment
+## Verification
 
-- [ ] Current state and continuation updated where relevant
-- [ ] No client data, production secrets or unrelated generated files
-- [ ] Record links and changed-path coverage checked
-- [ ] Security/authorization/PII changes have required human review (or not applicable)
+Actual commands, outcomes and evidence at the reviewed commit; list pending/blocked checks:
 
-Describe migrations, retention/deletion changes, accessibility and report/service impacts when applicable. Main may auto-deploy and notify the parent; merge/deployment is a separate human decision.
+## Review and release
+
+Sensitive/control changes require human domain review. No self-approval. Release gate status and deployment/configuration limits:
+Rollback:

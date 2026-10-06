@@ -1,0 +1,179 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> v1@0.1.0 test:browser
+> playwright test tests/browser/review-correction.spec.ts
+
+[WebServer] (node:31) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:44) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:56) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:79) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 tests/browser/review-correction.spec.ts:12:5 › resume keyboard stays modal and retains bytes until safe Escape resume (383ms)
+(node:161) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 tests/browser/review-correction.spec.ts:25:5 › accepted shared map clears stale resume prompt (5.5s)
+(node:241) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 tests/browser/review-correction.spec.ts:33:5 › malformed shared row fails visibly and preserves prior bytes (5.2s)
+(node:321) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  4 tests/browser/review-correction.spec.ts:41:5 › quota failure during replacement keeps prior map and pending choice (5.5s)
+(node:400) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] [browser] PDF export failed: Error: Element #hub-spoke-svg not found
+[WebServer]     at usePDFExport.useCallback[exportPDF] (src/hooks/usePDFExport.ts:71:26)
+[WebServer]     at async handleExport (src/app/page.tsx:193:5)
+[WebServer]   69 |       // SVG → canvas (scale 2× for PDF quality)
+[WebServer]   70 |       const result = await svgToImageData(canvasElementId, 2);
+[WebServer] > 71 |       if (!result) throw new Error(`Element #${canvasElementId} not found`);
+[WebServer]      |                          ^
+[WebServer]   72 |       const { imgData, canvasW, canvasH } = result;
+[WebServer]   73 |
+[WebServer]   74 |       const pdf = new jsPDF('landscape', 'mm', 'a4'); (src/hooks/usePDFExport.ts:122:15)
+[WebServer] [browser] ⨯ unhandledRejection: Error: Automatic print must not run
+[WebServer]     at window.print (../../../../..:311:30)
+[WebServer]     at usePDFExport.useCallback[exportPDF] (src/hooks/usePDFExport.ts:124:14)
+[WebServer]     at async handleExport (src/app/page.tsx:193:5)
+[WebServer]   122 |       console.error('PDF export failed:', error);
+[WebServer]   123 |       // Fallback: browser print dialog
+[WebServer] > 124 |       window.print();
+[WebServer]       |              ^
+[WebServer]   125 |     } finally {
+[WebServer]   126 |       setIsExporting(false);
+[WebServer]   127 |     }
+  ✘  5 tests/browser/review-correction.spec.ts:54:5 › failed PDF stays on map without success or automatic print (5.5s)
+
+
+  1) tests/browser/review-correction.spec.ts:12:5 › resume keyboard stays modal and retains bytes until safe Escape resume 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      16 |   for (let i = 0; i < 6; i++) {
+      17 |     await page.keyboard.press('Shift+Tab');
+    > 18 |     expect(await page.evaluate(() => !!document.activeElement?.closest('[role="dialog"],dialog'))).toBe(true);
+         |                                                                                                    ^
+      19 |   }
+      20 |   expect(await page.evaluate(() => localStorage.getItem('tvm_session_v1'))).toBe(JSON.stringify(fixture));
+      21 |   await page.keyboard.press('Escape');
+        at /workspace/scratch/03917fbce0c9/tvm/v1/tests/browser/review-correction.spec.ts:18:100
+
+    Error Context: test-results/review-correction-resume-k-4a3d2-es-until-safe-Escape-resume/error-context.md
+
+  2) tests/browser/review-correction.spec.ts:25:5 › accepted shared map clears stale resume prompt ─
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('dialog', { name: 'Resume last session?' })
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('dialog', { name: 'Resume last session?' }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Resume last session?' })
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      29 |   await page.getByRole('button', { name: 'Load session', exact: true }).click();
+      30 |   await expect.poll(() => page.evaluate(() => { const d = JSON.parse(localStorage.getItem('tvm_session_v1')!); return (d.session ?? d).coacheeName; })).toBe('Incoming Synthetic Map');
+    > 31 |   await expect(page.getByRole('dialog', { name: 'Resume last session?' })).toHaveCount(0);
+         |                                                                            ^
+      32 | });
+      33 | test('malformed shared row fails visibly and preserves prior bytes', async ({ page }) => {
+      34 |   await seed(page);
+        at /workspace/scratch/03917fbce0c9/tvm/v1/tests/browser/review-correction.spec.ts:31:76
+
+    Error Context: test-results/review-correction-accepted-63d78--clears-stale-resume-prompt/error-context.md
+
+  3) tests/browser/review-correction.spec.ts:33:5 › malformed shared row fails visibly and preserves prior bytes 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('alert').filter({ hasText: 'shared map could not be loaded' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('alert').filter({ hasText: 'shared map could not be loaded' }) with timeout 5000ms
+      - waiting for getByRole('alert').filter({ hasText: 'shared map could not be loaded' })
+
+
+      35 |   await page.route('**/rest/v1/shared_sessions*', route => route.fulfill({ json: { session: { ...fixture, relationships: [null] } } }));
+      36 |   await page.goto('/?share=ABCDEF');
+    > 37 |   await expect(page.getByRole('alert').filter({ hasText: 'shared map could not be loaded' })).toBeVisible();
+         |                                                                                               ^
+      38 |   await expect(page.getByRole('button', { name: 'Load session', exact: true })).toHaveCount(0);
+      39 |   expect(await page.evaluate(() => localStorage.getItem('tvm_session_v1'))).toBe(JSON.stringify(fixture));
+      40 | });
+        at /workspace/scratch/03917fbce0c9/tvm/v1/tests/browser/review-correction.spec.ts:37:95
+
+    Error Context: test-results/review-correction-malforme-63c4c-y-and-preserves-prior-bytes/error-context.md
+
+  4) tests/browser/review-correction.spec.ts:41:5 › quota failure during replacement keeps prior map and pending choice 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('button', { name: 'Load session', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('button', { name: 'Load session', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Load session', exact: true })
+
+
+      50 |   await expect(page.getByRole('alert').filter({ hasText: 'Changes could not be saved' })).toBeVisible();
+      51 |   expect(await page.evaluate(() => localStorage.getItem('tvm_session_v1'))).toBe(JSON.stringify(fixture));
+    > 52 |   await expect(page.getByRole('button', { name: 'Load session', exact: true })).toBeVisible();
+         |                                                                                 ^
+      53 | });
+      54 | test('failed PDF stays on map without success or automatic print', async ({ page }) => {
+      55 |   await seed(page); await page.goto('/');
+        at /workspace/scratch/03917fbce0c9/tvm/v1/tests/browser/review-correction.spec.ts:52:81
+
+    Error Context: test-results/review-correction-quota-fa-8b419-rior-map-and-pending-choice/error-context.md
+
+  5) tests/browser/review-correction.spec.ts:54:5 › failed PDF stays on map without success or automatic print 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('alert').filter({ hasText: 'PDF could not be prepared' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('alert').filter({ hasText: 'PDF could not be prepared' }) with timeout 5000ms
+      - waiting for getByRole('alert').filter({ hasText: 'PDF could not be prepared' })
+
+
+      57 |   await page.evaluate(() => { document.getElementById('hub-spoke-svg')?.remove(); window.print = () => { throw new Error('Automatic print must not run'); }; });
+      58 |   await page.getByRole('button', { name: 'Export PDF', exact: true }).click();
+    > 59 |   await expect(page.getByRole('alert').filter({ hasText: 'PDF could not be prepared' })).toBeVisible();
+         |                                                                                          ^
+      60 |   await expect(page.getByRole('button', { name: 'Export PDF', exact: true })).toBeVisible();
+      61 |   await expect(page.getByText('PDF Downloaded', { exact: true })).toHaveCount(0);
+      62 | });
+        at /workspace/scratch/03917fbce0c9/tvm/v1/tests/browser/review-correction.spec.ts:59:90
+
+    Error Context: test-results/review-correction-failed-P-b245c--success-or-automatic-print/error-context.md
+
+  5 failed
+    tests/browser/review-correction.spec.ts:12:5 › resume keyboard stays modal and retains bytes until safe Escape resume 
+    tests/browser/review-correction.spec.ts:25:5 › accepted shared map clears stale resume prompt ──
+    tests/browser/review-correction.spec.ts:33:5 › malformed shared row fails visibly and preserves prior bytes 
+    tests/browser/review-correction.spec.ts:41:5 › quota failure during replacement keeps prior map and pending choice 
+    tests/browser/review-correction.spec.ts:54:5 › failed PDF stays on map without success or automatic print 

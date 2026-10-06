@@ -12,3 +12,5 @@ The structured index is [registry.json](governance/registry.json). Detailed reco
 Current work: Phase 0 foundation and source/security baseline. Next: security and persistence remediation before client pilot. See [roadmap](strategy/ROADMAP.md), [release gates](quality/RELEASE-GATES.md), [legacy authority map](governance/LEGACY-AUTHORITY-MAP.md) and [captured brief](TVM-PROJECT-HANDOFF.md).
 
 Use `python3 scripts/check-governance.py` for local structure checks; use `--base <merge-base> --head HEAD` to validate a change set. Detailed rationale is captured; private internal AI reasoning is neither requested nor stored.
+
+Phase 1: read [ENFORCEMENT](governance/ENFORCEMENT.md) and [remediation backlog](product/REMEDIATION-BACKLOG.md). Work packages/lifecycle checks supplement traceability. GitHub rules and client release are separately verified.

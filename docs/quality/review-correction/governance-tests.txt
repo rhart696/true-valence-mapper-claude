@@ -1,0 +1,47 @@
+test_any_source_status_is_not_trusted (test_activation.ActivationTests.test_any_source_status_is_not_trusted) ... ok
+test_empty_rules_fail (test_activation.ActivationTests.test_empty_rules_fail) ... ok
+test_exact_rules_pass (test_activation.ActivationTests.test_exact_rules_pass) ... ok
+test_no_approval_fails (test_activation.ActivationTests.test_no_approval_fails) ... ok
+test_stale_review_allowed_fails (test_activation.ActivationTests.test_stale_review_allowed_fails) ... ok
+test_complete_context_passes (test_governance.GovernanceTests.test_complete_context_passes) ... ok
+test_dangling_context_fails (test_governance.GovernanceTests.test_dangling_context_fails) ... ok
+test_editorial_exemption_cannot_cover_code (test_governance.GovernanceTests.test_editorial_exemption_cannot_cover_code) ... ok
+test_historical_manifest_cannot_cover_new_change (test_governance.GovernanceTests.test_historical_manifest_cannot_cover_new_change) ... ok
+test_path_escape_fails (test_governance.GovernanceTests.test_path_escape_fails) ... ok
+test_record_links_and_duplicate_ids_fail (test_governance.GovernanceTests.test_record_links_and_duplicate_ids_fail) ... ok
+test_unlinked_new_behavior_fails (test_governance.GovernanceTests.test_unlinked_new_behavior_fails) ... ok
+test_verified_requirement_needs_passing_result (test_governance.GovernanceTests.test_verified_requirement_needs_passing_result) ... ok
+test_wrong_context_type_fails (test_governance.GovernanceTests.test_wrong_context_type_fails) ... ok
+test_missing_current_work_package_fails (test_process.ChangeCoverageTests.test_missing_current_work_package_fails) ... ok
+test_old_manifest_cannot_be_mutated (test_process.ChangeCoverageTests.test_old_manifest_cannot_be_mutated) ... ok
+test_product_change_cannot_hide_as_no_change (test_process.ChangeCoverageTests.test_product_change_cannot_hide_as_no_change) ... ok
+test_uncovered_changed_path_fails (test_process.ChangeCoverageTests.test_uncovered_changed_path_fails) ... ok
+test_evaluation_needs_service_outcomes (test_process.ProcessTests.test_evaluation_needs_service_outcomes) ... ok
+test_no_lifecycle_jump (test_process.ProcessTests.test_no_lifecycle_jump) ... ok
+test_overdue_linked_evidence_blocks (test_process.ProcessTests.test_overdue_linked_evidence_blocks) ... ok
+test_passing_check_without_artifact_fails (test_process.ProcessTests.test_passing_check_without_artifact_fails) ... ok
+test_product_service_review_required (test_process.ProcessTests.test_product_service_review_required) ... ok
+test_self_authorized_release_fails (test_process.ProcessTests.test_self_authorized_release_fails) ... ok
+test_sensitive_change_requires_human_review (test_process.ProcessTests.test_sensitive_change_requires_human_review) ... ok
+test_service_impact_required (test_process.ProcessTests.test_service_impact_required) ... ok
+test_unsafe_specification_blocks (test_process.ProcessTests.test_unsafe_specification_blocks) ... ok
+test_valid_implementation_can_be_reviewed_with_release_blocked (test_process.ProcessTests.test_valid_implementation_can_be_reviewed_with_release_blocked) ... ok
+test_verified_with_pending_check_fails (test_process.ProcessTests.test_verified_with_pending_check_fails) ... ok
+test_wrong_record_kind_blocks (test_process.ProcessTests.test_wrong_record_kind_blocks) ... ok
+test_named_full_result_with_artifact_and_commit_passes (test_process.PromotionTests.test_named_full_result_with_artifact_and_commit_passes) ... ok
+test_partial_passing_result_cannot_verify_requirement (test_process.PromotionTests.test_partial_passing_result_cannot_verify_requirement) ... ok
+test_bound_release_passes_with_authenticated_review_fixture (test_process.ReleaseTests.test_bound_release_passes_with_authenticated_review_fixture) ... ok
+test_change_request_overrides_prior_approval (test_process.ReleaseTests.test_change_request_overrides_prior_approval) ... ok
+test_distinct_reviewers_required (test_process.ReleaseTests.test_distinct_reviewers_required) ... ok
+test_missing_evidence_artifact_blocks (test_process.ReleaseTests.test_missing_evidence_artifact_blocks) ... ok
+test_missing_gate_blocks (test_process.ReleaseTests.test_missing_gate_blocks) ... ok
+test_open_gate_blocks (test_process.ReleaseTests.test_open_gate_blocks) ... ok
+test_stale_commit_blocks (test_process.ReleaseTests.test_stale_commit_blocks) ... ok
+test_stale_config_blocks (test_process.ReleaseTests.test_stale_config_blocks) ... ok
+test_stale_review_blocks (test_process.ReleaseTests.test_stale_review_blocks) ... ok
+test_unreviewed_release_blocks (test_process.ReleaseTests.test_unreviewed_release_blocks) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 0.145s
+
+OK

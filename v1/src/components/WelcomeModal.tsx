@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ARROW_SCORE_COLORS } from '../constants';
 
 export const WELCOME_STORAGE_KEY = 'tvm-onboarding-v1-complete';
@@ -158,11 +158,6 @@ interface WelcomeModalProps {
 export function WelcomeModal({ isOpen, onComplete }: WelcomeModalProps) {
   const [slide, setSlide] = useState(0);
   const isLast = slide === SLIDES.length - 1;
-
-  // Reset to slide 0 whenever modal opens
-  useEffect(() => {
-    if (isOpen) setSlide(0);
-  }, [isOpen]);
 
   if (!isOpen) return null;
 

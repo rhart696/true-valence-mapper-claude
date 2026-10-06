@@ -20,6 +20,7 @@ concurrency:
 jobs:
   # Build job
   build:
+    if: ${{ false }} # retired v0; restore only through reviewed release controls
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

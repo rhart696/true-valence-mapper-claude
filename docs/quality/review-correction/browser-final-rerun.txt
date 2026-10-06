@@ -1,0 +1,47 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> v1@0.1.0 test:browser
+> playwright test
+
+[WebServer] (node:31) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:44) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:56) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:79) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:79) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:92) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+(node:113) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 tests/browser/persistence.spec.ts:4:5 › saved map survives mount, resume, reload and explicit start fresh (592ms)
+  ✓   2 tests/browser/persistence.spec.ts:23:5 › malformed map stays intact until user chooses a fresh map (294ms)
+  ✓   3 tests/browser/persistence.spec.ts:30:5 › blocked browser storage surfaces recovery guidance (297ms)
+  ✓   4 tests/browser/persistence.spec.ts:36:5 › welcome does not erase a saved map (540ms)
+  ✓   5 tests/browser/persistence.spec.ts:45:5 › quota failure after resume preserves prior map and shows export guidance (380ms)
+  ✓   6 tests/browser/persistence.spec.ts:57:5 › incoming shared map waits for consent and dismissal preserves saved map (357ms)
+  ✓   7 tests/browser/review-correction.spec.ts:12:5 › resume keyboard stays modal and retains bytes until safe Escape resume (596ms)
+  ✓   8 tests/browser/review-correction.spec.ts:26:5 › accepted shared map clears stale resume prompt (401ms)
+  ✓   9 tests/browser/review-correction.spec.ts:34:5 › malformed shared row fails visibly and preserves prior bytes (337ms)
+  ✓  10 tests/browser/review-correction.spec.ts:42:5 › quota failure during replacement keeps prior map and pending choice (408ms)
+[WebServer] [browser] PDF export failed: Error: Element #hub-spoke-svg not found
+[WebServer]     at usePDFExport.useCallback[exportPDF] (src/hooks/usePDFExport.ts:71:26)
+[WebServer]     at async handleExport (src/app/page.tsx:180:9)
+[WebServer]   69 |       // SVG → canvas (scale 2× for PDF quality)
+[WebServer]   70 |       const result = await svgToImageData(canvasElementId, 2);
+[WebServer] > 71 |       if (!result) throw new Error(`Element #${canvasElementId} not found`);
+[WebServer]      |                          ^
+[WebServer]   72 |       const { imgData, canvasW, canvasH } = result;
+[WebServer]   73 |
+[WebServer]   74 |       const pdf = new jsPDF('landscape', 'mm', 'a4'); (src/hooks/usePDFExport.ts:123:15)
+  ✓  11 tests/browser/review-correction.spec.ts:55:5 › failed PDF stays on map without success or automatic print (486ms)
+  ✓  12 tests/browser/review-correction.spec.ts:65:5 › successful PDF emits a real nonempty download and retains map (742ms)
+
+  12 passed (7.7s)

@@ -1,0 +1,13 @@
+# Sharing architecture proposal
+
+Reviewed: 2026-10-05. REQ-0007/8; DEC-0008 proposed; RSK-0001/7/8. **No SQL migration or service deployment authorized by this document.**
+
+Selected design for review: authenticated owner creates a share through a server endpoint; endpoint validates the full bounded schema, permitted expiry and consent, stores only the selected fields, returns a cryptographically generated high-entropy read capability. Store a hash of the capability, not the plaintext token. A server endpoint resolves the capability, checks expiry/revocation and returns exactly one map. Browser clients receive no shared-table SELECT/INSERT privilege. Wrong/expired/revoked tokens produce indistinguishable not-found responses. Avoid recipient/token/map content in logs. Redact share URL referrers; apply rate limits and payload limits server-side.
+
+Owner authentication/session security must be chosen with the security reviewer. Do not substitute an anonymously callable security-definer function for authorization. Supabase server role secrets remain server-only and excluded from git/client bundles. Restrict all direct table grants and RLS; server handling and database constraints provide independent bounds. A client filter or long token alone cannot compensate for anonymous table listing.
+
+Revoke and delete are separate owner-authorized operations. Expiry prevents access, while scheduled physical cleanup and backup retention are separately documented and tested. Default retention is an explicit product/service decision pending privacy review; do not infer that the existing 30-day database default is approved. Owner may choose never to share.
+
+Alternatives: keep sharing disabled for early local rehearsals (lowest implementation risk, loses remote convenience); authenticated recipient access (stronger identity control, onboarding burden); anonymous capability creation (avoids accounts, but complicates ownership/deletion/abuse control). Authenticated owner + capability reading is a reviewable proposal, not an accepted production architecture.
+
+Acceptance suite: direct anon list/select/insert fail; legitimate owner create succeeds; oversized/nested invalid/future schema and forged expiry fail; wrong token fails; revoked/expired token fails; authorized deletion succeeds; another owner cannot revoke/delete; limits throttle abuse; physical cleanup is witnessed with synthetic staging data; secrets absent from client build; recipient warning and selected-field export match the service protocol. Document staging build/config and reviewer, no production client-map retrieval.

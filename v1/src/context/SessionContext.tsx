@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { ArrowDirection, ArrowScore, SessionState, Step } from '../types';
-import { SESSION_STORAGE_KEY } from '../types';
+import { parseStoredSession, readStoredSession, writeStoredSession } from '../lib/sessionStorage';
 
 interface SessionContextValue extends SessionState {
   setCoacheeName: (name: string) => void;
@@ -14,8 +14,10 @@ interface SessionContextValue extends SessionState {
   setCurrentStep: (step: Step) => void;
   clearSession: () => void;
   loadDemo: (items: Array<{ name: string; outbound: ArrowScore; inbound: ArrowScore; note?: string }>) => void;
+  replaceSession: (session: SessionState) => boolean;
   // Persistence
   savedSession: SessionState | null;
+  storageError: string | null;
   restoreSession: () => void;
 }
 
@@ -24,41 +26,6 @@ const initialState: SessionState = {
   relationships: [],
   currentStep: 'landing',
 };
-
-// --- localStorage helpers ---
-
-function readFromStorage(): SessionState | null {
-  if (typeof window === 'undefined') return null;
-  try {
-    const raw = localStorage.getItem(SESSION_STORAGE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as SessionState;
-    if (
-      typeof parsed.coacheeName !== 'string' ||
-      !Array.isArray(parsed.relationships) ||
-      typeof parsed.currentStep !== 'string'
-    ) {
-      return null;
-    }
-    return parsed;
-  } catch {
-    return null;
-  }
-}
-
-function writeToStorage(state: SessionState): void {
-  if (typeof window === 'undefined') return;
-  const hasData = state.coacheeName !== '' || state.relationships.length > 0;
-  if (!hasData) {
-    localStorage.removeItem(SESSION_STORAGE_KEY);
-    return;
-  }
-  try {
-    localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    // Quota exceeded — silently ignore
-  }
-}
 
 // Parse the numeric counter out of a rel-N-timestamp id so we avoid collisions after restore
 function maxIdFrom(relationships: SessionState['relationships']): number {
@@ -79,27 +46,49 @@ function generateId(): string {
 }
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
-  // Detect saved session once at mount (before first render via lazy init)
-  const [savedSession] = useState<SessionState | null>(() => {
-    const saved = readFromStorage();
-    if (!saved) return null;
-    if (saved.coacheeName === '' && saved.relationships.length === 0) return null;
-    return saved;
-  });
-
+  // Keep the server and initial client render identical. Never write the empty
+  // initial state over a saved map while the user is deciding whether to resume.
+  const [savedSession, setSavedSession] = useState<SessionState | null>(null);
+  const [storageError, setStorageError] = useState<string | null>(null);
   const [state, setState] = useState<SessionState>(initialState);
+  const [canSave, setCanSave] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
-  // Auto-save to localStorage on every state change
   useEffect(() => {
-    writeToStorage(state);
-  }, [state]);
+    let active = true;
+    queueMicrotask(() => {
+      if (!active) return;
+      try {
+        const result = readStoredSession(window.localStorage);
+        setSavedSession(result.session && (result.session.coacheeName || result.session.relationships.length) ? result.session : null);
+        setStorageError(result.error);
+      } catch {
+        setStorageError('Saved maps are unavailable in this browser. Keep an export before closing this page.');
+      } finally {
+        setInitialized(true);
+      }
+    });
+    return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    if (!canSave) return;
+    queueMicrotask(() => {
+      try { setStorageError(writeStoredSession(window.localStorage, state)); }
+      catch { setStorageError('Changes could not be saved on this device. Keep an export before closing this page.'); }
+    });
+  }, [state, canSave]);
 
   const setCoacheeName = useCallback((name: string) => {
+    if (!initialized || savedSession) return;
+    setCanSave(true);
     setState((prev) => ({ ...prev, coacheeName: name }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const addRelationship = useCallback((name: string) => {
     const id = generateId();
+    if (!initialized || savedSession) return;
+    setCanSave(true);
     setState((prev) => ({
       ...prev,
       relationships: [
@@ -107,61 +96,90 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         { id, name: name.trim(), outbound: 'unscored', inbound: 'unscored' },
       ],
     }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const removeRelationship = useCallback((id: string) => {
+    if (!initialized || savedSession) return;
+    setCanSave(true);
     setState((prev) => ({
       ...prev,
       relationships: prev.relationships.filter((r) => r.id !== id),
     }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const updateRelationship = useCallback((id: string, name: string) => {
+    if (!initialized || savedSession) return;
+    setCanSave(true);
     setState((prev) => ({
       ...prev,
       relationships: prev.relationships.map((r) =>
         r.id === id ? { ...r, name: name.trim() } : r
       ),
     }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const setArrowScore = useCallback((id: string, direction: ArrowDirection, score: ArrowScore) => {
+    if (!initialized || savedSession) return;
+    setCanSave(true);
     setState((prev) => ({
       ...prev,
       relationships: prev.relationships.map((r) =>
         r.id === id ? { ...r, [direction]: score } : r
       ),
     }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const setRelationshipNote = useCallback((id: string, note: string) => {
+    if (!initialized || savedSession) return;
+    setCanSave(true);
     setState((prev) => ({
       ...prev,
       relationships: prev.relationships.map((r) =>
         r.id === id ? { ...r, note } : r
       ),
     }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const setCurrentStep = useCallback((step: Step) => {
+    if (!initialized || savedSession) return;
+    setCanSave(true);
     setState((prev) => ({ ...prev, currentStep: step }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const clearSession = useCallback(() => {
+    if (!initialized) return;
     nextId = 1;
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem(SESSION_STORAGE_KEY);
-    }
-    setState(initialState);
-  }, []);
+    setSavedSession(null);
+    setCanSave(true);
+    setState({ ...initialState, relationships: [] });
+  }, [initialized]);
 
   const restoreSession = useCallback(() => {
-    const saved = readFromStorage();
-    if (!saved) return;
-    nextId = maxIdFrom(saved.relationships) + 1;
-    // Always return to map when resuming — 'complete' is a dead-end step
-    setState({ ...saved, currentStep: saved.currentStep === 'complete' ? 'map' : saved.currentStep });
-  }, []);
+    if (!savedSession) return;
+    nextId = maxIdFrom(savedSession.relationships) + 1;
+    setCanSave(true);
+    setState({ ...savedSession, currentStep: savedSession.currentStep === 'complete' ? 'map' : savedSession.currentStep });
+    setSavedSession(null);
+  }, [savedSession]);
+
+  const replaceSession = useCallback((incoming: SessionState): boolean => {
+    if (!initialized) return false;
+    const validated = parseStoredSession(JSON.stringify(incoming));
+    if (!validated) {
+      setStorageError('The incoming map could not be read. Your previous map has been kept.');
+      return false;
+    }
+    let error: string | null;
+    try { error = writeStoredSession(window.localStorage, validated); }
+    catch { error = 'Changes could not be saved on this device. Your previous map has been kept.'; }
+    setStorageError(error);
+    if (error) return false;
+    nextId = maxIdFrom(validated.relationships) + 1;
+    setSavedSession(null);
+    setState(validated);
+    setCanSave(true);
+    return true;
+  }, [initialized]);
 
   const loadDemo = useCallback(
     (items: Array<{ name: string; outbound: ArrowScore; inbound: ArrowScore; note?: string }>) => {
@@ -173,9 +191,9 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         inbound: item.inbound,
         note: item.note,
       }));
-      setState({ coacheeName: '', relationships, currentStep: 'map' });
+      replaceSession({ coacheeName: '', relationships, currentStep: 'map' });
     },
-    []
+    [replaceSession]
   );
 
   const value = useMemo<SessionContextValue>(
@@ -191,9 +209,11 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       clearSession,
       loadDemo,
       savedSession,
+      storageError,
       restoreSession,
+      replaceSession,
     }),
-    [state, setCoacheeName, addRelationship, removeRelationship, updateRelationship, setArrowScore, setRelationshipNote, setCurrentStep, clearSession, loadDemo, savedSession, restoreSession]
+    [state, setCoacheeName, addRelationship, removeRelationship, updateRelationship, setArrowScore, setRelationshipNote, setCurrentStep, clearSession, loadDemo, savedSession, storageError, restoreSession, replaceSession]
   );
 
   return (

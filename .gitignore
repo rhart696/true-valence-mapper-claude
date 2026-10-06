@@ -24,3 +24,6 @@ background-assets/reviews-evaluations/
 # Governance tooling caches
 **/__pycache__/
 *.py[cod]
+v1/.test-build/
+v1/test-results/
+v1/playwright-report/

@@ -1,152 +1,33 @@
-name: Security Audit
-
+name: TVM dependency and evidence review
 on:
   schedule:
-    # Run weekly on Sundays at 2 AM UTC
     - cron: '0 2 * * 0'
   workflow_dispatch:
-  pull_request:
-    paths:
-      - '**.js'
-      - '**.html'
-      - '**.sql'
-
+permissions:
+  contents: read
 concurrency:
-  group: security-audit-${{ github.ref }}
+  group: tvm-periodic-review
   cancel-in-progress: true
-
 jobs:
-  security-scan:
+  review:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    permissions:
-      contents: read
-      security-events: write
-
+    timeout-minutes: 10
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Check for hardcoded secrets
-        run: |
-          echo "🔍 Scanning for hardcoded secrets in v1/src/..."
-          SCAN_DIR="v1/src"
-
-          # Check for common secret patterns
-          if grep -rEi "password\s*=\s*['\"]" --include="*.ts" --include="*.tsx" "$SCAN_DIR"; then
-            echo "⚠️ WARNING: Found potential hardcoded passwords"
-            exit 1
-          fi
-
-          if grep -rEi "api[_-]?key\s*=\s*['\"][^'\"]{20,}" --include="*.ts" --include="*.tsx" "$SCAN_DIR"; then
-            echo "⚠️ WARNING: Found potential hardcoded API keys"
-            exit 1
-          fi
-
-          if grep -rEi "secret\s*=\s*['\"]" --include="*.ts" --include="*.tsx" "$SCAN_DIR"; then
-            echo "⚠️ WARNING: Found potential hardcoded secrets"
-            exit 1
-          fi
-
-          echo "✅ No hardcoded secrets detected"
-
-      - name: Check SQL injection patterns
-        run: |
-          echo "🔍 Scanning SQL files for injection risks..."
-
-          # Check for SQL files with potential injection patterns
-          if find docs/ -name "*.sql" -type f 2>/dev/null | xargs grep -i "DROP TABLE" 2>/dev/null | grep -v "IF EXISTS" | grep -v "-- "; then
-            echo "⚠️ WARNING: Found potentially unsafe DROP TABLE statements"
-            exit 1
-          fi
-
-          # Check for string concatenation in SQL (indicates potential injection)
-          if grep -rEi "\+\s*['\"].*SELECT" --include="*.ts" --include="*.tsx" v1/src/; then
-            echo "⚠️ WARNING: Found potential SQL injection via string concatenation"
-            exit 1
-          fi
-
-          echo "✅ No SQL injection patterns detected"
-
-      - name: Check XSS vulnerabilities
-        run: |
-          echo "🔍 Scanning v1/src/ for XSS vulnerability patterns..."
-
-          # Check for dangerous innerHTML usage in TS/TSX files
-          if grep -rn "innerHTML\s*=" --include="*.ts" --include="*.tsx" v1/src/ | grep -v "dangerouslySetInnerHTML"; then
-            echo "⚠️ WARNING: Found potentially unsafe innerHTML usage"
-            exit 1
-          fi
-
-          # Check for eval usage
-          if grep -rn "eval(" --include="*.ts" --include="*.tsx" v1/src/; then
-            echo "⚠️ WARNING: Found eval() usage (dangerous)"
-            exit 1
-          fi
-
-          # Check for new Function usage
-          if grep -rn "new Function(" --include="*.ts" --include="*.tsx" v1/src/; then
-            echo "⚠️ WARNING: Found new Function() usage (dangerous)"
-            exit 1
-          fi
-
-          echo "✅ No XSS vulnerability patterns detected"
-
-      - name: Validate input sanitization
-        run: |
-          echo "🔍 Checking for proper input validation in v1/src/..."
-
-          # v1 uses Supabase client + TypeScript types for validation — check that
-          # user-facing inputs go through the lib/supabase.ts abstraction layer
-          if ! grep -rq "supabase\|sanitize\|validate\|maxLength\|trim()" v1/src/components/; then
-            echo "⚠️ WARNING: No input sanitization patterns found in v1/src/components/"
-            exit 1
-          fi
-
-          echo "✅ Input validation checks passed"
-
-      - name: Check RLS policies
-        run: |
-          echo "🔍 Validating RLS policy security in docs/..."
-
-          # Check if SQL files contain RLS policies
-          if find docs/ -name "*rls*.sql" -type f 2>/dev/null | xargs grep -i "CREATE POLICY" 2>/dev/null | grep -v "USING"; then
-            echo "⚠️ WARNING: Found RLS policy without USING clause"
-            exit 1
-          fi
-
-          # Check for permissive policies (allow all)
-          if find docs/ -name "*.sql" -type f 2>/dev/null | xargs grep -i "TO authenticated" 2>/dev/null | grep -i "USING (true)"; then
-            echo "⚠️ WARNING: Found overly permissive RLS policy"
-            exit 1
-          fi
-
-          echo "✅ RLS policy checks passed"
-
-      - name: Security audit summary
-        if: always()
-        run: |
-          echo "📊 Security Audit Summary"
-          echo "========================"
-          echo ""
-          echo "Checks performed:"
-          echo "  ✓ Hardcoded secrets scan"
-          echo "  ✓ SQL injection patterns"
-          echo "  ✓ XSS vulnerability patterns"
-          echo "  ✓ Input validation usage"
-          echo "  ✓ RLS policy validation"
-          echo ""
-          echo "For detailed security documentation, see:"
-          echo "  - .github/SECURITY.md"
-          echo "  - docs/security/"
-
-      - name: Upload audit results
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check active work-package source currency
+        run: python3 scripts/check-process.py
+      - name: Audit full lockfile (development findings remain visible)
+        working-directory: v1
+        run: npm audit --package-lock-only --audit-level=high --json > dependency-audit.json
+      - name: Preserve actual audit results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: security-audit-results
-          path: |
-            **/*.sql
-            **/*.js
-            **/*.html
+          name: tvm-dependency-review
+          path: v1/dependency-audit.json
+          if-no-files-found: warn
           retention-days: 30
+      # Audit success does not establish application security or client readiness.

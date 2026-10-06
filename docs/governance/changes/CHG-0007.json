@@ -1,0 +1,50 @@
+{
+  "id": "CHG-0007",
+  "date": "2026-10-05",
+  "owner": "Richard Hart / ProActive ReSolutions",
+  "agent": "Codex",
+  "change_type": "governance",
+  "summary": "Record published Phase 1 draft PR and activation boundary",
+  "rationale": "Authorized changes are now available as draft PR13. Record concrete review/continuation links and distinguish implemented checks from unactivated live rules.",
+  "requirements": [
+    "REQ-0013",
+    "REQ-0006",
+    "REQ-0007",
+    "REQ-0008",
+    "REQ-0009"
+  ],
+  "decisions": [
+    "DEC-0007",
+    "DEC-0008",
+    "DEC-0009"
+  ],
+  "evidence": [
+    "SRC-0020",
+    "SRC-0021",
+    "SRC-0022",
+    "SRC-0023",
+    "SRC-0024",
+    "SRC-0025",
+    "OBS-0002",
+    "OBS-0003",
+    "OBS-0005"
+  ],
+  "risks": [
+    "RSK-0001",
+    "RSK-0002",
+    "RSK-0003",
+    "RSK-0005",
+    "RSK-0007",
+    "RSK-0008"
+  ],
+  "tests": [
+    "TEST-0002"
+  ],
+  "validation": "See TEST-0002 for scoped passing checks and unresolved browser/live controls/SBOM; no client release.",
+  "paths": [
+    "docs/governance/DELIVERY-STATUS.md",
+    "docs/CURRENT-STATE.md",
+    "docs/governance/work-packages/WP-0001.json",
+    "docs/governance/changes/CHG-0007.json"
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "id": "WP-0001",
+  "owner": "Richard Hart / ProActive ReSolutions",
+  "stage": "implemented",
+  "release_status": "not-authorized",
+  "objective": "Enforce managed product-service increments and implement first reliability fixes",
+  "problem": "Structural records alone do not enforce lifecycle/release decisions; baseline app can erase saved maps before resume and contains dependency findings.",
+  "scope": "Executable process/activation/release checks, compatible dependency updates, scoped persistence repair, service handling/rehearsal and sharing design proposal. No live migration/merge/deployment.",
+  "uncertainty": "Native main settings active; effective-rule gh verification and deny/allow test unperformed. Database/hosting config unknown; synthetic tests do not establish usability or efficacy; residual dev advisory/full SBOM unresolved.",
+  "alternatives": "Documentation alone insufficient; heavyweight external PM unnecessary now; reject breaking dependency downgrade; sharing architecture proposal awaits domain review.",
+  "acceptance": "Incomplete lifecycle/traceability fails; release stays blocked; mount preserves maps, resume/clear and nested schema/error paths pass scoped tests; product/service impacts recorded.",
+  "rollback": "Revert increment through reviewed PR; retain previous session key/parser compatibility; do not remove client records; no live migration to roll back.",
+  "requirements": [
+    "REQ-0013",
+    "REQ-0006",
+    "REQ-0007",
+    "REQ-0008",
+    "REQ-0009"
+  ],
+  "decisions": [
+    "DEC-0007",
+    "DEC-0008",
+    "DEC-0009"
+  ],
+  "evidence": [
+    "SRC-0020",
+    "SRC-0021",
+    "SRC-0022",
+    "SRC-0023",
+    "SRC-0024",
+    "SRC-0025",
+    "OBS-0002",
+    "OBS-0003",
+    "OBS-0005"
+  ],
+  "risks": [
+    "RSK-0001",
+    "RSK-0002",
+    "RSK-0003",
+    "RSK-0005",
+    "RSK-0007",
+    "RSK-0008"
+  ],
+  "tests": [
+    "TEST-0002"
+  ],
+  "impacts": {
+    "product": {
+      "disposition": "changed",
+      "rationale": "Persistence contract and sharing architecture/remediation backlog revised.",
+      "specifications": [
+        "docs/product/DATA-MODEL.md",
+        "docs/product/SHARING-ARCHITECTURE.md",
+        "docs/product/REMEDIATION-BACKLOG.md"
+      ]
+    },
+    "service": {
+      "disposition": "changed",
+      "rationale": "Data handling and synthetic complete journey paired with current software capabilities.",
+      "specifications": [
+        "docs/service/PERSISTENCE-PROTOCOL.md",
+        "docs/service/REHEARSAL-001.md",
+        "docs/service/INTERVENTION-SPEC.md"
+      ]
+    }
+  },
+  "history": [
+    {
+      "stage": "framed",
+      "date": "2026-10-05",
+      "actor": "Codex under Richard Hart authorization",
+      "evidence": "Current user instruction and OBS-0002/3/4 baseline"
+    },
+    {
+      "stage": "specified",
+      "date": "2026-10-05",
+      "actor": "Codex under Richard Hart authorization",
+      "evidence": "DEC-0007/8/9 and paired product-service specifications"
+    },
+    {
+      "stage": "implemented",
+      "date": "2026-10-05",
+      "actor": "Codex under Richard Hart authorization",
+      "evidence": "Branch changes; TEST-0002 records actual outcomes and remaining gaps"
+    }
+  ],
+  "required_reviews": [
+    "human-domain-review",
+    "product-service-review"
+  ],
+  "verification": [
+    {
+      "command": "python3 -m unittest discover -s scripts/tests -v",
+      "scope": "Governance/process/activation fail-closed regression",
+      "status": "passed",
+      "evidence": "docs/quality/PHASE-1-VALIDATION.md"
+    },
+    {
+      "command": "npm run lint && npm run typecheck && npm run test:unit && npm run build",
+      "scope": "App static/build/schema/storage",
+      "status": "passed",
+      "evidence": "docs/quality/PHASE-1-VALIDATION.md"
+    },
+    {
+      "command": "npm run test:browser",
+      "scope": "Actual hydration/reload/resume/clear/malformed/blocked storage",
+      "status": "passed",
+      "evidence": "docs/quality/PHASE-1-VALIDATION.md"
+    },
+    {
+      "command": "python3 scripts/check-enforcement-activation.py",
+      "scope": "Actual live required merge controls",
+      "status": "blocked",
+      "evidence": null
+    },
+    {
+      "command": "Authenticated browser save + independent GET rulesets/24546668 and rulesets/24546683",
+      "scope": "Active main ruleset configuration, review thresholds, trusted check sources and empty bypass lists; excludes effective-rule command and deny/allow test",
+      "status": "passed",
+      "evidence": "docs/quality/phase1/github-ruleset-activation.json"
+    }
+  ],
+  "paths": [
+    ".github/CODEOWNERS",
+    ".github/PULL_REQUEST_TEMPLATE.md",
+    ".github/workflows/deploy.yml",
+    ".github/workflows/governance.yml",
+    ".github/workflows/release-readiness.yml",
+    ".github/workflows/security-audit.yml",
+    ".gitignore",
+    "AGENTS.local.md",
+    "AGENTS.md",
+    "docs/CURRENT-STATE.md",
+    "docs/NEXT-SESSION.md",
+    "docs/START-HERE.md",
+    "docs/decisions/DEC-0007.md",
+    "docs/decisions/DEC-0008.md",
+    "docs/decisions/DEC-0009.md",
+    "docs/decisions/DECISION-REGISTER.md",
+    "docs/evidence/EVIDENCE-REGISTER.md",
+    "docs/evidence/sources/SRC-0020.md",
+    "docs/evidence/sources/SRC-0021.md",
+    "docs/evidence/sources/SRC-0022.md",
+    "docs/evidence/sources/SRC-0023.md",
+    "docs/evidence/sources/SRC-0024.md",
+    "docs/evidence/sources/SRC-0025.md",
+    "docs/governance/DELIVERY-STATUS.md",
+    "docs/governance/ENFORCEMENT.md",
+    "docs/governance/changes/CHG-0005.json",
+    "docs/governance/changes/CHG-0006.json",
+    "docs/governance/changes/CHG-0007.json",
+    "docs/governance/changes/CHG-0008.json",
+    "docs/governance/github-ruleset.json",
+    "docs/governance/parent-github-ruleset.json",
+    "docs/governance/registry.json",
+    "docs/governance/release.json",
+    "docs/governance/work-packages/WP-0001.json",
+    "docs/product/DATA-MODEL.md",
+    "docs/product/REMEDIATION-BACKLOG.md",
+    "docs/product/SHARING-ARCHITECTURE.md",
+    "docs/quality/DEPENDENCY-REMEDIATION.md",
+    "docs/quality/PHASE-1-VALIDATION.md",
+    "docs/quality/RELEASE-GATES.md",
+    "docs/quality/baseline/lockfile-inventory-phase1.json",
+    "docs/quality/phase1/github-ruleset-activation.json",
+    "docs/quality/phase1/npm-audit-full.json",
+    "docs/quality/phase1/npm-audit-production.json",
+    "docs/quality/phase1/persistence-baseline-reproduction.txt",
+    "docs/quality/phase1/sbom-production-nonoptional.json",
+    "docs/requirements/REQ-0006.md",
+    "docs/requirements/REQ-0009.md",
+    "docs/requirements/REQ-0013.md",
+    "docs/requirements/REQUIREMENTS-REGISTER.md",
+    "docs/service/PERSISTENCE-PROTOCOL.md",
+    "docs/service/REHEARSAL-001.md",
+    "scripts/check-enforcement-activation.py",
+    "scripts/check-process.py",
+    "scripts/tests/test_activation.py",
+    "scripts/tests/test_process.py",
+    "v1/AGENTS.md",
+    "v1/CLAUDE.md",
+    "v1/eslint.config.mjs",
+    "v1/package-lock.json",
+    "v1/package.json",
+    "v1/playwright.config.ts",
+    "v1/src/app/page.tsx",
+    "v1/src/components/WelcomeModal.tsx",
+    "v1/src/context/SessionContext.tsx",
+    "v1/src/lib/sessionStorage.ts",
+    "v1/tests/browser/persistence.spec.ts",
+    "v1/tests/sessionStorage.test.mjs"
+  ]
+}

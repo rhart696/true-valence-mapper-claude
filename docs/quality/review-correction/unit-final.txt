@@ -1,0 +1,18 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> v1@0.1.0 test:unit
+> rm -rf .test-build && tsc src/lib/sessionStorage.ts src/types.ts --outDir .test-build --module commonjs --target ES2020 --skipLibCheck && node --test tests/sessionStorage.test.mjs
+
+✔ legacy and versioned maps retain names, categories and notes (1.737873ms)
+✔ malformed nested payloads and future schemas fail safely (0.329056ms)
+✔ read failure preserves malformed bytes and never removes storage (0.194444ms)
+✔ quota and blocked access are visible errors (0.199852ms)
+✔ clear removes only the map key; writes have schema envelope (0.275686ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 86.391638
