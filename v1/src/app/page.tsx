@@ -1,5 +1,6 @@
 'use client';
 
+import { DecisionDialog } from '../components/DecisionDialog';
 import { SessionProvider, useSession } from '../context/SessionContext';
 import { usePDFExport } from '../hooks/usePDFExport';
 import { useState, useEffect } from 'react';
@@ -27,12 +28,7 @@ function ResumePrompt({ coacheeName, relationshipCount, onResume, onStartFresh }
     : `${relationshipCount} relationship${relationshipCount !== 1 ? 's' : ''} (no name set)`;
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="resume-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
-    >
+    <DecisionDialog titleId="resume-title" onCancel={onResume}>
       <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-2xl">
         <h2 id="resume-title" className="mb-2 text-xl font-bold text-gray-dark">
           Resume last session?
@@ -57,7 +53,7 @@ function ResumePrompt({ coacheeName, relationshipCount, onResume, onStartFresh }
           Start fresh
         </button>
       </div>
-    </div>
+    </DecisionDialog>
   );
 }
 
@@ -67,11 +63,12 @@ interface LoadSharedPromptProps {
   sharedSession: SessionState;
   shareCode: string;
   hasCurrentData: boolean;
+  error: string | null;
   onLoad: () => void;
   onDismiss: () => void;
 }
 
-function LoadSharedPrompt({ sharedSession, shareCode, hasCurrentData, onLoad, onDismiss }: LoadSharedPromptProps) {
+function LoadSharedPrompt({ sharedSession, shareCode, hasCurrentData, error, onLoad, onDismiss }: LoadSharedPromptProps) {
   const count = sharedSession.relationships.length;
   const name = sharedSession.coacheeName;
   const label = name
@@ -79,12 +76,7 @@ function LoadSharedPrompt({ sharedSession, shareCode, hasCurrentData, onLoad, on
     : `${count} relationship${count !== 1 ? 's' : ''}`;
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="load-shared-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
-    >
+    <DecisionDialog titleId="load-shared-title" onCancel={onDismiss}>
       <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-2xl">
         <h2 id="load-shared-title" className="mb-2 text-xl font-bold text-gray-dark">
           Load shared session?
@@ -102,6 +94,7 @@ function LoadSharedPrompt({ sharedSession, shareCode, hasCurrentData, onLoad, on
           </p>
         )}
 
+        {error && <p role="alert" className="mb-4 text-sm text-gray-dark">{error}</p>}
         <button
           onClick={onLoad}
           autoFocus
@@ -117,14 +110,15 @@ function LoadSharedPrompt({ sharedSession, shareCode, hasCurrentData, onLoad, on
           Dismiss
         </button>
       </div>
-    </div>
+    </DecisionDialog>
   );
 }
 
 // --- App ---
 
 function AppContent() {
-  const { currentStep, setCurrentStep, clearSession, relationships, coacheeName, setCoacheeName, loadDemo, savedSession, storageError, restoreSession } = useSession();
+  const { currentStep, setCurrentStep, clearSession, relationships, coacheeName, replaceSession, loadDemo, savedSession, storageError, restoreSession } = useSession();
+  const [actionError, setActionError] = useState<string | null>(null);
   const [showDefinitions, setShowDefinitions] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
   const [showResumePrompt, setShowResumePrompt] = useState(false);
@@ -132,16 +126,10 @@ function AppContent() {
   const { isExporting, exportPDF, exportPNG } = usePDFExport();
 
   function applySharedSession(session: SessionState) {
-    loadDemo(session.relationships.map((r) => ({
-      name: r.name,
-      outbound: r.outbound,
-      inbound: r.inbound,
-      note: r.note,
-    })));
-    // loadDemo resets coacheeName to '' — restore it from the shared session
-    if (session.coacheeName) setCoacheeName(session.coacheeName);
+    if (!replaceSession({ ...session, currentStep: 'map' })) return;
+    setShowResumePrompt(false);
     setPendingShared(null);
-    setCurrentStep('map');
+    setActionError(null);
   }
 
   // Check for ?share= param and load session from Supabase
@@ -157,11 +145,11 @@ function AppContent() {
     window.history.replaceState({}, '', clean.toString());
 
     loadSession(shareCode).then((session) => {
-      if (!session) return; // silently ignore invalid/expired codes
+      if (!session) { setActionError('The shared map could not be loaded. It may be invalid or expired. Your current map has been kept.'); return; }
       // A saved map may still be awaiting the resume choice. Always ask before
       // applying a fetched map, including when that asynchronous choice is pending.
       setPendingShared({ session, code: shareCode });
-    });
+    }).catch(() => setActionError('The shared map could not be loaded. Your current map has been kept. Try again or contact the sender.'));
   }, []);
 
   // Read welcome state after hydration; a restored map arrives asynchronously.
@@ -190,12 +178,14 @@ function AppContent() {
   }
 
   async function handleExport() {
-    await exportPDF('hub-spoke-svg', relationships, coacheeName);
-    setCurrentStep('complete');
+    setActionError(null);
+    if (await exportPDF('hub-spoke-svg', relationships, coacheeName)) setCurrentStep('complete');
+    else setActionError('The PDF could not be prepared. Your map has been kept. Try again or use your browser Print command and verify the resulting file.');
   }
 
   async function handleExportPNG() {
-    await exportPNG('hub-spoke-svg', coacheeName);
+    setActionError(null);
+    if (!await exportPNG('hub-spoke-svg', coacheeName)) setActionError('The image could not be prepared. Your map has been kept. Try again.');
   }
 
   function handleLoadDemo() {
@@ -204,7 +194,8 @@ function AppContent() {
 
   return (
     <main id="main-content" className="min-h-screen bg-white">
-      {storageError && <p role="alert" className="border-b border-amber-300 bg-amber-50 px-4 py-3 text-sm text-gray-dark">{storageError}</p>}
+      {actionError && <p role="alert" className="border-b border-amber-300 bg-amber-50 px-4 py-3 text-sm text-gray-dark">{actionError}</p>}
+      {storageError && !pendingShared && <p role="alert" className="border-b border-amber-300 bg-amber-50 px-4 py-3 text-sm text-gray-dark">{storageError}</p>}
       {currentStep === 'landing' && (
         <div key="landing" className="screen-enter">
           <LandingScreen
@@ -251,6 +242,7 @@ function AppContent() {
         <LoadSharedPrompt
           sharedSession={pendingShared.session}
           shareCode={pendingShared.code}
+          error={storageError}
           hasCurrentData={relationships.length > 0 || coacheeName !== '' || !!savedSession || !!storageError}
           onLoad={() => applySharedSession(pendingShared.session)}
           onDismiss={() => setPendingShared(null)}

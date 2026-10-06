@@ -1,5 +1,6 @@
 import { getSupabaseClient } from './supabase';
 import type { SessionState } from '../types';
+import { parseStoredSession } from './sessionStorage';
 
 // 6-char alphanumeric, no confusable chars (0/O, 1/I, 5/S, 8/B)
 const CODE_CHARS = 'ACDEFGHJKLMNPQRTUVWXYZ234679';
@@ -54,17 +55,10 @@ export async function loadSession(shareCode: string): Promise<SessionState | nul
 
   if (error || !data) return null;
 
-  const s = data.session as SessionState;
-
-  // Validate shape before accepting
-  if (
-    typeof s?.coacheeName !== 'string' ||
-    !Array.isArray(s?.relationships)
-  ) {
-    return null;
-  }
-
-  return { ...s, currentStep: 'map' };
+  // Every ingress uses the same bounded nested/schema validator.
+  const session = parseStoredSession(JSON.stringify(data.session));
+  if (!session) throw new Error('Invalid shared map payload');
+  return { ...session, currentStep: 'map' };
 }
 
 export function buildShareUrl(shareCode: string): string {

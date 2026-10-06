@@ -1629,6 +1629,28 @@
         "DEC-0009",
         "SRC-0025"
       ]
+    },
+    {
+      "id": "TEST-0003",
+      "kind": "test",
+      "title": "Astra review corrective runtime verification",
+      "path": "docs/quality/review-correction/VALIDATION.md",
+      "status": "passed",
+      "currency": "authoritative",
+      "owner": "Richard Hart / ProActive ReSolutions",
+      "created": "2026-10-06",
+      "last_reviewed": "2026-10-06",
+      "supersedes": [],
+      "superseded_by": [],
+      "related": [
+        "REQ-0006",
+        "REQ-0007",
+        "REQ-0010",
+        "DEC-0009"
+      ],
+      "scope": "Synthetic session decisions, shared ingress and explicit export outcomes; excludes live/server/service acceptance.",
+      "coverage": "partial",
+      "result": "12 browser, 5 Node, 42 governance tests and lint/type/build pass; dependency audit and wider release gates remain open."
     }
   ]
 }

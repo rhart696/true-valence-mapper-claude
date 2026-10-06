@@ -5,8 +5,8 @@ import type { Relationship } from '../types';
 
 interface UsePDFExportReturn {
   isExporting: boolean;
-  exportPDF: (canvasElementId: string, relationships?: Relationship[], coacheeName?: string) => Promise<void>;
-  exportPNG: (canvasElementId: string, coacheeName?: string) => Promise<void>;
+  exportPDF: (canvasElementId: string, relationships?: Relationship[], coacheeName?: string) => Promise<boolean>;
+  exportPNG: (canvasElementId: string, coacheeName?: string) => Promise<boolean>;
 }
 
 /** Serialise SVG element → offscreen canvas → PNG data URL. */
@@ -117,11 +117,11 @@ export function usePDFExport(): UsePDFExportReturn {
       }
 
       const dateStr = new Date().toISOString().split('T')[0];
-      pdf.save(`${filePrefix(coacheeName)}trust-map-${dateStr}.pdf`);
+      await pdf.save(`${filePrefix(coacheeName)}trust-map-${dateStr}.pdf`, { returnPromise: true });
+      return true;
     } catch (error) {
       console.error('PDF export failed:', error);
-      // Fallback: browser print dialog
-      window.print();
+      return false;
     } finally {
       setIsExporting(false);
     }
@@ -138,8 +138,10 @@ export function usePDFExport(): UsePDFExportReturn {
       link.download = `${filePrefix(coacheeName)}trust-map-${dateStr}.png`;
       link.href = result.imgData;
       link.click();
+      return true;
     } catch (error) {
       console.error('PNG export failed:', error);
+      return false;
     } finally {
       setIsExporting(false);
     }

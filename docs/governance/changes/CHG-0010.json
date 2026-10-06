@@ -1,0 +1,51 @@
+{
+  "id": "CHG-0010",
+  "date": "2026-10-06",
+  "owner": "Richard Hart / ProActive ReSolutions",
+  "agent": "Codex",
+  "change_type": "governance",
+  "summary": "Preserve corrective execution logs as tracked review evidence",
+  "rationale": "Generic log ignore excludes raw logs; preserve exact bytes as txt artifacts and make validation locators durable without rewriting historical manifests.",
+  "requirements": [
+    "REQ-0006",
+    "REQ-0007",
+    "REQ-0010"
+  ],
+  "decisions": [
+    "DEC-0009"
+  ],
+  "evidence": [
+    "OBS-0003"
+  ],
+  "risks": [
+    "RSK-0002",
+    "RSK-0003"
+  ],
+  "tests": [
+    "TEST-0003"
+  ],
+  "validation": "Raw log copies preserve bytes; exact change coverage and package checks rerun. Client release remains not authorized.",
+  "paths": [
+    "docs/governance/changes/CHG-0010.json",
+    "docs/governance/work-packages/WP-0002.json",
+    "docs/quality/review-correction/VALIDATION.md",
+    "docs/quality/review-correction/browser-after.txt",
+    "docs/quality/review-correction/browser-before-restored.txt",
+    "docs/quality/review-correction/browser-before.txt",
+    "docs/quality/review-correction/browser-final-rerun.txt",
+    "docs/quality/review-correction/browser-final.txt",
+    "docs/quality/review-correction/browser-verified.txt",
+    "docs/quality/review-correction/build-final.txt",
+    "docs/quality/review-correction/build.txt",
+    "docs/quality/review-correction/governance-render.txt",
+    "docs/quality/review-correction/governance-tests.txt",
+    "docs/quality/review-correction/lint-final.txt",
+    "docs/quality/review-correction/lint.txt",
+    "docs/quality/review-correction/process-final.txt",
+    "docs/quality/review-correction/process.txt",
+    "docs/quality/review-correction/typecheck-final.txt",
+    "docs/quality/review-correction/typecheck.txt",
+    "docs/quality/review-correction/unit-final.txt",
+    "docs/quality/review-correction/unit.txt"
+  ]
+}

@@ -1,0 +1,659 @@
+{
+  "schema_version": "1.0",
+  "review_date": "2026-10-06",
+  "scope": {
+    "schema_version": 1,
+    "review_date": "2026-10-06",
+    "scope": "Frozen baseline; replace this file with an explicitly issued updated target file if selected Astra improvements are implemented.",
+    "parent": {
+      "repository": "rhart696/true-valence-mapper",
+      "base": "82646a5f6a40a76f9a579f98f2960ebae4372c56",
+      "head": "3a4f208c9911a6a496c0452acdea54c2a18216c0",
+      "pr": 1
+    },
+    "canonical": {
+      "repository": "rhart696/true-valence-mapper-claude",
+      "base": "a460c6f589b712e66a973b123678cec9e68bbc3c",
+      "foundation": "68f5654a9ad65f84e1771757737e320c1597c67f",
+      "baseline_increment": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "review_head": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "foundation_pr": 12,
+      "increment_pr": 13
+    }
+  },
+  "confirmed_findings": [
+    {
+      "id": "F01",
+      "title": "Canonical merge-control rollout is unsatisfiable for the frozen foundation PR",
+      "category": "governance",
+      "introduced_preexisting": "New rollout/configuration interaction; sole-owner CODEOWNERS pre-existing",
+      "claim_class": "SUPPORTED ANALYSIS",
+      "severity": "Medium",
+      "severity_rationale": "Blocks safe delivery; this is an availability/governance defect, not a proven unauthorized-merge exploit.",
+      "evidence_ids": [
+        "R15",
+        "R16",
+        "L01",
+        "L02",
+        "T12",
+        "X01",
+        "X02",
+        "X03"
+      ],
+      "confidence_basis": "Direct live/source comparison plus GitHub base-owner/self-approval rules supports a blocked normal merge path.",
+      "reproducible_trigger": "Compare main effective required checks to foundation check runs; compare PR author to base CODEOWNERS.",
+      "expected_behavior": "Required checks actually execute; an eligible independent code owner can approve.",
+      "actual_behavior": "Main requires TVM governance/process/application; PR12 emits context. Only rhart696 owns affected paths and rhart696 authored PR12/13. Zero reviews observed.",
+      "evidence_to_conclusion": "Direct live/source comparison plus GitHub base-owner/self-approval rules supports a blocked normal merge path.",
+      "counterevidence": "PR13 emits all three checks; its current non-main base has no effective rules. Public bypass actors are unknown; no merge attempt was made.",
+      "recommended_correction": "Prepare a separately scoped, legitimately authored/reviewed bootstrap change that installs real required checks and an eligible second code owner on the base; preserve no-self-approval and do not manufacture success contexts. Re-pin and review changed candidates.",
+      "regression_acceptance": "An independent eligible reviewer is available; exact required checks run genuine scoped commands at the new reviewed head; deny/allow exercise under separately granted authority.",
+      "human_owner_role": "Repository owner and qualified maintainer",
+      "affected_requirement_control": [
+        "REQ-0013",
+        "REQ-0001"
+      ]
+    },
+    {
+      "id": "F02",
+      "title": "Parent canonical updater still pushes directly to protected main",
+      "category": "governance",
+      "introduced_preexisting": "Direct-push pattern pre-existing, retained in rewritten PR1 updater",
+      "claim_class": "SUPPORTED ANALYSIS",
+      "severity": "Medium",
+      "severity_rationale": "Advertised reference synchronization cannot normally complete under the live PR requirement; potential stale reference, not app deployment or data exposure.",
+      "evidence_ids": [
+        "R18",
+        "R42",
+        "L01",
+        "X01"
+      ],
+      "confidence_basis": "Source operation conflicts with observed PR/review requirement; no-bypass assumption is supplied rather than independently proven.",
+      "reproducible_trigger": "Canonical reference needs to advance; workflow ends with git push origin main.",
+      "expected_behavior": "An update follows reviewed PR policy.",
+      "actual_behavior": "Workflow creates a bot commit on checkout then directly pushes main.",
+      "evidence_to_conclusion": "Source operation conflicts with observed PR/review requirement; no-bypass assumption is supplied rather than independently proven.",
+      "counterevidence": "No update push executed. Integrity checks preserve seven pins; policy already forbids unreviewed direct pushes.",
+      "recommended_correction": "Smallest correction: disable this automatic write job pending a reviewed PR-based updater; retain read-only integrity checks and manual reviewed reference changes.",
+      "regression_acceptance": "No direct protected-main write in updater; seven reference pins unchanged; canonical change arrives through an approved PR.",
+      "human_owner_role": "Repository maintainer",
+      "affected_requirement_control": [
+        "REQ-0002"
+      ]
+    },
+    {
+      "id": "F03",
+      "title": "Keyboard navigation bypasses the resume decision and removes saved data",
+      "category": "reliability/accessibility",
+      "introduced_preexisting": "Pre-existing modal gap; incomplete repair in PR13",
+      "claim_class": "REPRODUCED",
+      "severity": "High",
+      "severity_rationale": "A normal keyboard path deletes the sole persistent map without choosing Start fresh; subsequent reload/closure loses recovery.",
+      "evidence_ids": [
+        "R03",
+        "R04",
+        "T05",
+        "T16",
+        "R26",
+        "X06",
+        "X07"
+      ],
+      "confidence_basis": "Original app logic reproduced in font-only fixture; source mutator and remove branch explain result.",
+      "reproducible_trigger": "Seed a valid saved map and welcome-complete flag. Focus Resume, Shift+Tab three times to background Start Session, press Enter.",
+      "expected_behavior": "Background inert until explicit resume/replace choice; existing bytes preserved.",
+      "actual_behavior": "Focus leaves dialog; background Start Session sets canSave and empty state is persisted as removal; storedAfter is null.",
+      "evidence_to_conclusion": "Original app logic reproduced in font-only fixture; source mutator and remove branch explain result.",
+      "counterevidence": "SavedSession remains in memory and can still be restored before page closes; original ordinary resume tests pass. No client data used.",
+      "recommended_correction": "Use a real modal with focus containment/inert background, and guard destructive persistence in the state layer until a deliberate resolution of saved data.",
+      "regression_acceptance": "Keyboard/mouse cannot mutate background while choice pending; Tab/Shift+Tab stay contained; Escape behavior is explicitly safe; reload preserves original bytes until explicit replacement.",
+      "human_owner_role": "Frontend engineer with accessibility reviewer",
+      "affected_requirement_control": [
+        "REQ-0006",
+        "REQ-0010"
+      ]
+    },
+    {
+      "id": "F04",
+      "title": "Accepting an incoming shared map leaves a stale resume decision active",
+      "category": "reliability",
+      "introduced_preexisting": "Pre-existing stale savedSession mechanism retained/exposed by PR13 consent flow",
+      "claim_class": "REPRODUCED",
+      "severity": "Medium",
+      "severity_rationale": "User faces a second conflicting decision that can overwrite or erase the just-loaded map; bounded session integrity issue.",
+      "evidence_ids": [
+        "R04",
+        "R05",
+        "R06",
+        "R37",
+        "T05",
+        "T16"
+      ],
+      "confidence_basis": "Browser observation matches loadDemo not clearing savedSession and render condition allowing old prompt.",
+      "reproducible_trigger": "Saved map exists; open synthetic ?share=ABCDEF; choose Load session.",
+      "expected_behavior": "Incoming map becomes active and superseded resume state is consumed atomically.",
+      "actual_behavior": "Incoming map is saved while old Resume last session dialog remains visible.",
+      "evidence_to_conclusion": "Browser observation matches loadDemo not clearing savedSession and render condition allowing old prompt.",
+      "counterevidence": "Dismissal path passes existing test; initial shared replacement asks consent; no silent database update.",
+      "recommended_correction": "Resolve savedSession and pendingShared in one explicit replace action; preserve prior bytes until validation and choice complete.",
+      "regression_acceptance": "After accept, only incoming map is active and no stale resume prompt; dismiss retains old map; quota/invalid payload leaves prior data available.",
+      "human_owner_role": "Frontend engineer",
+      "affected_requirement_control": [
+        "REQ-0006"
+      ]
+    },
+    {
+      "id": "F05",
+      "title": "Shared payload validation stops at the top level",
+      "category": "security/reliability",
+      "introduced_preexisting": "Pre-existing loadSession validator; unchanged by PR13",
+      "claim_class": "REPRODUCED",
+      "severity": "Medium",
+      "severity_rationale": "Malformed shared input produces an uncaught UI error; no code execution or disclosure demonstrated.",
+      "evidence_ids": [
+        "R07",
+        "R05",
+        "T05",
+        "T16",
+        "R20"
+      ],
+      "confidence_basis": "Reproduction and validation branches agree; shared path bypasses new robust local parser.",
+      "reproducible_trigger": "Synthetic API returns coacheeName string and relationships:[null]; choose Load session.",
+      "expected_behavior": "Reject nested invalid content with visible recovery and preserve current map.",
+      "actual_behavior": "Top-level load accepts it; applySharedSession reads null.name and throws.",
+      "evidence_to_conclusion": "Reproduction and validation branches agree; shared path bypasses new robust local parser.",
+      "counterevidence": "Existing persistent map survived the tested error; network response was synthetic, not a real server payload.",
+      "recommended_correction": "Use a shared bounded parser at every ingress and handle fetch/validation failures visibly; keep original map until validated replacement.",
+      "regression_acceptance": "Null/wrong types/oversize/future schema/duplicate IDs invalid at shared ingress; errors visible, no state loss; valid legacy and versioned data supported deliberately.",
+      "human_owner_role": "Frontend and security engineer",
+      "affected_requirement_control": [
+        "REQ-0006",
+        "REQ-0007"
+      ]
+    },
+    {
+      "id": "F06",
+      "title": "Failed PDF export reports a successful download",
+      "category": "reliability/service",
+      "introduced_preexisting": "Pre-existing export hook and completion behavior",
+      "claim_class": "REPRODUCED",
+      "severity": "Medium",
+      "severity_rationale": "Facilitator may close or clear a map believing a recoverable record exists; misleading workflow is material.",
+      "evidence_ids": [
+        "R09",
+        "R10",
+        "R06",
+        "R26",
+        "R39",
+        "T05",
+        "T16"
+      ],
+      "confidence_basis": "Hook catches error and returns normally; caller unconditionally completes.",
+      "reproducible_trigger": "Synthetic resumed map; remove SVG in DOM to force export failure; stub print to record fallback; click Export PDF.",
+      "expected_behavior": "Show error/alternative action and stay on map unless a real export action succeeds.",
+      "actual_behavior": "No download observed; print fallback invoked; UI shows PDF Downloaded.",
+      "evidence_to_conclusion": "Hook catches error and returns normally; caller unconditionally completes.",
+      "counterevidence": "Print may allow a user to save a document; it is not guaranteed and the fixture deliberately did not produce one. Protocol tells facilitators to verify files.",
+      "recommended_correction": "Return an explicit success/failure outcome, separate print fallback state and retain map; add long-note pagination and note-inclusion controls as separate acceptance tasks.",
+      "regression_acceptance": "Injected export failure never claims download or auto-clears; cancellation stays on map; successful download contains required fields and long notes without clipping.",
+      "human_owner_role": "Frontend engineer and facilitator lead",
+      "affected_requirement_control": [
+        "REQ-0010",
+        "REQ-0008"
+      ]
+    },
+    {
+      "id": "F07",
+      "title": "Work-package verification and evaluation accept nonexistent evidence",
+      "category": "evidence governance",
+      "introduced_preexisting": "Introduced by PR13 check-process.py",
+      "claim_class": "REPRODUCED",
+      "severity": "Medium",
+      "severity_rationale": "Allows unsupported package promotion inside the management record; separate release checks/human review limit impact.",
+      "evidence_ids": [
+        "R11",
+        "R12",
+        "R44",
+        "T03",
+        "T11",
+        "R17"
+      ],
+      "confidence_basis": "Checker tests nonempty strings but does not resolve transition/verification evidence or validate temporal sequence.",
+      "reproducible_trigger": "Set stage verified/evaluated with passed verification and nonexistent file string; fabricate evaluation text; reverse transition dates.",
+      "expected_behavior": "At minimum resolve required evidence references and reject impossible chronology before promotion.",
+      "actual_behavior": "All four adverse fixtures return an empty error list.",
+      "evidence_to_conclusion": "Checker tests nonempty strings but does not resolve transition/verification evidence or validate temporal sequence.",
+      "counterevidence": "Record stages must remain ordered; requirement full-acceptance and release checks impose additional constraints; truth still requires human appraisal. Not a proven release authorization bypass.",
+      "recommended_correction": "Use typed resolvable artifact/record references, hashes and execution provenance; enforce ordered dates and minimum evaluation schema. Keep human appraisal of relevance and authenticity.",
+      "regression_acceptance": "Missing/unsafe/stale evidence and reversed chronology fail; genuine scoped artifacts pass; placeholders cannot promote evaluated status.",
+      "human_owner_role": "Governance tooling maintainer and evaluation lead",
+      "affected_requirement_control": [
+        "REQ-0013",
+        "REQ-0012"
+      ]
+    },
+    {
+      "id": "F08",
+      "title": "Current audit no longer reproduces zero production findings",
+      "category": "dependencies",
+      "introduced_preexisting": "Pre-existing source-map-js1.2.1 remains; advisory data changed since supplied audit",
+      "claim_class": "REPRODUCED",
+      "severity": "Medium",
+      "severity_rationale": "Current CI audit gate fails and remediation evidence is stale; project-specific exploit path unproven so advisory high is not automatically review High.",
+      "evidence_ids": [
+        "T06",
+        "T07",
+        "T08",
+        "T09",
+        "R27",
+        "R28",
+        "X12"
+      ],
+      "confidence_basis": "Lockfile path and advisory affected range agree; patched1.2.2 exists.",
+      "reproducible_trigger": "Run current npm audit --package-lock-only --omit=dev on frozen candidate lockfile.",
+      "expected_behavior": "Current disposition for all applicable findings and a reproducible release inventory.",
+      "actual_behavior": "One high production affected entry source-map-js1.2.1; six high full entries; full SBOM ESBOMPROBLEMS.",
+      "evidence_to_conclusion": "Lockfile path and advisory affected range agree; patched1.2.2 exists.",
+      "counterevidence": "No attacker-controlled indexed-source-map consumption demonstrated in TVM. Five other full entries are one dev braces chain. Older zero audit may have been accurate then.",
+      "recommended_correction": "Implementation agent should propose compatible source-map-js update and rerun audit/build/regressions; separately resolve optional SBOM mismatch and obtain time-bound dev-risk disposition. No dependency changed in this review.",
+      "regression_acceptance": "Current production high gate passes or a separately authorized applicable disposition exists; full inventory generated or explicitly reconciled; no blind major downgrade.",
+      "human_owner_role": "Dependency maintainer and security reviewer",
+      "affected_requirement_control": [
+        "REQ-0009"
+      ]
+    },
+    {
+      "id": "F09",
+      "title": "Checked-in sharing policy does not restrict reads to possession of a share code",
+      "category": "security/privacy",
+      "introduced_preexisting": "Pre-existing source SQL; explicitly documented open limitation",
+      "claim_class": "SUPPORTED ANALYSIS",
+      "severity": "High",
+      "severity_rationale": "If deployed with anonymous SELECT grants, any anon consumer can list all unexpired sensitive maps; serious confidentiality exposure under a concrete condition.",
+      "evidence_ids": [
+        "R08",
+        "R07",
+        "R25",
+        "R29",
+        "X05",
+        "X08"
+      ],
+      "confidence_basis": "SQL predicate contains no identity/capability condition; current client filters do not add trusted authorization.",
+      "reproducible_trigger": "In isolated staging with these policies and anon grants, omit the client .eq filter and select unexpired rows. This review did not execute that query.",
+      "expected_behavior": "Server authorizes specific map access independently of client filtering; owner-controlled revocation/retention.",
+      "actual_behavior": "Inspected policy tests only expires_at > now(); insert check true; cleanup optional; no owner/revocation in source.",
+      "evidence_to_conclusion": "SQL predicate contains no identity/capability condition; current client filters do not add trusted authorization.",
+      "counterevidence": "Live schema/grants unknown; SQL may not be deployed; no client data accessed. Proposed server architecture addresses this but is not implemented.",
+      "recommended_correction": "Keep cloud sharing out of client use; qualified reviewer selects local-only or reviewed server authorization architecture; validate synthetic grants/policies/revocation/cleanup and actual disclosure.",
+      "regression_acceptance": "Anon list/read/insert deny; valid owner/share cases allow; wrong/expired/revoked capabilities deny; delete/cleanup/backup semantics evidenced at exact build/config.",
+      "human_owner_role": "Security/privacy reviewer and backend maintainer",
+      "affected_requirement_control": [
+        "REQ-0007",
+        "REQ-0008"
+      ]
+    }
+  ],
+  "unconfirmed_leads_and_missing_evidence": [
+    {
+      "id": "U01",
+      "question": "What is actually deployed, including hosting triggers, Supabase grants/policies, retention/backups and client accessibility?",
+      "evidence_ids": [
+        "R08",
+        "R17",
+        "L01"
+      ],
+      "needed": "Owner-provided dated configuration and isolated staging evidence; no production queries authorized."
+    },
+    {
+      "id": "U02",
+      "question": "Does release authorization bind the approved decision content, build and configuration through the actual deployment path?",
+      "evidence_ids": [
+        "R13",
+        "R30",
+        "R41",
+        "T13"
+      ],
+      "needed": "Controlled staging proof for mismatched decision/config/commit; local denial alone does not establish all bypass resistance."
+    },
+    {
+      "id": "U03",
+      "question": "Do long notes, all arrow types, Unicode and pagination survive PDF/PNG export accurately?",
+      "evidence_ids": [
+        "R09",
+        "R26"
+      ],
+      "needed": "Rendered fixture comparison and human-readable fidelity review; long-note pagination is an unconfirmed source lead."
+    },
+    {
+      "id": "U04",
+      "question": "How do storage quota/unavailability, multi-tab races and assistive technologies behave end to end?",
+      "evidence_ids": [
+        "R20",
+        "R37",
+        "T04"
+      ],
+      "needed": "Additional bounded real-browser scenarios and qualified accessibility review; no full WCAG conformance judgment."
+    },
+    {
+      "id": "U05",
+      "question": "Do the full research source register and service mechanisms withstand specialist appraisal and field evaluation?",
+      "evidence_ids": [
+        "R24",
+        "R35",
+        "R36",
+        "X13"
+      ],
+      "needed": "All consequential original studies, correction checks, population/method applicability and appropriately consented field data. Selected sources only reviewed here."
+    },
+    {
+      "id": "U06",
+      "question": "What account entitlements, bypass actors and deployment permissions exist?",
+      "evidence_ids": [
+        "L01",
+        "L02"
+      ],
+      "needed": "Owner-authorized dated settings export; public GET omits bypass actors; paid plan and security products not verified."
+    },
+    {
+      "id": "U07",
+      "question": "Were separate Astra recommendation files intended?",
+      "evidence_ids": [
+        "A01"
+      ],
+      "needed": "ASTRA-OPTIMIZATION.md and OPTIMIZATIONS.json were not supplied/found; no proposal-by-proposal disposition can be invented."
+    }
+  ],
+  "optimization_register": [
+    {
+      "id": "O01",
+      "title": "Generate a short current-context packet for each turn",
+      "claim_class": "PROPOSED EXPERIMENT",
+      "evidence_ids": [
+        "R31",
+        "R32",
+        "T01"
+      ],
+      "observed_bottleneck": "Entry documents mix frozen baseline and newer test/dependency facts.",
+      "proposed_change": "Generate head, diff scope, current acceptance criteria, evidence dates and unresolved gates from authoritative records; preserve historical sections.",
+      "mechanism": "Reduce stale-version and unsupported completion assertions.",
+      "expected_benefit": {
+        "status": "hypothesis, not measured",
+        "description": "Reduce stale-version and unsupported completion assertions."
+      },
+      "product_effects": "Correct implementation target and regression criteria.",
+      "service_effects": "Keep provisional service claims and consent gates visible.",
+      "effort_cost_dependencies": "Not estimated; use existing repository and test tools. Requires named owner time; no purchase or entitlement assumed.",
+      "risks_added_complexity": "Maintenance and false confidence if checks are treated as approval; keep the experiment bounded.",
+      "smallest_validation_experiment": "Replay two real status and two change-planning tasks using existing versus generated packet.",
+      "outcome_metric_acceptance_threshold": "Count wrong-version claims and unsupported completion statements; proposed target zero, with all material claims traceable. Threshold is proposed for human approval, not an established project result.",
+      "owner_role": "Technical lead",
+      "rollback": "Retain existing entrypoints; remove generator if it creates competing truth.",
+      "priority": "P1",
+      "confidence_basis": "Inspected bottleneck; proposed effect requires evaluation."
+    },
+    {
+      "id": "O02",
+      "title": "Version a small replay evaluation set before changing model workflow",
+      "claim_class": "PROPOSED EXPERIMENT",
+      "evidence_ids": [
+        "T03",
+        "T05",
+        "X14"
+      ],
+      "observed_bottleneck": "Existing tests miss demonstrated edge cases; no comparative workflow/model outcome evidence.",
+      "proposed_change": "Use REPLAY-EVAL.json with calibration cases and human-generated unseen variants; deterministic checks plus qualified adjudication. Keep user-reported Medium setting as baseline.",
+      "mechanism": "Measure supported completion and missed defects before adding effort or agents.",
+      "expected_benefit": {
+        "status": "hypothesis, not measured",
+        "description": "Measure supported completion and missed defects before adding effort or agents."
+      },
+      "product_effects": "Better grounded corrections and fewer false alarms.",
+      "service_effects": "Evaluate inference boundaries and safe facilitator handoffs separately.",
+      "effort_cost_dependencies": "Not estimated; use existing repository and test tools. Requires named owner time; no purchase or entitlement assumed.",
+      "risks_added_complexity": "Maintenance and false confidence if checks are treated as approval; keep the experiment bounded.",
+      "smallest_validation_experiment": "Run one baseline on each case, preserve tool traces/outcomes; repeat only nondeterministic cases. Compare any later workflow on the same isolated variants.",
+      "outcome_metric_acceptance_threshold": "Report per-case citation support, completion, reproducibility, false alarms, seeded misses, recovery and human revisions; latency/usage only when observed. Proposed zero seeded severe misses and zero unsupported approval claims; tiny set cannot establish project-wide performance. Threshold is proposed for human approval, not an established project result.",
+      "owner_role": "Independent evaluation lead with domain reviewer",
+      "rollback": "Keep original baseline and discard changes that add cost without demonstrated task-level benefit.",
+      "priority": "P1",
+      "confidence_basis": "Inspected bottleneck; proposed effect requires evaluation."
+    },
+    {
+      "id": "O03",
+      "title": "Validate typed evidence references at promotion boundaries",
+      "claim_class": "PROPOSED EXPERIMENT",
+      "evidence_ids": [
+        "R11",
+        "R12",
+        "T03"
+      ],
+      "observed_bottleneck": "Arbitrary nonempty strings can satisfy passed verification and history evidence.",
+      "proposed_change": "Require resolvable artifact IDs, appropriate result/type and chronological transitions; bind artifacts to exact source/config; retain human acceptance.",
+      "mechanism": "Reject manufactured or stale evidence earlier without more status ceremony.",
+      "expected_benefit": {
+        "status": "hypothesis, not measured",
+        "description": "Reject manufactured or stale evidence earlier without more status ceremony."
+      },
+      "product_effects": "Prevent unverified work from appearing verified.",
+      "service_effects": "Require service-impact evidence as well as software checks.",
+      "effort_cost_dependencies": "Not estimated; use existing repository and test tools. Requires named owner time; no purchase or entitlement assumed.",
+      "risks_added_complexity": "Maintenance and false confidence if checks are treated as approval; keep the experiment bounded.",
+      "smallest_validation_experiment": "Use existing adversarial fixtures plus valid current records as negative and positive controls.",
+      "outcome_metric_acceptance_threshold": "All four invalid fixture classes rejected and valid controls accepted; no automatic human approval. Threshold is proposed for human approval, not an established project result.",
+      "owner_role": "Governance maintainer and independent reviewer",
+      "rollback": "Keep statuses pending when migration cannot resolve old evidence; do not fabricate references.",
+      "priority": "P1",
+      "confidence_basis": "Inspected bottleneck; proposed effect requires evaluation."
+    },
+    {
+      "id": "O04",
+      "title": "Make replacement and export outcomes explicit transactions",
+      "claim_class": "PROPOSED EXPERIMENT",
+      "evidence_ids": [
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "X07"
+      ],
+      "observed_bottleneck": "Persistence, sharing, resume and export use partially separate state paths.",
+      "proposed_change": "One validated replace action, modal focus containment, explicit export result and visible recovery.",
+      "mechanism": "Reduce conflicting state and false completion signals.",
+      "expected_benefit": {
+        "status": "hypothesis, not measured",
+        "description": "Reduce conflicting state and false completion signals."
+      },
+      "product_effects": "Preserve prior map until successful authorized replacement; truthful export UI.",
+      "service_effects": "Facilitator verifies retained record before closing; failure is recoverable.",
+      "effort_cost_dependencies": "Not estimated; use existing repository and test tools. Requires named owner time; no purchase or entitlement assumed.",
+      "risks_added_complexity": "Maintenance and false confidence if checks are treated as approval; keep the experiment bounded.",
+      "smallest_validation_experiment": "Implement in separate corrective PR; run the four saved browser scenarios and valid/dismiss/quota cases.",
+      "outcome_metric_acceptance_threshold": "No persistent loss from background focus; no stale dialog; invalid shared input visibly rejected; no success claim without successful export action. Threshold is proposed for human approval, not an established project result.",
+      "owner_role": "Frontend engineer and facilitator reviewer",
+      "rollback": "Revert corrective PR and keep affected workflow unavailable pending repair.",
+      "priority": "P0",
+      "confidence_basis": "Inspected bottleneck; proposed effect requires evaluation."
+    },
+    {
+      "id": "O05",
+      "title": "Use an isolated local-only rehearsal to test the service protocol",
+      "claim_class": "PROPOSED EXPERIMENT",
+      "evidence_ids": [
+        "R21",
+        "R22",
+        "R23",
+        "R24",
+        "X13"
+      ],
+      "observed_bottleneck": "Service documents are specifications without observed facilitator or participant outcomes.",
+      "proposed_change": "Qualified facilitators rehearse synthetic cases with cloud writes disabled, safe-stop cases and export verification.",
+      "mechanism": "Discover confusing prompts and operational gaps before requesting a real pilot.",
+      "expected_benefit": {
+        "status": "hypothesis, not measured",
+        "description": "Discover confusing prompts and operational gaps before requesting a real pilot."
+      },
+      "product_effects": "Exercise full journey and accessibility/error recovery.",
+      "service_effects": "Test consent, pseudonyms, reverse arrows as perceived effects, noncoercive action and follow-up language.",
+      "effort_cost_dependencies": "Not estimated; use existing repository and test tools. Requires named owner time; no purchase or entitlement assumed.",
+      "risks_added_complexity": "Maintenance and false confidence if checks are treated as approval; keep the experiment bounded.",
+      "smallest_validation_experiment": "One complete synthetic rehearsal plus one stop/escalation case; record observed deviations, not simulated client research.",
+      "outcome_metric_acceptance_threshold": "All critical consent/data/stop steps completed; each exported fact matches synthetic map; unresolved safety failures block pilot. Threshold is proposed for human approval, not an established project result.",
+      "owner_role": "Service lead and qualified safety/privacy reviewers",
+      "rollback": "Return to protocol revision; retain no client records.",
+      "priority": "P0",
+      "confidence_basis": "Inspected bottleneck; proposed effect requires evaluation."
+    },
+    {
+      "id": "O06",
+      "title": "Bind dependency disposition and inventory to date and build",
+      "claim_class": "PROPOSED EXPERIMENT",
+      "evidence_ids": [
+        "R27",
+        "T06",
+        "T07",
+        "T08",
+        "T09",
+        "X12"
+      ],
+      "observed_bottleneck": "A previously clean production audit is no longer clean; optional package mismatch blocks full SBOM.",
+      "proposed_change": "Try minimal compatible patch in implementation work; regenerate inventory in clean documented environment and reconcile optional targets.",
+      "mechanism": "Avoid stale assurance and blind dependency downgrades.",
+      "expected_benefit": {
+        "status": "hypothesis, not measured",
+        "description": "Avoid stale assurance and blind dependency downgrades."
+      },
+      "product_effects": "Reduce applicable dependency exposure and inventory ambiguity.",
+      "service_effects": "Make confidentiality/reliability representations accurately scoped.",
+      "effort_cost_dependencies": "Not estimated; use existing repository and test tools. Requires named owner time; no purchase or entitlement assumed.",
+      "risks_added_complexity": "Maintenance and false confidence if checks are treated as approval; keep the experiment bounded.",
+      "smallest_validation_experiment": "Separate patch candidate then build, persistence tests, production/full audits and platform inventory reconciliation.",
+      "outcome_metric_acceptance_threshold": "Current production gate satisfied or explicitly authorized disposition; every full audit chain classified; inventory exclusions explicit. Threshold is proposed for human approval, not an established project result.",
+      "owner_role": "Dependency maintainer and security reviewer",
+      "rollback": "Revert candidate lockfile in implementation branch if regressions; keep release blocked.",
+      "priority": "P1",
+      "confidence_basis": "Inspected bottleneck; proposed effect requires evaluation."
+    },
+    {
+      "id": "O07",
+      "title": "Resolve reviewer/check bootstrap and verify deployment separation",
+      "claim_class": "PROPOSED EXPERIMENT",
+      "evidence_ids": [
+        "R14",
+        "R15",
+        "R16",
+        "R17",
+        "L01",
+        "L02",
+        "T11",
+        "X01",
+        "X02",
+        "X03"
+      ],
+      "observed_bottleneck": "Required checks and sole author-codeowner currently prevent a normal foundation merge; workflow source remains candidate-controlled.",
+      "proposed_change": "Owner verifies actual reviewer identities, required contexts and hosting configuration, then designs a legitimate independently reviewed rollout. Evaluate trusted checker source only against a stated threat.",
+      "mechanism": "Make intended controls operable and distinguish status provenance from checker integrity.",
+      "expected_benefit": {
+        "status": "hypothesis, not measured",
+        "description": "Make intended controls operable and distinguish status provenance from checker integrity."
+      },
+      "product_effects": "No application deployment implied by docs/governance merge.",
+      "service_effects": "No client authorization inferred from green CI.",
+      "effort_cost_dependencies": "Not estimated; use existing repository and test tools. Requires named owner time; no purchase or entitlement assumed.",
+      "risks_added_complexity": "Maintenance and false confidence if checks are treated as approval; keep the experiment bounded.",
+      "smallest_validation_experiment": "Read-only configuration inventory then synthetic checker-tamper and release-denial cases; authorized owner separately stages configuration correction.",
+      "outcome_metric_acceptance_threshold": "A nonauthor eligible codeowner can approve; exact required contexts run on actual stacked base; deployment cannot bypass separately required authorization. Unknown entitlement recorded, no purchase assumed. Threshold is proposed for human approval, not an established project result.",
+      "owner_role": "Repository owner, independent codeowner and hosting administrator",
+      "rollback": "Maintain blocked releases until controls are demonstrated; do not manufacture statuses or bypass review.",
+      "priority": "P0",
+      "confidence_basis": "Inspected bottleneck; proposed effect requires evaluation."
+    }
+  ],
+  "readiness": [
+    {
+      "id": "J01",
+      "scope": "Parent PR 1 merge readiness",
+      "verdict": "NOT READY",
+      "evidence_ids": [
+        "F02",
+        "L01",
+        "R42"
+      ],
+      "criteria_warrant_and_conditions": "Direct-push updater conflicts with main PR control; no independent review evidence. Correct/disable updater and obtain required actual review/checks."
+    },
+    {
+      "id": "J02",
+      "scope": "Foundation PR 12 merge readiness",
+      "verdict": "NOT READY",
+      "evidence_ids": [
+        "F01",
+        "L01",
+        "L02"
+      ],
+      "criteria_warrant_and_conditions": "Actual required contexts absent and sole author-codeowner cannot provide independent approval. Resolve legitimate bootstrap and deployment separation first."
+    },
+    {
+      "id": "J03",
+      "scope": "Increment PR 13 merge readiness",
+      "verdict": "NOT READY",
+      "evidence_ids": [
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "F08",
+        "L01"
+      ],
+      "criteria_warrant_and_conditions": "Reproduced persistence/export failures and current production audit failure; underlying foundation/base controls unresolved. Repair and rerun at actual retargeted base."
+    },
+    {
+      "id": "J04",
+      "scope": "Management/enforcement rollout completeness",
+      "verdict": "NOT READY",
+      "evidence_ids": [
+        "F01",
+        "F07",
+        "T11",
+        "U01",
+        "U02"
+      ],
+      "criteria_warrant_and_conditions": "Useful local controls exist, but promotion evidence can be fabricated and operational/deployment binding remains incomplete."
+    },
+    {
+      "id": "J05",
+      "scope": "Synthetic facilitator rehearsal",
+      "verdict": "READY WITH CONDITIONS",
+      "evidence_ids": [
+        "R23",
+        "O05",
+        "T05"
+      ],
+      "criteria_warrant_and_conditions": "Only isolated synthetic/local exercise: no cloud/client records; explicitly include known failures and verify output; qualified facilitator observes, no efficacy claim. This is not permission for production rehearsal."
+    },
+    {
+      "id": "J06",
+      "scope": "Real executive pilot",
+      "verdict": "NOT READY",
+      "evidence_ids": [
+        "R29",
+        "F03",
+        "F09",
+        "U01",
+        "U03",
+        "U04"
+      ],
+      "criteria_warrant_and_conditions": "Privacy, persistence, accessibility, export, deployment and human approval gates remain unresolved. Critical missing evidence is not waived."
+    },
+    {
+      "id": "J07",
+      "scope": "Evidence of service efficacy",
+      "verdict": "INSUFFICIENT EVIDENCE",
+      "evidence_ids": [
+        "R02",
+        "R24",
+        "R35",
+        "R36",
+        "X13"
+      ],
+      "criteria_warrant_and_conditions": "Provisional mechanisms and feasibility protocol are not outcome data or causal/psychometric validation."
+    }
+  ]
+}

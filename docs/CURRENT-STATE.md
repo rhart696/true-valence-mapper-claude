@@ -42,3 +42,9 @@ Enforcement mechanisms, compatible dependencies, safe persistence and paired ser
 Phase 1 results: 42 stdlib tests, five Node tests and six browser scenarios passed; lint/typecheck/build passed. Production audit zero findings; full audit five high development-chain entries. Next16.3.8/jsPDF4.2.1 proposed versions; deployed app remains uninspected. Sharing load now prompts before replacing a map; this is not database authorization remediation. Full SBOM, professional review, accessibility/report testing and staging privacy/sharing remain open.
 
 Phase 1 review: https://github.com/rhart696/true-valence-mapper-claude/pull/13 (draft, stacked on #12). Reviewable changes are published; native GitHub rules are active; client release remains not authorized. See docs/quality/phase1/github-ruleset-activation.json for scoped settings verification and remaining tests.
+
+## Astra review intake and corrective batch — 2026-10-06
+
+Received six Astra review/evaluation files; Claude independent evaluation remains outstanding. All 44 pinned source hashes match. Missing referenced logs/fixtures prevented validating their contents; independently reproduced corrective acceptance failures. WP-0002 repairs resume focus/background mutation, stale shared-resume state, nested shared parsing and export completion; 12 browser, 5 schema and 42 governance tests plus lint/type/build passed. See docs/quality/review-correction/VALIDATION.md. No full requirement or human/service acceptance promoted.
+
+Current audit supersedes earlier zero-production status: one high production source-map-js affected entry, six high full entries; exploitability not established. F07 nonexistent promotion evidence reproduced. F01/F02 bootstrap/updater, F07, F08, F09 remain open. No merge, deployment, SQL migration, risk acceptance or real pilot authorization.

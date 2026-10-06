@@ -1,0 +1,1829 @@
+{
+  "schema_version": "1.0",
+  "retrieved_at": "2026-10-06",
+  "configuration": "GPT-6 Astra Medium user-reported, not independently verified",
+  "evidence": [
+    {
+      "id": "R01",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/strategy/PRODUCT-SERVICE-CHARTER.md",
+      "lines": [
+        1,
+        16
+      ],
+      "symbol_or_section": [
+        1,
+        30
+      ],
+      "sha256": "71eda729ad9870c24f7b5f49d49d7f00c1be1a6fc9dc380645b691257571b59f",
+      "git_blob_oid": "8bae9138896558621553bcb9b235bce47ed92692",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/strategy/PRODUCT-SERVICE-CHARTER.md#L1-L16",
+      "artifact": "source-evidence/R01.txt",
+      "supported_claims": [
+        "Intended product-service scope, inference boundaries and required human authority."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R02",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/strategy/SUCCESS-MEASURES.md",
+      "lines": [
+        1,
+        16
+      ],
+      "symbol_or_section": [
+        1,
+        30
+      ],
+      "sha256": "3cbe1bbd8f8d06fa2fae25642abbdc368c0944129ec5d05f125ac58cc50e7eb0",
+      "git_blob_oid": "d33c5678e7387c09ef67b203f00768f6eea02ff2",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/strategy/SUCCESS-MEASURES.md#L1-L16",
+      "artifact": "source-evidence/R02.txt",
+      "supported_claims": [
+        "Success/feasibility criteria remain provisional; follow-up self-report does not establish causality."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R03",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "v1/src/app/page.tsx",
+      "lines": [
+        17,
+        62
+      ],
+      "symbol_or_section": [
+        17,
+        62
+      ],
+      "sha256": "2c97ba42cb7b0e92abbfd6b3ddf1b0311472fa66e617245beae6a3c92c0a7b2e",
+      "git_blob_oid": "f24a91232be4be641d5c949ec2a6ae1fa3b61907",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/v1/src/app/page.tsx#L17-L62",
+      "artifact": "source-evidence/R03.txt",
+      "supported_claims": [
+        "Resume modal has autofocus but no focus containment or inert background."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R04",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "v1/src/context/SessionContext.tsx",
+      "lines": [
+        47,
+        167
+      ],
+      "symbol_or_section": [
+        47,
+        167
+      ],
+      "sha256": "ae888041e1a42dc6f62df0f0a0e71a41ed20c0cedefcfbf1a29ada36aa421aef",
+      "git_blob_oid": "59f5c90deaa251d098c3fbb33cbecd7ea7acee56",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/v1/src/context/SessionContext.tsx#L47-L167",
+      "artifact": "source-evidence/R04.txt",
+      "supported_claims": [
+        "Initial canSave false; mutators enable save; clear and restore consume savedSession, loadDemo does not."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R05",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "v1/src/app/page.tsx",
+      "lines": [
+        126,
+        175
+      ],
+      "symbol_or_section": [
+        126,
+        175
+      ],
+      "sha256": "2c97ba42cb7b0e92abbfd6b3ddf1b0311472fa66e617245beae6a3c92c0a7b2e",
+      "git_blob_oid": "f24a91232be4be641d5c949ec2a6ae1fa3b61907",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/v1/src/app/page.tsx#L126-L175",
+      "artifact": "source-evidence/R05.txt",
+      "supported_claims": [
+        "Shared acceptance applies loadDemo without consuming savedSession; fetch awaits consent."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R06",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "v1/src/app/page.tsx",
+      "lines": [
+        183,
+        257
+      ],
+      "symbol_or_section": [
+        183,
+        257
+      ],
+      "sha256": "2c97ba42cb7b0e92abbfd6b3ddf1b0311472fa66e617245beae6a3c92c0a7b2e",
+      "git_blob_oid": "f24a91232be4be641d5c949ec2a6ae1fa3b61907",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/v1/src/app/page.tsx#L183-L257",
+      "artifact": "source-evidence/R06.txt",
+      "supported_claims": [
+        "Export completion is unconditional after exportPDF resolves; old savedSession can redisplay resume modal."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R07",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "v1/src/lib/shareSession.ts",
+      "lines": [
+        1,
+        77
+      ],
+      "symbol_or_section": [
+        1,
+        77
+      ],
+      "sha256": "fb525c4ea52339130f312532ef918594a940b9d253aa70b12e10202a9eed136f",
+      "git_blob_oid": "0f1518efc05c0c1c17b9b048f71f383889ec3e96",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/v1/src/lib/shareSession.ts#L1-L77",
+      "artifact": "source-evidence/R07.txt",
+      "supported_claims": [
+        "Six-character Math.random codes; anonymous direct table API; nested shared payloads not validated."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R08",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/planning/SUPABASE-SHARED-SESSIONS-SCHEMA.sql",
+      "lines": [
+        1,
+        43
+      ],
+      "symbol_or_section": [
+        1,
+        43
+      ],
+      "sha256": "9d4fc7713d2d0e8ac6552aa40be8bb552e5f29771f77b0e75bd3d5e457f1113c",
+      "git_blob_oid": "bf03e5f679159e1933294b66ccea087fee5c208e",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/planning/SUPABASE-SHARED-SESSIONS-SCHEMA.sql#L1-L43",
+      "artifact": "source-evidence/R08.txt",
+      "supported_claims": [
+        "Source anonymous SELECT filters expiry only, INSERT unrestricted, deletion optional; not proof of deployed grants."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R09",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "v1/src/hooks/usePDFExport.ts",
+      "lines": [
+        63,
+        149
+      ],
+      "symbol_or_section": [
+        63,
+        149
+      ],
+      "sha256": "5658cd7545f3f3fffaa96ed044dfbd4bb7a6f043ca3083a22ea9fbf82833dfd5",
+      "git_blob_oid": "bb76fdf35d79cdd9827a4118b5a0ef08076016c2",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/v1/src/hooks/usePDFExport.ts#L63-L149",
+      "artifact": "source-evidence/R09.txt",
+      "supported_claims": [
+        "PDF error fallback resolves after print; pagination occurs after writing whole note; PNG failure only logged."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R10",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "v1/src/components/ExportSuccessScreen.tsx",
+      "lines": [
+        1,
+        35
+      ],
+      "symbol_or_section": [
+        1,
+        40
+      ],
+      "sha256": "9df473e53376df217c787d0e13b7b667d314c679dfd0b279222bbe1811ed9748",
+      "git_blob_oid": "564f2bfe1680394ca9ae2b20a712c14471932b6e",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/v1/src/components/ExportSuccessScreen.tsx#L1-L35",
+      "artifact": "source-evidence/R10.txt",
+      "supported_claims": [
+        "Completion screen asserts PDF Downloaded and offers new session."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R11",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "scripts/check-process.py",
+      "lines": [
+        24,
+        82
+      ],
+      "symbol_or_section": [
+        24,
+        82
+      ],
+      "sha256": "c8e1a7665f60a159cd6bbdc8caae8fa75364f9cc42cf0aa05aeeda89a6eaa646",
+      "git_blob_oid": "e70265393886c8b7bd4ee7f4ef49791d45367dcd",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/scripts/check-process.py#L24-L82",
+      "artifact": "source-evidence/R11.txt",
+      "supported_claims": [
+        "Transition and verification evidence are checked for truthiness, not referenced artifact existence; dates not ordered."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R12",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "scripts/check-process.py",
+      "lines": [
+        84,
+        166
+      ],
+      "symbol_or_section": [
+        84,
+        166
+      ],
+      "sha256": "c8e1a7665f60a159cd6bbdc8caae8fa75364f9cc42cf0aa05aeeda89a6eaa646",
+      "git_blob_oid": "e70265393886c8b7bd4ee7f4ef49791d45367dcd",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/scripts/check-process.py#L84-L166",
+      "artifact": "source-evidence/R12.txt",
+      "supported_claims": [
+        "Release and promotion checks require existing artifacts and syntactic hashes; append-only manifests and changed paths enforced."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R13",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "scripts/check-process.py",
+      "lines": [
+        168,
+        210
+      ],
+      "symbol_or_section": [
+        168,
+        210
+      ],
+      "sha256": "c8e1a7665f60a159cd6bbdc8caae8fa75364f9cc42cf0aa05aeeda89a6eaa646",
+      "git_blob_oid": "e70265393886c8b7bd4ee7f4ef49791d45367dcd",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/scripts/check-process.py#L168-L210",
+      "artifact": "source-evidence/R13.txt",
+      "supported_claims": [
+        "Release uses current main registry plus API reviews, rejects PR author approver; does not recompute config digest."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R14",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": ".github/workflows/governance.yml",
+      "lines": [
+        1,
+        68
+      ],
+      "symbol_or_section": [
+        1,
+        100
+      ],
+      "sha256": "8894c19dbeb089ddf378b9be26eb4854571a06def463cf387772a3079fd0d3ac",
+      "git_blob_oid": "b143a66c19879d964e6fd3d007d6c0602dd813b1",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/.github/workflows/governance.yml#L1-L68",
+      "artifact": "source-evidence/R14.txt",
+      "supported_claims": [
+        "Candidate checkout executes governance/process/application; read-only contents token; three named checks."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R15",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "68f5654a9ad65f84e1771757737e320c1597c67f",
+      "path": ".github/workflows/governance.yml",
+      "lines": [
+        1,
+        29
+      ],
+      "symbol_or_section": [
+        1,
+        50
+      ],
+      "sha256": "c8865775a154ce46311bc9d40607f5f2fb70427ce378f44edf8fcc1047c84860",
+      "git_blob_oid": "9540467a3b0baed0706f1fdc280b20481fc5232e",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/68f5654a9ad65f84e1771757737e320c1597c67f/.github/workflows/governance.yml#L1-L29",
+      "artifact": "source-evidence/R15.txt",
+      "supported_claims": [
+        "Foundation workflow emits context rather than the three currently required check names."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R16",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "a460c6f589b712e66a973b123678cec9e68bbc3c",
+      "path": ".github/CODEOWNERS",
+      "lines": [
+        1,
+        15
+      ],
+      "symbol_or_section": [
+        1,
+        35
+      ],
+      "sha256": "1de1fec69f641d610867db7666fa4a63d532dd598754ebccf8ece6bcbf9b03e4",
+      "git_blob_oid": "a0664c453230d82d7a67be62e2183d2214c5c11b",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/a460c6f589b712e66a973b123678cec9e68bbc3c/.github/CODEOWNERS#L1-L15",
+      "artifact": "source-evidence/R16.txt",
+      "supported_claims": [
+        "Baseline CODEOWNERS names only rhart696."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R17",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/governance/ENFORCEMENT.md",
+      "lines": [
+        1,
+        44
+      ],
+      "symbol_or_section": [
+        1,
+        70
+      ],
+      "sha256": "7fb42c43789017539b4e1c0176fc97242304391c037a9b86587ba688ba24b4f9",
+      "git_blob_oid": "0bc359cb6110f2a75ec0ec14667bf8bf354f14df",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/governance/ENFORCEMENT.md#L1-L44",
+      "artifact": "source-evidence/R17.txt",
+      "supported_claims": [
+        "Documented control boundaries, merge sequence, main scope, deployment uncertainty and human review."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R18",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper",
+      "commit": "3a4f208c9911a6a496c0452acdea54c2a18216c0",
+      "path": ".github/workflows/auto-sync-submodules.yml",
+      "lines": [
+        1,
+        38
+      ],
+      "symbol_or_section": [
+        1,
+        38
+      ],
+      "sha256": "f068db75e5b1a30a4493ce61d844c8f41f80f05840377ac7cda3bc99206aabf3",
+      "git_blob_oid": "ef81cf684d76c22087423b18a5fad009500ee04e",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper/blob/3a4f208c9911a6a496c0452acdea54c2a18216c0/.github/workflows/auto-sync-submodules.yml#L1-L38",
+      "artifact": "source-evidence/R18.txt",
+      "supported_claims": [
+        "Canonical-only updater creates a commit and pushes directly to main."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R19",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper",
+      "commit": "3a4f208c9911a6a496c0452acdea54c2a18216c0",
+      "path": "scripts/check-reference-integrity.py",
+      "lines": [
+        1,
+        77
+      ],
+      "symbol_or_section": [
+        1,
+        100
+      ],
+      "sha256": "656dbd4dba5a8c593dc732ee4203817f8b1ff685fca5e091430a349405ee168e",
+      "git_blob_oid": "e74c3ebc749b06da4f7c1826d15fb5b96a3c6b1e",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper/blob/3a4f208c9911a6a496c0452acdea54c2a18216c0/scripts/check-reference-integrity.py#L1-L77",
+      "artifact": "source-evidence/R19.txt",
+      "supported_claims": [
+        "Reference checks compare Git index pins with snapshot; snapshot remains candidate-controlled."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R20",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "v1/src/lib/sessionStorage.ts",
+      "lines": [
+        1,
+        71
+      ],
+      "symbol_or_section": [
+        1,
+        71
+      ],
+      "sha256": "c590b946a7b57232d3ef37331a51858b7a6a1163ee6da56a6427d5261536f3d2",
+      "git_blob_oid": "4513455127f4c49177de1aa07385a2ee2f872c88",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/v1/src/lib/sessionStorage.ts#L1-L71",
+      "artifact": "source-evidence/R20.txt",
+      "supported_claims": [
+        "Bounded nested parser, legacy/envelope support, future rejection and visible storage errors."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R21",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/service/FACILITATOR-GUIDE.md",
+      "lines": [
+        1,
+        16
+      ],
+      "symbol_or_section": [
+        1,
+        35
+      ],
+      "sha256": "cce64cad6b88c731f9a0295770868d3906a21048ab31911a9aaaef598a0df2e0",
+      "git_blob_oid": "540741f9ee6ff440be480b30f5b14d16a9d14268",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/service/FACILITATOR-GUIDE.md#L1-L16",
+      "artifact": "source-evidence/R21.txt",
+      "supported_claims": [
+        "Perception/inference boundaries, optional participation, no coerced action, follow-up and data cautions."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R22",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/service/INTERVENTION-SPEC.md",
+      "lines": [
+        1,
+        22
+      ],
+      "symbol_or_section": [
+        1,
+        40
+      ],
+      "sha256": "fc39bdb9ce6df35139bc28bc0c2de235ad1170544ec73ce9c504ca2074bb4e19",
+      "git_blob_oid": "3bb01345808777970ba106878e77c90a13d149eb",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/service/INTERVENTION-SPEC.md#L1-L22",
+      "artifact": "source-evidence/R22.txt",
+      "supported_claims": [
+        "Exact conflict-specific questions, alternatives, safe action and provisional protocol."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R23",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/service/REHEARSAL-001.md",
+      "lines": [
+        1,
+        23
+      ],
+      "symbol_or_section": [
+        1,
+        45
+      ],
+      "sha256": "eda50783fa9e6ebb9f5011b9732f3f450159d7cfde0f91075375b00ad5712129",
+      "git_blob_oid": "33cb4cf11c545362dcbdaa1f01c30eca22a58134",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/service/REHEARSAL-001.md#L1-L23",
+      "artifact": "source-evidence/R23.txt",
+      "supported_claims": [
+        "Synthetic complete-journey protocol and external worksheet; no actual rehearsal outcomes."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R24",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/research/protocols/EXP-0001.md",
+      "lines": [
+        1,
+        16
+      ],
+      "symbol_or_section": [
+        1,
+        40
+      ],
+      "sha256": "59d3e38f0e6555d270f72dde427c025a457f71e65ee3a5186ee53b52503754ec",
+      "git_blob_oid": "4ad284e9a5e437e193282b3a56a70ccd33e5925c",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/research/protocols/EXP-0001.md#L1-L16",
+      "artifact": "source-evidence/R24.txt",
+      "supported_claims": [
+        "Planned non-causal feasibility study with consent, separate research, safety stops and repeated-use caution."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R25",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/product/SHARING-ARCHITECTURE.md",
+      "lines": [
+        1,
+        13
+      ],
+      "symbol_or_section": [
+        1,
+        35
+      ],
+      "sha256": "6d19cde2469dfd42213bb7588947e7c8bb2b6610029e2a99c98e7b54247f9645",
+      "git_blob_oid": "d3e831108e1316ea0328600512b4b2175758ce44",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/product/SHARING-ARCHITECTURE.md#L1-L13",
+      "artifact": "source-evidence/R25.txt",
+      "supported_claims": [
+        "Owner/capability architecture is a proposal; includes local-only alternative and staging acceptance."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R26",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/product/UX-SPEC.md",
+      "lines": [
+        1,
+        14
+      ],
+      "symbol_or_section": [
+        1,
+        35
+      ],
+      "sha256": "b04778b3e88b1e706a54bc1b9c83e21e75e61cf18346633b829ac9bf5f256576",
+      "git_blob_oid": "e1453ca553264c983cc453165fa3ad9a759a26b2",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/product/UX-SPEC.md#L1-L14",
+      "artifact": "source-evidence/R26.txt",
+      "supported_claims": [
+        "Requirements for modal management and export fidelity/error truthfulness."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R27",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/quality/DEPENDENCY-REMEDIATION.md",
+      "lines": [
+        1,
+        13
+      ],
+      "symbol_or_section": [
+        1,
+        35
+      ],
+      "sha256": "3afd13a52c00dcff7ef1a380d1a82e203b24ea129b5ec29eb1c5f50154a97f51",
+      "git_blob_oid": "30b1a77d40f6cd4fc068209f3b35482caed0b767",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/quality/DEPENDENCY-REMEDIATION.md#L1-L13",
+      "artifact": "source-evidence/R27.txt",
+      "supported_claims": [
+        "Dated audit zero production/five full findings and incomplete SBOM are scoped historical results."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R28",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "v1/package.json",
+      "lines": [
+        1,
+        40
+      ],
+      "symbol_or_section": [
+        1,
+        60
+      ],
+      "sha256": "fbd14fcef40f6e191c98089c7142991c6a962f1cdb6bdec9f32be992f67456f4",
+      "git_blob_oid": "194b7764038159ae791f2bae65547cb139726274",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/v1/package.json#L1-L40",
+      "artifact": "source-evidence/R28.txt",
+      "supported_claims": [
+        "Pinned direct dependencies and actual scripts."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R29",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/quality/RELEASE-GATES.md",
+      "lines": [
+        1,
+        25
+      ],
+      "symbol_or_section": [
+        1,
+        40
+      ],
+      "sha256": "3b0af19326985645659abd51d75874f8357d5fb1b1bd41cc9a1535e13e43b8ef",
+      "git_blob_oid": "6f68aa62e9cb394e94b68557bba7de15b4e08b81",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/quality/RELEASE-GATES.md#L1-L25",
+      "artifact": "source-evidence/R29.txt",
+      "supported_claims": [
+        "Client pilot remains NOT READY; dependencies, authorization, persistence, accessibility and report gates open."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R30",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/governance/release.json",
+      "lines": [
+        1,
+        82
+      ],
+      "symbol_or_section": [
+        1,
+        250
+      ],
+      "sha256": "0aca93025dab1343cbf1ac3471b1b6f418bd487a44e90aba59b69293b53cba52",
+      "git_blob_oid": "5a8b89174567be0a68e98919d2790e471bbd1a93",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/governance/release.json#L1-L82",
+      "artifact": "source-evidence/R30.txt",
+      "supported_claims": [
+        "Machine gate status and approvers at candidate; no authorized release."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R31",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/CURRENT-STATE.md",
+      "lines": [
+        1,
+        44
+      ],
+      "symbol_or_section": [
+        1,
+        75
+      ],
+      "sha256": "050582e294cf685002dd12ae62b26b8beeeea906400c33c226209088c052d140",
+      "git_blob_oid": "6201b0c2de37aad01498f774f4086a7fb5620aa0",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/CURRENT-STATE.md#L1-L44",
+      "artifact": "source-evidence/R31.txt",
+      "supported_claims": [
+        "Baseline and phase1 facts mixed in authoritative entrypoint; current results appended."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R32",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "AGENTS.local.md",
+      "lines": [
+        1,
+        35
+      ],
+      "symbol_or_section": [
+        1,
+        65
+      ],
+      "sha256": "c8e08992d31b30ac6aa10da198372d3088831824035717641a8ea911dc688a65",
+      "git_blob_oid": "0f0e19210521991a7d4a82ecbecae74e40f539d7",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/AGENTS.local.md#L1-L35",
+      "artifact": "source-evidence/R32.txt",
+      "supported_claims": [
+        "Baseline stack/test claims followed by later authorization; historical context can be confused with current state."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R33",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "AI_POLICY.md",
+      "lines": [
+        1,
+        85
+      ],
+      "symbol_or_section": [
+        1,
+        85
+      ],
+      "sha256": "ad08ef590b8f625cfb6777e38b472f8d4140674133c37429b5362be431850a2a",
+      "git_blob_oid": "3deeb0798c66b01804c9e53302edb4c43f3151fc",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/AI_POLICY.md#L1-L85",
+      "artifact": "source-evidence/R33.txt",
+      "supported_claims": [
+        "Template vendor/AI mode declarations and line-by-line human security review requirement; policy assertions not account proof."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R34",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/risk/AI-GOVERNANCE.md",
+      "lines": [
+        1,
+        12
+      ],
+      "symbol_or_section": [
+        1,
+        35
+      ],
+      "sha256": "42798a9a931ed00cbc10a34ea34afc62d685d1941b4c49e42f1f3ca4c43aac6c",
+      "git_blob_oid": "a91c6eb833cafcb968a6758f5bf2a11cf7e1dc3f",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/risk/AI-GOVERNANCE.md#L1-L12",
+      "artifact": "source-evidence/R34.txt",
+      "supported_claims": [
+        "Unfilled policy fields explicitly acknowledged; source quality still requires judgment."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R35",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/strategy/THEORY-OF-CHANGE.md",
+      "lines": [
+        1,
+        17
+      ],
+      "symbol_or_section": [
+        1,
+        35
+      ],
+      "sha256": "5678cebb77a37214951fe89a69c084d35b15c42e260cd4302dc351c7381a03e3",
+      "git_blob_oid": "b02d86de248be32fc56bee3f83af0fe2ee8f66e0",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/strategy/THEORY-OF-CHANGE.md#L1-L17",
+      "artifact": "source-evidence/R35.txt",
+      "supported_claims": [
+        "Mechanisms and disconfirmation are explicitly hypotheses with contextual alternatives."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R36",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/evidence/CLAIMS-REGISTER.md",
+      "lines": [
+        1,
+        13
+      ],
+      "symbol_or_section": [
+        1,
+        30
+      ],
+      "sha256": "5ba4e94a196c8b482ace6e4141fe476403526e0ef1c4f9ddc0462dffb701faf2",
+      "git_blob_oid": "f8b65cab3c976b87a585ade167dd39e68c4164ee",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/evidence/CLAIMS-REGISTER.md#L1-L13",
+      "artifact": "source-evidence/R36.txt",
+      "supported_claims": [
+        "TVM benefit claims provisional; no psychometric or efficacy validation claimed."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R37",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "v1/tests/browser/persistence.spec.ts",
+      "lines": [
+        1,
+        71
+      ],
+      "symbol_or_section": [
+        1,
+        75
+      ],
+      "sha256": "d5325d9d6252c8fb77b3a5d19fda09603bc7bbc8168b27e6fe0be1bc3151b1da",
+      "git_blob_oid": "7968170564b829d8eec942da314ad3dcaee80f70",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/v1/tests/browser/persistence.spec.ts#L1-L71",
+      "artifact": "source-evidence/R37.txt",
+      "supported_claims": [
+        "Six original scenarios cover share dismissal but not acceptance or keyboard escape behind resume."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R38",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/product/DATA-MODEL.md",
+      "lines": [
+        1,
+        18
+      ],
+      "symbol_or_section": [
+        1,
+        40
+      ],
+      "sha256": "17cb599dfd28ac242806aec996611a471a60835bb1924b1a238b9ec7820da28c",
+      "git_blob_oid": "001900ea11e6117e0ce812fb0dc0a3cac1e3c6c4",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/product/DATA-MODEL.md#L1-L18",
+      "artifact": "source-evidence/R38.txt",
+      "supported_claims": [
+        "Structured observation/action fields planned, 4000-character note storage limit documented."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R39",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/service/PERSISTENCE-PROTOCOL.md",
+      "lines": [
+        1,
+        11
+      ],
+      "symbol_or_section": [
+        1,
+        30
+      ],
+      "sha256": "2293398985a1dac682806a0d65f0f6177505f525265e163d24af75ed60759877",
+      "git_blob_oid": "52d560f16a98d620966dc15218a5003f956a854c",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/service/PERSISTENCE-PROTOCOL.md#L1-L11",
+      "artifact": "source-evidence/R39.txt",
+      "supported_claims": [
+        "Facilitator retention/export verification instructions acknowledge incomplete recovery and export failure."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R40",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "v1/src/components/FloatingPanel.tsx",
+      "lines": [
+        510,
+        538
+      ],
+      "symbol_or_section": [
+        510,
+        538
+      ],
+      "sha256": "a9a361cfd71ace7757489406ef7d0e47df9a3dedc63c81c24dbcca7d13aefdb8",
+      "git_blob_oid": "607b99a8256134c20ecc3ed920ae8ee5ae1a32ea",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/v1/src/components/FloatingPanel.tsx#L510-L538",
+      "artifact": "source-evidence/R40.txt",
+      "supported_claims": [
+        "Note editor lacks maxlength while storage parser rejects notes over4000 characters."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R41",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": ".github/workflows/release-readiness.yml",
+      "lines": [
+        1,
+        44
+      ],
+      "symbol_or_section": [
+        1,
+        60
+      ],
+      "sha256": "e3527fabca5720c643ac2da2f999797139e27ce6c6fbc3641b2f3b00508085fa",
+      "git_blob_oid": "addb7c841a842e28c6fc5ae2c91e7e128f1e6f45",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/.github/workflows/release-readiness.yml#L1-L44",
+      "artifact": "source-evidence/R41.txt",
+      "supported_claims": [
+        "Manual release readiness executes main policy and lacks deployment credentials."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R42",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper",
+      "commit": "3a4f208c9911a6a496c0452acdea54c2a18216c0",
+      "path": "docs/CONVERGENCE.md",
+      "lines": [
+        1,
+        28
+      ],
+      "symbol_or_section": [
+        1,
+        50
+      ],
+      "sha256": "398334ec9a40a9b41f76a1674757dc749ed758e520bcaf5e21e4ace9522e8c66",
+      "git_blob_oid": "ff1b711293b0b6ddb66e5fc0fcd1114482891d6a",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper/blob/3a4f208c9911a6a496c0452acdea54c2a18216c0/docs/CONVERGENCE.md#L1-L28",
+      "artifact": "source-evidence/R42.txt",
+      "supported_claims": [
+        "Parent-before-foundation merge direction, no runtime deployment and no silent pin advancement."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R43",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/governance/registry.json",
+      "lines": [
+        1,
+        45
+      ],
+      "symbol_or_section": [
+        1,
+        45
+      ],
+      "sha256": "e760b061a3f4a469df86a42c0caac46ee56c381bf1b82965188d78ea3864f981",
+      "git_blob_oid": "541e6d30345e01afeff09880d00b74583753d050",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/governance/registry.json#L1-L45",
+      "artifact": "source-evidence/R43.txt",
+      "supported_claims": [
+        "Registry source scope structure; all requirement/claim/risk entries additionally parsed in this review."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "R44",
+      "type": "repository",
+      "repository": "rhart696/true-valence-mapper-claude",
+      "commit": "08a05a6660694e468d25f110e9598b476a422f2e",
+      "path": "docs/requirements/REQ-0013.md",
+      "lines": [
+        1,
+        9
+      ],
+      "symbol_or_section": [
+        1,
+        20
+      ],
+      "sha256": "77b9d5b0727bf9360e7260c94ab51af108aaddc1211dff22e55b562ff4a21d4b",
+      "git_blob_oid": "c3adb03ae9c5cbd974f3c54fe84854832477fe81",
+      "retrieved_at": "2026-10-06",
+      "url": "https://github.com/rhart696/true-valence-mapper-claude/blob/08a05a6660694e468d25f110e9598b476a422f2e/docs/requirements/REQ-0013.md#L1-L9",
+      "artifact": "source-evidence/R44.txt",
+      "supported_claims": [
+        "Managed increment acceptance includes lifecycle, change linkage, currency and human approvals."
+      ],
+      "limits": "Source at pinned commit; does not establish deployed behavior."
+    },
+    {
+      "id": "T01",
+      "type": "execution",
+      "artifact": "logs/git-integrity.json",
+      "sha256": "f61556d75e585dfe30a5ccc0563db87e1e43c391d8179fb816630f8ddce21da0",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "All five snapshot trees and entries agree with real fetched objects; clean detached pinned checkouts."
+      ],
+      "limits": "Git content identity; not independently verified commit signer identity."
+    },
+    {
+      "id": "T02",
+      "type": "execution",
+      "artifact": "logs/check-results.json",
+      "sha256": "10f7a2aff1836198375baa1607b673318defe8e562d95d5b092b3d833678cd24",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Exact command/environment locations/exits for stdlib, structure, Git-range, app checks and audits."
+      ],
+      "limits": "Read together with referenced logs; no hidden inference of full acceptance."
+    },
+    {
+      "id": "T03",
+      "type": "execution",
+      "artifact": "logs/adversarial-process.json",
+      "sha256": "7b1afd5a1552475dddef7705143d3939ce8a4589e4c9d3bf639b67bb96f2d258",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Original checker accepts nonexistent verification file, fabricated outcome text and backwards lifecycle dates."
+      ],
+      "limits": "Synthetic in-process inputs; does not authorize release or prove human-review bypass."
+    },
+    {
+      "id": "T04",
+      "type": "execution",
+      "artifact": "logs/browser-original.json",
+      "sha256": "485ba475fa12f7d92898744705f059cf4060fff68e0e5d14bd4ff402af962d5c",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Six original browser tests executed successfully with separate Chromium runtime."
+      ],
+      "limits": "Original source unchanged; dev server with dummy Supabase, not deployment."
+    },
+    {
+      "id": "T05",
+      "type": "execution",
+      "artifact": "logs/browser-adversarial.json",
+      "sha256": "66884b16a2b1e828277b929f9ca49a0e1401af49e882e6d867ec4dfccbc6dc43",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Four independent browser scenarios reproduce resume deletion, stale prompt, null-row error and false PDF completion."
+      ],
+      "limits": "Separate font-only layout fixture served via webpack; no client data or live DB."
+    },
+    {
+      "id": "T06",
+      "type": "execution",
+      "artifact": "logs/audit-production.log",
+      "sha256": "280c3a5b21b8f3ed1906ac2561d2121dba110bb957586c4f984b2062c8e52a4a",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Current production-only audit reports source-map-js high entry."
+      ],
+      "limits": "Audit metadata is not proof of runtime exploitability."
+    },
+    {
+      "id": "T07",
+      "type": "execution",
+      "artifact": "logs/audit-full.log",
+      "sha256": "39a239af484cdc1f35d52115cf75ab810a2ce9980726133ae0e3ceddd8740dd1",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Current full audit reports six high affected entries."
+      ],
+      "limits": "Package entries, not independent exploitable vulnerabilities."
+    },
+    {
+      "id": "T08",
+      "type": "execution",
+      "artifact": "logs/sbom-full-stderr.log",
+      "sha256": "3589c5c08d6d73e0b2b0eecd54a25ec4c0fa5e4eec3ba3a9b0cff09f06bf8058",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Full SBOM generation fails on optional wasm-runtime dependency mismatch."
+      ],
+      "limits": "ESBOMPROBLEMS reproduced; no complete SBOM claimed."
+    },
+    {
+      "id": "T09",
+      "type": "execution",
+      "artifact": "logs/source-map-path.log",
+      "sha256": "3908adb3f358881d5953e3e916abdde9eabe7282caebe9974adab392b0d71db6",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Installed source-map-js1.2.1 via Next/PostCSS and Tailwind."
+      ],
+      "limits": "Reachability to attacker-controlled source maps not established."
+    },
+    {
+      "id": "T10",
+      "type": "execution",
+      "artifact": "logs/after-integrity.json",
+      "sha256": "e2b6ab5a27b801075643d742dff7e5dd287ffcc6d6b7f23523b6d3a029249e92",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "All 404 tracked-file hashes unchanged, clean Git status and empty diffs."
+      ],
+      "limits": "Generated caches and dependencies excluded; original source/locks preserved."
+    },
+    {
+      "id": "T11",
+      "type": "execution",
+      "artifact": "logs/control-tamper.json",
+      "sha256": "3cc334659d5b742928a46267e5b5d50619fde4bbaa12a52e7e55c0910e0f898e",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Candidate-owned replacement checker returns success without validation."
+      ],
+      "limits": "Local shell simulation; no GitHub status created or approval bypass reproduced."
+    },
+    {
+      "id": "T12",
+      "type": "execution",
+      "artifact": "logs/readiness-controls.json",
+      "sha256": "40052bd37d79454786815b999e8fe9b20ae515e3df819e79843ff3636f58fdb5",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Public effective rules match prepared policy fields; base CODEOWNERS names sole author."
+      ],
+      "limits": "Public API omits bypass actors; authenticated activation CLI remains blocked."
+    },
+    {
+      "id": "T13",
+      "type": "execution",
+      "artifact": "logs/release-denial.log",
+      "sha256": "74d920d115cded83ecc5b54be08465e014cf64046a2fb410c5530cef0fbfa507",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Release authorization refuses open gates and missing release PR."
+      ],
+      "limits": "Expected local denial, not witnessed live release deny/allow exercise."
+    },
+    {
+      "id": "T14",
+      "type": "execution",
+      "artifact": "logs/foundation-governance.log",
+      "sha256": "9945f935fc7b7c77653f206afef944655d79ef2b7df801d5d338fdfd26cc2d7e",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Exact foundation checker passes100-path range using real canonical Git object database."
+      ],
+      "limits": "Code from foundation snapshot, Git directory explicitly assigned; no fake baseline commits."
+    },
+    {
+      "id": "T15",
+      "type": "execution",
+      "artifact": "logs/foundation-stdlib.log",
+      "sha256": "96501507d21133e33b03fe2e9cc17062f2699daef779a674f025e1169e7678cf",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Nine foundation governance tests pass."
+      ],
+      "limits": "Subset of later42; do not sum as independent coverage."
+    },
+    {
+      "id": "T16",
+      "type": "execution",
+      "artifact": "fixtures/browser-app-provenance.json",
+      "sha256": "214e88d98861926d98491c840f6b0bfe7d1f5469e33f670bcb1bd7a2cf260269",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Browser fixture relationship to original documented."
+      ],
+      "limits": "Only layout font removal; webpack serving differs from original Turbopack."
+    },
+    {
+      "id": "T17",
+      "type": "execution",
+      "artifact": "logs/browser-original.log",
+      "sha256": "c638f3529ca1d323afb56a8911655709df8976855f087172aa06a303f5cef251",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Six passing scenario names and actual browser execution output."
+      ],
+      "limits": "After font-runtime correction; prior failed attempt retained."
+    },
+    {
+      "id": "T18",
+      "type": "execution",
+      "artifact": "logs/build.log",
+      "sha256": "788d93cd4fc20e9de017669e9bf35cd9e69cf0a0114d2158266d7da84167c2da",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Original application build passes at candidate with npm ci --ignore-scripts install."
+      ],
+      "limits": "Successful compilation not deployment/behavior assurance."
+    },
+    {
+      "id": "L01",
+      "type": "live-observation",
+      "artifact": "logs/live-github.json",
+      "sha256": "2a6f81dc4db86359f2b63f48aa2d2f19b72cf79021e2330a4eacd86bd3c5bf1f",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Live PR identities, zero reviews and effective main rules read via public GitHub API."
+      ],
+      "limits": "All returned review arrays empty; authenticated entitlements/role assignments not inspected."
+    },
+    {
+      "id": "L02",
+      "type": "live-observation",
+      "artifact": "logs/live-github-more.json",
+      "sha256": "c8ac164d79dbdd8817049689d5f0271f1e804cee926cfda68b557d4b0ebf0292",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Live CI check summaries, zero inline comments, ruleset details and no effective rules on stacked base."
+      ],
+      "limits": "Check summaries not job logs; bypass actor field omitted; GraphQL review threads not independently queried."
+    },
+    {
+      "id": "A01",
+      "type": "supplied-baseline",
+      "artifact": "INVENTORY.json",
+      "sha256": "2b5ef684e41c63ac8a1236b99a3b1be3f7c9256c34d22e27ecef2d6526998ce0",
+      "retrieved_at": "2026-10-06",
+      "supported_claims": [
+        "Attachment checksums,419 distinct text blobs, five snapshots, omitted paths and changed paths."
+      ],
+      "limits": "Initial checkout absence later resolved in T01; preserve chronology."
+    },
+    {
+      "id": "X01",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "GitHub",
+      "title": "Available rules for rulesets",
+      "version_status": "living documentation",
+      "url": "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets",
+      "section": "Require a pull request; Require status checks",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "the expected source of status updates",
+      "supported_claims": [
+        "Specific GitHub App source restriction is distinct from checker immutability; required checks and review constrain main."
+      ],
+      "artifact": "source-evidence/X01.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "a3011a21eb8c89086425b5adc8141714eea55a8355e19f457e087c043a78097f",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof."
+    },
+    {
+      "id": "X02",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "GitHub",
+      "title": "About code owners",
+      "version_status": "living documentation",
+      "url": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners",
+      "section": "CODEOWNERS and forks; syntax; branch protection",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "pull requests use the version of CODEOWNERS from the base branch",
+      "supported_claims": [
+        "Base-branch CODEOWNERS controls review; owners need write permission; last matching pattern matters."
+      ],
+      "artifact": "source-evidence/X02.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "b2e89a94a63be7758ebd34eb6246fc09a7729a766d9d18c60c6f1db1af44a6d4",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof."
+    },
+    {
+      "id": "X03",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "GitHub",
+      "title": "Approving a pull request with required reviews",
+      "version_status": "living documentation",
+      "url": "https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/approving-a-pull-request-with-required-reviews",
+      "section": "Required reviews",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "Pull request authors cannot approve their own pull requests.",
+      "supported_claims": [
+        "PR authors cannot approve their own PR."
+      ],
+      "artifact": "source-evidence/X03.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "87a1a769f707cbf358bf0af342c6f83500a727c122da0f0a40ef17fcfb838913",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof."
+    },
+    {
+      "id": "X04",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "NIST",
+      "title": "SSDF publications and SP800-218",
+      "version_status": "SSDF1.1 final;1.2 draft per current listing",
+      "url": "https://csrc.nist.gov/projects/ssdf/publications",
+      "section": "Publication status; SP800-218 PO.4.1/2, PW.7.2, PW.8.2",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "gather and safeguard the necessary information",
+      "supported_claims": [
+        "Use explicit assurance criteria, safeguarded evidence and scoped code/testing review as lenses, not compliance certification."
+      ],
+      "artifact": "source-evidence/X04.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "1d310f92a3e88af2f3273ff95066eb3950debe8b4b6766f22ad117c197240797",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof.",
+      "retrieved_bytes_sha256": "617746e553a9e2da49bfbd4eef0dfc3094758a39b869314e4173ac36605cde22",
+      "retrieval_url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf"
+    },
+    {
+      "id": "X05",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "OWASP",
+      "title": "Application Security Verification Standard",
+      "version_status": "tag v5.0.0 stable",
+      "url": "https://raw.githubusercontent.com/OWASP/ASVS/v5.0.0/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.csv",
+      "section": "v5.0.0-8.2.2 and8.3.1",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "enforces authorization rules at a trusted service layer",
+      "supported_claims": [
+        "Data-specific permissions and trusted service-layer enforcement are applicable sharing lenses."
+      ],
+      "artifact": "source-evidence/X05.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "5019b02ddf7e8e06b898d7c8ab1cca1f7c4ceb4abce392152d5fa392e3616d78",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof.",
+      "retrieved_bytes_sha256": "98c8fe911b9edb403af8ee05d3ce8201ecac2659e313b053890a62847cdcf680",
+      "retrieval_url": "https://raw.githubusercontent.com/OWASP/ASVS/v5.0.0/5.0/docs_en/OWASP_Application_Security_Verification_Standard_5.0.0_en.csv"
+    },
+    {
+      "id": "X06",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "W3C",
+      "title": "Web Content Accessibility Guidelines2.2",
+      "version_status": "Recommendation12December2024 at retrieved URL",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "section": "2.4.3 Focus Order;2.4.11 Focus Not Obscured",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "preserves meaning and operability",
+      "supported_claims": [
+        "Apply focus-order/visibility criteria to modal flow; full conformance not assessed."
+      ],
+      "artifact": "source-evidence/X06.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "38eaa5dcd1f0051045e39ea1cd153277d5075ebde6ec22ebd3577a1681513384",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof."
+    },
+    {
+      "id": "X07",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "W3C WAI",
+      "title": "Dialog (Modal) Pattern",
+      "version_status": "informative APG pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+      "section": "About; Keyboard Interaction",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "Windows under a modal dialog are inert.",
+      "supported_claims": [
+        "Modal background should be inert and focus contained; pattern is not itself a WCAG certification."
+      ],
+      "artifact": "source-evidence/X07.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "614fc233b608b76982f41ffc421780e21b395aa56f85c9d6f3e2f1b528467203",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof."
+    },
+    {
+      "id": "X08",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "Supabase",
+      "title": "Row Level Security",
+      "version_status": "living vendor documentation",
+      "url": "https://supabase.com/docs/guides/database/postgres/row-level-security",
+      "section": "Policies; SELECT policies",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "Row Level Security",
+      "supported_claims": [
+        "RLS predicates govern visible rows; client filtering is not independent authorization."
+      ],
+      "artifact": "source-evidence/X08.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "29c41dc79e14f6ce4e07edfd0ab490f28be1f3a5e70b183025a630b067116609",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof."
+    },
+    {
+      "id": "X09",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "Vercel/Next.js",
+      "title": "September2026 Security Release",
+      "version_status": "publisher security release30September2026",
+      "url": "https://nextjs.org/blog/september-2026-security-release",
+      "section": "Impact and patch versions",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "Updates are now available in v16.3.8",
+      "supported_claims": [
+        "16.3.8 addresses the listed release vulnerabilities; affected configurations differ; this is not assurance of all current dependencies."
+      ],
+      "artifact": "source-evidence/X09.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "a927131db77c457be870f9ac565297783b8b838559126f162a5eca725310e2ac",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof."
+    },
+    {
+      "id": "X10",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "jsPDF maintainers",
+      "title": "HTML Injection in output methods",
+      "version_status": "publisher GHSA-wfv2-pwc8-crg5",
+      "url": "https://github.com/parallax/jsPDF/security/advisories/GHSA-wfv2-pwc8-crg5",
+      "section": "Affected/patched versions; impact",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "The vulnerability has been fixed in jspdf@4.2.1.",
+      "supported_claims": [
+        "4.2.1 fixes listed output-overload issue; inspected TVM calls save, not those overloads."
+      ],
+      "artifact": "source-evidence/X10.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "1b0b8485ea8752ebb7c641c31db790b67ecc40aa1c11cc4af2b80ec635dbfdbb",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof."
+    },
+    {
+      "id": "X11",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "GitHub Advisory Database",
+      "title": "braces stack-exhaustion DoS",
+      "version_status": "GitHub-reviewed GHSA-vfj7-8cjw-p6xm updated2October2026",
+      "url": "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm",
+      "section": "Affected versions; patched versions; description",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "deeply nested brace patterns",
+      "supported_claims": [
+        "<=3.0.3 affected; no patched version listed; TVM residual path is lint tooling."
+      ],
+      "artifact": "source-evidence/X11.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "753efbae1e2ff7519ddf66aa9afb3c5df77f8dd50a3b1f0afbaec903eb95e3da",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof."
+    },
+    {
+      "id": "X12",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "GitHub Advisory Database / source-map-js maintainer",
+      "title": "source-map-js event-loop DoS",
+      "version_status": "GHSA-68fv-2mgg-jv7q updated5October2026; maintainer1.2.2 release",
+      "url": "https://github.com/advisories/GHSA-68fv-2mgg-jv7q",
+      "section": "Affected/patched versions; indexed source-map offsets",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "fails to validate the per-section offset line value",
+      "supported_claims": [
+        "1.2.1 falls in affected range;1.2.2 patched; exploit needs crafted source map consumption, unproven in TVM."
+      ],
+      "artifact": "source-evidence/X12.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "e660ae9ee2854882e2ccf8ad1f6b4198f43941e4a105f3ea26254ac520ccf1f1",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof."
+    },
+    {
+      "id": "X13",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "Skivington et al.; BMJ / MRC-NIHR",
+      "title": "A new framework for developing and evaluating complex interventions",
+      "version_status": "2021 methods/framework article, not TVM intervention trial",
+      "url": "https://doi.org/10.1136/bmj.n2061",
+      "section": "Development; summary points; core elements; Feasibility; Evaluation",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "assess predefined progression criteria",
+      "supported_claims": [
+        "Supports context/programme-theory/stakeholder and prespecified feasibility inquiry; transfer from health/social-policy setting to TVM provisional."
+      ],
+      "artifact": "source-evidence/X13.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "a4cd8ac74059d7c850bd6939efa284f6cafa6a48d21cdeab2ce40f50020d2b3e",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof.",
+      "retrieved_bytes_sha256": "8a5f056656737891f021a5d34d59aafdb99f642ce41a29bf4af605fd340e98fc",
+      "retrieval_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8482308/fullTextXML"
+    },
+    {
+      "id": "X14",
+      "type": "external-primary-or-primary-guidance",
+      "publisher": "Anthropic",
+      "title": "Demystifying evals for AI agents",
+      "version_status": "vendor engineering guidance9January2026",
+      "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+      "section": "Task/trial/outcome definitions; graders; Steps1\u20135",
+      "retrieved_at": "2026-10-06",
+      "excerpt": "what the agent produced, not the path it took",
+      "supported_claims": [
+        "Ground tasks in real failures, evaluate resulting state, isolate trials and calibrate graders with humans; project benefit must be measured."
+      ],
+      "artifact": "source-evidence/X14.md",
+      "hash_scope": "saved inspected-source record, not server-original bytes",
+      "sha256": "4afe151750fe1c05d287b1dc447e8c29175c20ca6794d82770de2be018b90db3",
+      "limits": "Selected content; living documents may change. X11/12 are reviewed advisory records, supplemented by upstream references; not TVM exploit proof.",
+      "retrieved_bytes_sha256": "ca141bdb09560246379d687863c88808db67436f7a9b3fa7faecd0df05ef386f",
+      "retrieval_url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents"
+    }
+  ],
+  "execution_registry": "logs/check-results.json",
+  "supplied_evidence": "Original attachment SHA256 and per-blob verification in INVENTORY.json; supplied GitHub observations are historical, superseded only where independently retrieved.",
+  "limits": "No client data, deployed DB reads, purchases, GitHub writes, merge/deploy or approvals. Statistical independence not claimed.",
+  "environment": {
+    "os": "Linux x64",
+    "python": "3.12.14",
+    "git": "2.51.1",
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "browser": "Chromium 153.0.8010.0 separate runtime",
+    "source_heads": {
+      "parent": "3a4f208c9911a6a496c0452acdea54c2a18216c0",
+      "canonical": "08a05a6660694e468d25f110e9598b476a422f2e"
+    }
+  },
+  "executions": [
+    {
+      "id": "parent-stdlib",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/tests",
+        "-v"
+      ],
+      "cwd": "parent",
+      "started_at": "2026-10-06T13:15:55.418804+00:00",
+      "exit": 0,
+      "log": "logs/parent-stdlib.log"
+    },
+    {
+      "id": "parent-integrity",
+      "command": [
+        "python",
+        "scripts/check-reference-integrity.py"
+      ],
+      "cwd": "parent",
+      "started_at": "2026-10-06T13:15:55.463496+00:00",
+      "exit": 0,
+      "log": "logs/parent-integrity.log"
+    },
+    {
+      "id": "canonical-stdlib",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/tests",
+        "-v"
+      ],
+      "cwd": "canonical",
+      "started_at": "2026-10-06T13:15:55.495877+00:00",
+      "exit": 0,
+      "log": "logs/canonical-stdlib.log"
+    },
+    {
+      "id": "governance-structure",
+      "command": [
+        "python",
+        "scripts/check-governance.py"
+      ],
+      "cwd": "canonical",
+      "started_at": "2026-10-06T13:15:55.658934+00:00",
+      "exit": 0,
+      "log": "logs/governance-structure.log"
+    },
+    {
+      "id": "process-structure",
+      "command": [
+        "python",
+        "scripts/check-process.py"
+      ],
+      "cwd": "canonical",
+      "started_at": "2026-10-06T13:15:55.713843+00:00",
+      "exit": 0,
+      "log": "logs/process-structure.log"
+    },
+    {
+      "id": "governance-increment",
+      "command": [
+        "python",
+        "scripts/check-governance.py",
+        "--base",
+        "68f5654a9ad65f84e1771757737e320c1597c67f",
+        "--head",
+        "08a05a6660694e468d25f110e9598b476a422f2e"
+      ],
+      "cwd": "canonical",
+      "started_at": "2026-10-06T13:15:55.752092+00:00",
+      "exit": 0,
+      "log": "logs/governance-increment.log"
+    },
+    {
+      "id": "process-increment",
+      "command": [
+        "python",
+        "scripts/check-process.py",
+        "--base",
+        "68f5654a9ad65f84e1771757737e320c1597c67f",
+        "--head",
+        "08a05a6660694e468d25f110e9598b476a422f2e"
+      ],
+      "cwd": "canonical",
+      "started_at": "2026-10-06T13:15:55.803457+00:00",
+      "exit": 0,
+      "log": "logs/process-increment.log"
+    },
+    {
+      "id": "governance-combined",
+      "command": [
+        "python",
+        "scripts/check-governance.py",
+        "--base",
+        "a460c6f589b712e66a973b123678cec9e68bbc3c",
+        "--head",
+        "08a05a6660694e468d25f110e9598b476a422f2e"
+      ],
+      "cwd": "canonical",
+      "started_at": "2026-10-06T13:15:55.848787+00:00",
+      "exit": 0,
+      "log": "logs/governance-combined.log"
+    },
+    {
+      "id": "process-combined",
+      "command": [
+        "python",
+        "scripts/check-process.py",
+        "--base",
+        "a460c6f589b712e66a973b123678cec9e68bbc3c",
+        "--head",
+        "08a05a6660694e468d25f110e9598b476a422f2e"
+      ],
+      "cwd": "canonical",
+      "started_at": "2026-10-06T13:15:55.899807+00:00",
+      "exit": 1,
+      "log": "logs/process-combined.log"
+    },
+    {
+      "id": "activation-capability",
+      "command": [
+        "python",
+        "scripts/check-enforcement-activation.py"
+      ],
+      "cwd": "canonical",
+      "started_at": "2026-10-06T13:15:55.954030+00:00",
+      "exit": 1,
+      "log": "logs/activation-capability.log"
+    },
+    {
+      "id": "npm-install",
+      "command": [
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "--fetch-retries=0",
+        "--fetch-timeout=20000"
+      ],
+      "cwd": "canonical/v1",
+      "started_at": "2026-10-06T13:15:55.985234+00:00",
+      "exit": 0,
+      "log": "logs/npm-install.log"
+    },
+    {
+      "id": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "cwd": "canonical/v1",
+      "started_at": "2026-10-06T13:16:32.860042+00:00",
+      "exit": 0,
+      "log": "logs/lint.log"
+    },
+    {
+      "id": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "canonical/v1",
+      "started_at": "2026-10-06T13:16:35.666553+00:00",
+      "exit": 0,
+      "log": "logs/typecheck.log"
+    },
+    {
+      "id": "unit",
+      "command": [
+        "npm",
+        "run",
+        "test:unit"
+      ],
+      "cwd": "canonical/v1",
+      "started_at": "2026-10-06T13:16:38.496592+00:00",
+      "exit": 0,
+      "log": "logs/unit.log"
+    },
+    {
+      "id": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "canonical/v1",
+      "started_at": "2026-10-06T13:16:39.399382+00:00",
+      "exit": 0,
+      "log": "logs/build.log"
+    },
+    {
+      "id": "audit-production",
+      "command": [
+        "npm",
+        "audit",
+        "--package-lock-only",
+        "--omit=dev",
+        "--json",
+        "--fetch-retries=0",
+        "--fetch-timeout=20000"
+      ],
+      "cwd": "canonical/v1",
+      "started_at": "2026-10-06T13:17:09.101626+00:00",
+      "exit": 1,
+      "log": "logs/audit-production.log"
+    },
+    {
+      "id": "audit-full",
+      "command": [
+        "npm",
+        "audit",
+        "--package-lock-only",
+        "--json",
+        "--fetch-retries=0",
+        "--fetch-timeout=20000"
+      ],
+      "cwd": "canonical/v1",
+      "started_at": "2026-10-06T13:17:21.004969+00:00",
+      "exit": 1,
+      "log": "logs/audit-full.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:browser"
+      ],
+      "cwd": "canonical/v1",
+      "environment": {
+        "TVM_TEST_CHROMIUM": "/workspace/scratch/0c76ca5819a6/outputs/browser-runtime/chromium",
+        "LD_LIBRARY_PATH": "/workspace/scratch/0c76ca5819a6/outputs/browser-runtime/lib",
+        "FONTCONFIG_PATH": "/workspace/scratch/0c76ca5819a6/outputs/browser-runtime/fonts",
+        "NEXT_TELEMETRY_DISABLED": "1"
+      },
+      "started_at": "2026-10-06T13:21:27.091637+00:00",
+      "exit": 0,
+      "log": "logs/browser-original.log"
+    }
+  ],
+  "supplemental_execution_sources": [
+    "run_adversarial_webpack.py",
+    "fixtures/browser-adversarial.cjs",
+    "fixtures/adversarial_process.py",
+    "fixtures/control-tamper.py",
+    "logs/foundation-governance.log",
+    "logs/foundation-stdlib.log",
+    "logs/release-denial.log",
+    "logs/readiness-controls.json"
+  ]
+}

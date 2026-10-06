@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { ArrowDirection, ArrowScore, SessionState, Step } from '../types';
-import { readStoredSession, writeStoredSession } from '../lib/sessionStorage';
+import { parseStoredSession, readStoredSession, writeStoredSession } from '../lib/sessionStorage';
 
 interface SessionContextValue extends SessionState {
   setCoacheeName: (name: string) => void;
@@ -14,6 +14,7 @@ interface SessionContextValue extends SessionState {
   setCurrentStep: (step: Step) => void;
   clearSession: () => void;
   loadDemo: (items: Array<{ name: string; outbound: ArrowScore; inbound: ArrowScore; note?: string }>) => void;
+  replaceSession: (session: SessionState) => boolean;
   // Persistence
   savedSession: SessionState | null;
   storageError: string | null;
@@ -51,6 +52,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   const [storageError, setStorageError] = useState<string | null>(null);
   const [state, setState] = useState<SessionState>(initialState);
   const [canSave, setCanSave] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -62,6 +64,8 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         setStorageError(result.error);
       } catch {
         setStorageError('Saved maps are unavailable in this browser. Keep an export before closing this page.');
+      } finally {
+        setInitialized(true);
       }
     });
     return () => { active = false; };
@@ -76,12 +80,14 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   }, [state, canSave]);
 
   const setCoacheeName = useCallback((name: string) => {
+    if (!initialized || savedSession) return;
     setCanSave(true);
     setState((prev) => ({ ...prev, coacheeName: name }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const addRelationship = useCallback((name: string) => {
     const id = generateId();
+    if (!initialized || savedSession) return;
     setCanSave(true);
     setState((prev) => ({
       ...prev,
@@ -90,17 +96,19 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         { id, name: name.trim(), outbound: 'unscored', inbound: 'unscored' },
       ],
     }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const removeRelationship = useCallback((id: string) => {
+    if (!initialized || savedSession) return;
     setCanSave(true);
     setState((prev) => ({
       ...prev,
       relationships: prev.relationships.filter((r) => r.id !== id),
     }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const updateRelationship = useCallback((id: string, name: string) => {
+    if (!initialized || savedSession) return;
     setCanSave(true);
     setState((prev) => ({
       ...prev,
@@ -108,9 +116,10 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         r.id === id ? { ...r, name: name.trim() } : r
       ),
     }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const setArrowScore = useCallback((id: string, direction: ArrowDirection, score: ArrowScore) => {
+    if (!initialized || savedSession) return;
     setCanSave(true);
     setState((prev) => ({
       ...prev,
@@ -118,9 +127,10 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         r.id === id ? { ...r, [direction]: score } : r
       ),
     }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const setRelationshipNote = useCallback((id: string, note: string) => {
+    if (!initialized || savedSession) return;
     setCanSave(true);
     setState((prev) => ({
       ...prev,
@@ -128,19 +138,21 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         r.id === id ? { ...r, note } : r
       ),
     }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const setCurrentStep = useCallback((step: Step) => {
+    if (!initialized || savedSession) return;
     setCanSave(true);
     setState((prev) => ({ ...prev, currentStep: step }));
-  }, []);
+  }, [initialized, savedSession]);
 
   const clearSession = useCallback(() => {
+    if (!initialized) return;
     nextId = 1;
     setSavedSession(null);
     setCanSave(true);
     setState({ ...initialState, relationships: [] });
-  }, []);
+  }, [initialized]);
 
   const restoreSession = useCallback(() => {
     if (!savedSession) return;
@@ -149,6 +161,25 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     setState({ ...savedSession, currentStep: savedSession.currentStep === 'complete' ? 'map' : savedSession.currentStep });
     setSavedSession(null);
   }, [savedSession]);
+
+  const replaceSession = useCallback((incoming: SessionState): boolean => {
+    if (!initialized) return false;
+    const validated = parseStoredSession(JSON.stringify(incoming));
+    if (!validated) {
+      setStorageError('The incoming map could not be read. Your previous map has been kept.');
+      return false;
+    }
+    let error: string | null;
+    try { error = writeStoredSession(window.localStorage, validated); }
+    catch { error = 'Changes could not be saved on this device. Your previous map has been kept.'; }
+    setStorageError(error);
+    if (error) return false;
+    nextId = maxIdFrom(validated.relationships) + 1;
+    setSavedSession(null);
+    setState(validated);
+    setCanSave(true);
+    return true;
+  }, [initialized]);
 
   const loadDemo = useCallback(
     (items: Array<{ name: string; outbound: ArrowScore; inbound: ArrowScore; note?: string }>) => {
@@ -160,10 +191,9 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         inbound: item.inbound,
         note: item.note,
       }));
-      setCanSave(true);
-      setState({ coacheeName: '', relationships, currentStep: 'map' });
+      replaceSession({ coacheeName: '', relationships, currentStep: 'map' });
     },
-    []
+    [replaceSession]
   );
 
   const value = useMemo<SessionContextValue>(
@@ -181,8 +211,9 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       savedSession,
       storageError,
       restoreSession,
+      replaceSession,
     }),
-    [state, setCoacheeName, addRelationship, removeRelationship, updateRelationship, setArrowScore, setRelationshipNote, setCurrentStep, clearSession, loadDemo, savedSession, storageError, restoreSession]
+    [state, setCoacheeName, addRelationship, removeRelationship, updateRelationship, setArrowScore, setRelationshipNote, setCurrentStep, clearSession, loadDemo, savedSession, storageError, restoreSession, replaceSession]
   );
 
   return (

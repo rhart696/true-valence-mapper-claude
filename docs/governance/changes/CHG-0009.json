@@ -1,0 +1,57 @@
+{
+  "id": "CHG-0009",
+  "date": "2026-10-06",
+  "owner": "Richard Hart / ProActive ReSolutions",
+  "agent": "Codex",
+  "change_type": "fix",
+  "summary": "Repair saved-session decisions, shared ingress and truthful export outcomes following Astra review",
+  "rationale": "F03\u2013F06 source confirmed and corrective acceptance failures independently reproduced. Native modal and state-layer guard preserve pending maps; bounded shared parser and atomic replacement preserve recovery; export success is explicit. Retain reported evidence limitations and open release risks.",
+  "requirements": [
+    "REQ-0006",
+    "REQ-0007",
+    "REQ-0010"
+  ],
+  "decisions": [
+    "DEC-0009"
+  ],
+  "evidence": [
+    "OBS-0003"
+  ],
+  "risks": [
+    "RSK-0002",
+    "RSK-0003"
+  ],
+  "tests": [
+    "TEST-0003"
+  ],
+  "validation": "12 final browser, 5 Node, 42 governance tests and lint/type/build pass. Current production audit one high; full six high. F07 reproduced and remains open. No full requirement, live control, client readiness or human acceptance claim.",
+  "paths": [
+    "docs/CURRENT-STATE.md",
+    "docs/NEXT-SESSION.md",
+    "docs/governance/changes/CHG-0009.json",
+    "docs/governance/registry.json",
+    "docs/governance/work-packages/WP-0002.json",
+    "docs/product/SESSION-RECOVERY-CORRECTION.md",
+    "docs/quality/review-correction/F07-reproduction.json",
+    "docs/quality/review-correction/TRIAGE.md",
+    "docs/quality/review-correction/VALIDATION.md",
+    "docs/quality/review-correction/input-integrity.json",
+    "docs/quality/review-correction/npm-audit-full.json",
+    "docs/quality/review-correction/npm-audit-production.json",
+    "docs/quality/review-correction/review-input/CONTINUATION.md",
+    "docs/quality/review-correction/review-input/COVERAGE.md",
+    "docs/quality/review-correction/review-input/EVIDENCE.json",
+    "docs/quality/review-correction/review-input/FINDINGS.json",
+    "docs/quality/review-correction/review-input/REPLAY-EVAL.json",
+    "docs/quality/review-correction/review-input/REVIEW.md",
+    "docs/quality/review-correction/source-integrity.json",
+    "docs/service/PERSISTENCE-PROTOCOL.md",
+    "v1/src/app/page.tsx",
+    "v1/src/components/DecisionDialog.tsx",
+    "v1/src/components/ExportSuccessScreen.tsx",
+    "v1/src/context/SessionContext.tsx",
+    "v1/src/hooks/usePDFExport.ts",
+    "v1/src/lib/shareSession.ts",
+    "v1/tests/browser/review-correction.spec.ts"
+  ]
+}

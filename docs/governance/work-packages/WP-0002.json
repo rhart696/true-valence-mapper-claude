@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "id": "WP-0002",
+  "owner": "Richard Hart / ProActive ReSolutions",
+  "stage": "implemented",
+  "release_status": "not-authorized",
+  "objective": "Repair review-identified session decision, shared ingress and export failures",
+  "problem": "Astra F03\u2013F06 identify background session loss, stale resume choice, malformed shared ingress and false export success.",
+  "scope": "Bounded runtime corrections and synthetic regression tests; no sharing SQL, dependencies, GitHub settings, merge, deployment or client records.",
+  "uncertainty": "Uploaded execution logs/fixtures absent; reproduce claims locally. Full accessibility, PDF fidelity, cloud privacy and human evaluation remain open.",
+  "alternatives": "Use existing native browser modal support rather than new dependencies; reuse bounded parser; return explicit export outcome rather than automatic print fallback.",
+  "acceptance": "Modal blocks background interaction; unresolved saved map blocks ordinary mutators; accepted valid shared map replaces atomically and clears resume choice; invalid/quota shared replacements preserve old map; failed PDF stays on map with truthful guidance.",
+  "rollback": "Revert the corrective commit through reviewed branch; previous storage key/schema preserved; no live migration.",
+  "requirements": [
+    "REQ-0006",
+    "REQ-0007",
+    "REQ-0010"
+  ],
+  "decisions": [
+    "DEC-0009"
+  ],
+  "evidence": [
+    "OBS-0003"
+  ],
+  "risks": [
+    "RSK-0002",
+    "RSK-0003"
+  ],
+  "tests": [
+    "TEST-0003"
+  ],
+  "impacts": {
+    "product": {
+      "disposition": "changed",
+      "rationale": "Explicit session replacement and truthful export outcomes supplement current contract.",
+      "specifications": [
+        "docs/product/SESSION-RECOVERY-CORRECTION.md"
+      ]
+    },
+    "service": {
+      "disposition": "changed",
+      "rationale": "Facilitators verify saved replacement and file availability before ending.",
+      "specifications": [
+        "docs/service/PERSISTENCE-PROTOCOL.md"
+      ]
+    }
+  },
+  "history": [
+    {
+      "stage": "framed",
+      "date": "2026-10-06",
+      "actor": "Codex under existing branch-work authorization",
+      "evidence": "docs/quality/review-correction/TRIAGE.md"
+    },
+    {
+      "stage": "specified",
+      "date": "2026-10-06",
+      "actor": "Codex under existing branch-work authorization",
+      "evidence": "docs/quality/review-correction/TRIAGE.md"
+    },
+    {
+      "stage": "implemented",
+      "date": "2026-10-06",
+      "actor": "Codex under existing branch-work authorization",
+      "evidence": "docs/quality/review-correction/VALIDATION.md"
+    }
+  ],
+  "required_reviews": [
+    "human-domain-review",
+    "product-service-review"
+  ],
+  "verification": [
+    {
+      "command": "npm run test:browser",
+      "scope": "Existing scenarios and F03\u2013F06 corrective regressions",
+      "status": "passed",
+      "evidence": "docs/quality/review-correction/VALIDATION.md"
+    },
+    {
+      "command": "npm run lint && npm run typecheck && npm run test:unit && npm run build",
+      "scope": "Static/schema/build",
+      "status": "passed",
+      "evidence": "docs/quality/review-correction/VALIDATION.md"
+    },
+    {
+      "command": "python3 -m unittest discover -s scripts/tests -v",
+      "scope": "Governance regression",
+      "status": "passed",
+      "evidence": "docs/quality/review-correction/VALIDATION.md"
+    }
+  ],
+  "paths": [
+    "docs/CURRENT-STATE.md",
+    "docs/NEXT-SESSION.md",
+    "docs/governance/changes/CHG-0009.json",
+    "docs/governance/changes/CHG-0010.json",
+    "docs/governance/registry.json",
+    "docs/governance/work-packages/WP-0002.json",
+    "docs/product/SESSION-RECOVERY-CORRECTION.md",
+    "docs/quality/review-correction/F07-reproduction.json",
+    "docs/quality/review-correction/TRIAGE.md",
+    "docs/quality/review-correction/VALIDATION.md",
+    "docs/quality/review-correction/browser-after.txt",
+    "docs/quality/review-correction/browser-before-restored.txt",
+    "docs/quality/review-correction/browser-before.txt",
+    "docs/quality/review-correction/browser-final-rerun.txt",
+    "docs/quality/review-correction/browser-final.txt",
+    "docs/quality/review-correction/browser-verified.txt",
+    "docs/quality/review-correction/build-final.txt",
+    "docs/quality/review-correction/build.txt",
+    "docs/quality/review-correction/governance-render.txt",
+    "docs/quality/review-correction/governance-tests.txt",
+    "docs/quality/review-correction/input-integrity.json",
+    "docs/quality/review-correction/lint-final.txt",
+    "docs/quality/review-correction/lint.txt",
+    "docs/quality/review-correction/npm-audit-full.json",
+    "docs/quality/review-correction/npm-audit-production.json",
+    "docs/quality/review-correction/process-final.txt",
+    "docs/quality/review-correction/process.txt",
+    "docs/quality/review-correction/review-input/CONTINUATION.md",
+    "docs/quality/review-correction/review-input/COVERAGE.md",
+    "docs/quality/review-correction/review-input/EVIDENCE.json",
+    "docs/quality/review-correction/review-input/FINDINGS.json",
+    "docs/quality/review-correction/review-input/REPLAY-EVAL.json",
+    "docs/quality/review-correction/review-input/REVIEW.md",
+    "docs/quality/review-correction/source-integrity.json",
+    "docs/quality/review-correction/typecheck-final.txt",
+    "docs/quality/review-correction/typecheck.txt",
+    "docs/quality/review-correction/unit-final.txt",
+    "docs/quality/review-correction/unit.txt",
+    "docs/service/PERSISTENCE-PROTOCOL.md",
+    "v1/src/app/page.tsx",
+    "v1/src/components/DecisionDialog.tsx",
+    "v1/src/components/ExportSuccessScreen.tsx",
+    "v1/src/context/SessionContext.tsx",
+    "v1/src/hooks/usePDFExport.ts",
+    "v1/src/lib/shareSession.ts",
+    "v1/tests/browser/review-correction.spec.ts"
+  ]
+}

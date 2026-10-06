@@ -9,3 +9,9 @@ On reopening, let the participant choose resume or start fresh before entering n
 If storage is unavailable or saving fails, use the visible guidance and arrange an appropriate export or alternative record before closing. Never promise an export was created solely because the completion screen appeared; verify the file. Export errors/report fidelity remain a separate remediation item.
 
 At close, confirm the participant's retain/erase choice, demonstrate reload/resume if retaining, or explicitly start fresh if erasing. Browser erasure does not revoke previous shared links or delete server/backup copies. This increment does not alter the live sharing/retention service.
+
+## Review correction — 2026-10-06, WP-0002
+
+Resume/shared choices block background interaction; Escape resumes the saved map or dismisses an incoming map. Shared replacement validates nested content and attempts persistence before consuming the prior map; failure guidance remains inside the shared decision so the facilitator can dismiss/recover. Do not close after a failed replacement.
+
+PDF failure keeps the map and reports the failure. PDF prepared means a download was requested successfully, not proof the user saved/opened it. Verify the actual file and note/label fidelity before erase or close. Long-note/Unicode fidelity and full accessibility remain open. Cloud sharing authorization is still unresolved; this browser input validation does not establish confidential server access.
